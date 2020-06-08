@@ -1,0 +1,218 @@
+/* Profile container */
+.profile {
+    margin: 20px 0;
+  }
+
+  .profile .col-md-9 .row{
+    background: #ced4dc;
+  }
+
+  /* Profile sidebar */
+  .profile-sidebar {
+    padding: 20px 0 10px 0;
+    background: #fff;
+  }
+
+  .profile-userpic img {
+    float: none;
+    margin: 0 auto;
+    display: table;
+    width: 50%;
+    height: 50%;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+  }
+
+  .profile-usertitle {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .profile-usertitle-name {
+    color: #5a7391;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+
+  .profile-usertitle-job {
+    text-transform: uppercase;
+    color: #5b9bd1;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .profile-userbuttons {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .profile-userbuttons .btn {
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 15px;
+    margin-right: 5px;
+  }
+
+  .profile-userbuttons .btn:last-child {
+    margin-right: 0px;
+  }
+
+  .profile-usermenu {
+    margin-top: 30px;
+  }
+
+  .profile-usermenu ul li {
+    border-bottom: 1px solid #f0f4f7;
+  }
+
+  .profile-usermenu ul li:last-child {
+    border-bottom: none;
+  }
+
+  .profile-usermenu ul li a {
+    color: #93a3b5;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .profile-usermenu ul li a i {
+    margin-right: 8px;
+    font-size: 14px;
+  }
+
+  .profile-usermenu ul li a:hover {
+    background-color: #fafcfd;
+    color: #5b9bd1;
+  }
+
+  .profile-usermenu ul li.active {
+    border-bottom: none;
+  }
+
+  .profile-usermenu ul li.active a {
+    color: #5b9bd1;
+    background-color: #f6f9fb;
+    border-left: 2px solid #5b9bd1;
+    margin-left: -2px;
+  }
+
+  /* Profile Content */
+  .profile-content {
+    /* padding: 20px;
+    background: #fff; */
+    /* min-height: 460px; */
+    padding: 10px;
+  }
+
+  .profile-content .well {
+    padding: 5px;
+}
+
+.profile-content hr{
+    background: #ced4dc;
+    width: 100%;
+    margin:0px ;
+}
+
+  nav.main-header.navbar.navbar-expand.navbar-dark.navbar-primary{
+    background-color:#033d72 !important;
+  }
+
+  .earning-bar{
+    background-color:#033d72 !important;
+    color: #fff;
+  }
+
+  a.earning-bar.btn.btn-default:hover{
+      color: #fff;
+  }
+
+  .btn-group.w-100.mb-2{
+      margin-bottom: 0px !important;
+  }
+
+  .earning-card{
+      background-color: #c0dee5;
+  }
+
+  .main-footer {
+    background: rgb(9,57,59) !important;
+    border-top: 1px solid #dee2e6;
+    color: #fff !important;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .graph h5{
+    padding: 10px;
+    background: #3c5673;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .paginateContainer{
+    width: 50%;
+    float: right;
+    top: -37px;
+    position: relative;
+  }
+
+  #search{
+    border: 1px solid !important;
+    padding: 10px;
+    margin-left: 17px;
+  }
+
+
+
+  /* 05-05-2020 */
+  body{
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+}
+.show{
+    background: #dee6ef;
+    min-height: 460px;
+    padding: 1px;
+}
+.pro li .active {
+    background: #001f3f;
+    color: #fff;
+    padding: 8px;
+    height: auto;
+    width: 100%;
+}
+.userIcon{
+    margin: 0 auto;
+    display: table;
+    font-size: 150px;
+}
+.paginateList{
+    float: right;
+}
+table td, table th {
+    text-align: center;
+}
+/* end */
+
+i.iconFa.fa.fa-asterisk {
+    color: red;
+    font-size: 10px;
+}
+
+table td{
+    font-size: 0.9em;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

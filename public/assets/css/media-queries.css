@@ -1,0 +1,308 @@
+/*/*/*
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  
+  //CSS
+  
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  //CSS
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .google-play h4{
+    margin-top: 0px;
+  }
+  .mobile-app{
+    float: left;
+  }
+  .doctor-app{
+    margin-top: 0px;
+  }
+  tab-title {
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  /*.caption{
+    margin-top: 15px;
+  }*/
+  /*.caption{
+    margin-top: -275px;
+  }*/
+.btn-area {
+    margin-top: 169px;
+    padding-top: 10px;
+    margin-left: 10px;
+}
+.footer-bottom{
+    padding: 0;
+  }
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  tab-title {
+    font-size: 22px;
+    font-weight: 800;
+  }
+.footer-bottom{
+    padding: 0;
+  }
+
+  /*.caption{
+  	margin-top: 15px;
+  }*/
+  .caption{
+    margin-top: -275px
+  }
+
+  .google-play {
+    padding-top: 36px;
+  }
+  .more {
+    padding-top: 5px !important;
+}
+main{
+    margin-top: 57px;
+  }
+    
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  
+  .tab-title{
+  	font-size: 24px;
+  }
+
+  .google-play h4{
+    margin-top: 0px;
+  }
+  /*.btn-area {
+      margin-top: -2px;
+      padding-top: 10px;
+  }*/
+  .mobile-app{
+    float: left;
+  }
+
+  .btn-area{
+    margin-top: 62px;
+    margin-left: 4px;
+  }
+
+  .caption{
+  	margin-top: 12px;
+    line-height: 0.8;
+  }
+  .tab-title{
+    font-size: 14px;
+  }
+  .tab-sub-title{
+    font-size: 10px;
+  }
+.more {
+    font-size: 8px;
+    padding-top: 5px !important;
+}
+  .drop-btn a {
+    padding: 5px!important;
+    font-size: 8px;
+  }
+  .drop-btn span{
+    padding: 0;
+    font-size: 5px;
+  }
+  .google-play {
+    padding-top: 10px;
+  }
+  .doctor-app{
+    margin-top: 10px;
+  }
+  .google-play .doctor {
+      padding-top: 10px;
+  }
+a.drop-btn {
+    font-size: 8px;
+        /*margin-top: -4px;*/
+}
+.btn-area .nav-link {
+      font-size: 6px;
+      margin-top: 4px;
+  }
+main{
+    margin-top: 57px;
+  }
+  .news{
+    font-size: 1em;
+  }
+  .footer-bottom{
+    padding: 0;
+  }
+  
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+/*@media (min-width: 320px) and (max-width: 480px) {
+  .caption{
+  	margin-top: 15px;
+  }
+  .tabs-left li a{
+  	padding: 8px;
+  	font-size:	2vw;
+  } 
+  .tab-title{
+  	font-size: 10px;
+  }
+}*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  /*.caption{
+    margin-top: 15px;
+  }*/
+  /*.caption{
+    margin-top: -120px;
+  }*/
+  .mobile-app{
+    float: left;
+    width: 50%;
+  }
+  .more {
+    font-size: 8px;
+    padding-top: 5px !important;
+  }
+  .btn-area{
+    margin-top: 62px;
+    margin-left: 4px;
+  }
+  .tabs-left li a{
+    padding: 8px;
+    font-size:  2vw;
+  } 
+  .tab-title{
+    font-size: 14px;
+  }
+  .tab-sub-title{
+    font-size: 10px;
+  }
+
+  .drop-btn a {
+    padding: 5px!important;
+    font-size: 8px;
+   
+  }
+  .google-play {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .doctor-app{
+    margin-top: 10px;
+  }
+  .caption{
+    /*margin-top: 12px;*/
+    margin-top: -120px;
+    line-height: 0.8;
+  }
+  a.drop-btn {
+    font-size: 8px;
+    margin-top: -4px;
+  }
+  .btn-area .nav-link {
+      font-size: 6px;
+      margin-top: 4px;
+  }
+  .btn-area{
+    margin-top: 62px;
+    margin-left: 4px;
+  }
+  
+  .google-play h4{
+    margin-top: 0px;
+  }
+  main{
+    margin-top: 57px;
+  }
+  .news{
+    font-size: 1em;
+  }
+  .footer-bottom{
+    padding: 0;
+  }
+}
+
+@media (max-width: 319px) {
+  .btn-area{
+    margin-top: 63px;
+    margin-left: 4px;
+  }
+  .mobile-app{
+    float: left;
+  }
+  .news{
+    font-size: 1em;
+  }
+  .btn-area .nav-link {
+    font-size: 6px;
+    margin-top: 4px;
+  }
+  .tabs-left li a{
+  	font-size:	2vw;
+  }
+  .more {
+    font-size: 8px;
+    padding-top: 5px !important;
+}
+  .google-play {
+    padding-top: 10px;
+  }
+  .doctor-app{
+    margin-top: 10px;
+  }
+  .caption{
+    margin-top: 12px;
+    line-height: 0.8;
+  }
+  a.drop-btn {
+    font-size: 8px;
+    /*margin-top: -4px;*/
+  }
+  .google-play h4{
+    margin-top: 0px;
+  }
+  .footer-bottom{
+    padding: 0;
+  }
+}
+

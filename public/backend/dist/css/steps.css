@@ -1,0 +1,138 @@
+#regForm {
+    background-color: #ffffff;
+    margin: 0 auto;
+    padding: 40px;
+    /* width: 70%; */
+    min-width: 300px;
+  }
+
+  .tab-header{
+    margin: 50px;
+    margin-top: 0;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #aaaaaa;
+  }
+
+  /* Mark input boxes that gets an error on validation: */
+  input.invalid {
+    background-color: #ffdddd;
+  }
+
+  /* Hide all steps by default: */
+  .tab {
+    display: none;
+  }
+
+  button {
+    background-color: #033d72;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+
+
+    cursor: pointer;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
+
+  #prevBtn {
+    background-color: #bbbbbb;
+  }
+
+  /* Make circles that indicate the steps of the form: */
+  .step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+  }
+
+  .step.active {
+    opacity: 1;
+  }
+
+  /* Mark the steps that are finished and valid: */
+  .step.finish {
+    background-color: #033d72;
+    color: #FFF;
+  }
+
+
+
+  .complete-profille-header{
+    background: #033d72;
+    color: #fff;
+  }
+
+
+
+  /* css for profile tab */
+  .profile-tab li{
+      padding: 15px;
+      background: #fff;
+  }
+
+  .well{
+      height: 0 !important;
+  }
+
+
+  .earning-bar{
+      padding: 15px;
+  }
+
+  #statements{
+      display: none;
+  }
+
+  #wEarn{
+      /* margin-top: 110px; */
+  }
+
+  /* Style for fullcalender  */
+
+  .fc-event .fc-content {
+    position: relative;
+    z-index: 2;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px;
+    font-weight: 600;
+  }
+
+
+
+  .fc-toolbar.fc-header-toolbar {
+    background: #033d72;
+    color: #fff;
+    font-weight: 600;
+    }
+
+    .fc-widget-header {
+        background: #6c757d !important;
+        color: #fff;
+}
+
+.fc-scroller{
+    overflow: auto !important;
+    margin-bottom: 10px !important;
+    height: auto !important;
+}
+
+.fc-body{
+    background: #fff !important;
+}

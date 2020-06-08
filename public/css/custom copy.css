@@ -1,0 +1,1052 @@
+/* Header CSS */
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, p{
+    font-family: 'UberMoveText', 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    color: #000;
+}
+
+.carousel-caption h3{
+    font-weight: 600;
+}
+
+.banner{
+    height: auto;
+    /* background: -webkit-linear-gradient(to right, #efe2e2 , #6cb2eb);
+    background: -o-linear-gradient(to right, #efe2e2 , #6cb2eb);
+    background: -moz-linear-gradient(to right, #efe2e2 , #6cb2eb);
+    background: linear-gradient(to right, #efe2e2 , #6cb2eb); */
+    margin:0 auto;
+    border-bottom: 5px solid #2373dd;
+}
+
+.logo{
+    padding: 5px;
+}
+
+.breaking_news{
+    color: red ;
+    font-weight: 600;
+    font-size: 11px;
+}
+
+.logo{
+    padding-right: 17px;
+}
+
+.navbar-expand-md{
+    /* margin-top: 1px; */
+}
+
+a.navbar-brand {
+    margin: 0 auto;
+    width: 300px;
+    height: auto;
+}
+
+.navbar-brand{
+    padding-left: 0px;
+}
+
+.banner ul li{
+    list-style: none;
+    display: inline-block;
+    float: right;
+}
+
+.banner ul li a{
+    /* padding: 5px; */
+    color: #fff;
+}
+
+.pull-right li a{
+    color: #000 !important;
+    padding: 3px;
+}
+
+.tab-menu{
+    background: #000;
+    margin: 0 auto;
+    display: table;
+    padding: 0 !important;
+}
+
+.banner a img {
+    margin: 0 auto;
+    margin-top: 10px;
+}
+/* Header CSS End  */
+
+/* Primary Menu */
+
+.menu {
+    /* background: #2176bd; */
+    font-weight: 500;
+    font-size: 16px;
+    padding: 0px;
+}
+
+.primary_menu a.nav-link,.col-2 a.nav-link {
+    color: #000 !important;
+}
+
+.dropdown-item{
+    color: #000 !important;
+}
+
+.hoverable:hover{
+    border-bottom: 1px solid red;
+}
+
+.dropdown-item:hover {
+    /* color: #000 !important;
+    background: #00b8ff91 !important;
+    font-weight: 600; */
+}
+
+/* End */
+
+/* Footer */
+/* Footer */
+/*
+.list-inline, .list-unstyled {
+    padding-left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+section {
+}
+
+.footerImage{
+    width:  100%;
+    height: 300px;
+}
+
+section .section-title {
+    text-align: center;
+    color: #007b5e;
+    text-transform: uppercase;
+}
+#footer {
+    background: -webkit-linear-gradient(to right, #efe2e2 , #12CAD2);
+    background: -o-linear-gradient(to right, #efe2e2 , #12CAD2);
+    background: -moz-linear-gradient(to right, #efe2e2 , #12CAD2);
+    background: linear-gradient(to right, #efe2e2 , #12CAD2);
+    width: 100%;
+    padding-top:30px;
+}
+#footer h5{
+	padding-left: 10px;
+    border-left: 3px solid #eeeeee;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+    color:#000;
+    font-weight: 600;
+    font-size: 14px;
+}
+#footer a {
+    color: #000;
+    text-decoration: none !important;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+    font-weight: 600;
+}
+#footer ul.social li{
+	padding: 3px 0;
+}
+#footer ul.social li a i {
+    margin-right: 5px;
+	font-size:25px;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+	transition: .5s all ease;
+}
+#footer ul.social li:hover a i {
+	font-size:30px;
+	margin-top:-10px;
+}
+#footer ul.social li a,
+#footer ul.quick-links li a{
+    color:#000;
+
+}
+#footer ul.social li a:hover{
+	color:#000;
+}
+#footer ul.quick-links li{
+	padding: 3px 0;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+    transition: .5s all ease;
+    font-size: 12px;
+}
+#footer ul.quick-links li:hover{
+	padding: 3px 0;
+	margin-left:5px;
+	font-weight:700;
+}
+#footer ul.quick-links li a i{
+	margin-right: 5px;
+}
+#footer ul.quick-links li:hover a i {
+    font-weight: 700;
+}
+
+.footer_menu li{
+    list-style: none;
+    float: left;
+    font-size: 12px;
+}
+
+.footer_menu li img{
+    width: 50px;
+    height: 50px;
+    margin-top: -15px;
+}
+
+.copyright{
+    background: #09393B;
+    bottom: 0;
+    position: relative;
+    width: 100%;
+}
+
+.copyright p{
+    padding-top: 5px;
+    color:#fff;
+    margin: 0 auto;
+    display: table;
+} */
+
+
+.footer-section{
+    /* background-color: #242629;
+    padding: 0px;
+    margin: 0px; */
+    background-color: #242629;
+    padding: 0px;
+    margin: 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #34373a;
+}
+
+.subscribe-mail input{
+    width: 80%;
+    margin-right: 5px;
+    border-radius: 0px;
+    height: 35px;
+}
+
+ul.list-unstyled.list-inline.social {
+    margin-top: -10px !important;
+    font-size: 1.5em;
+}
+
+.footer-blank{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #34373a;
+}
+
+.footer-bottom .navbar{
+    width: 25%;
+    display: flex;
+    font-size:1em;
+}
+.footer-section img{
+    width: 15%;
+    margin-left: 34%;
+}
+
+.footer-right{
+    padding-top: 10px;
+}
+
+.footer-right ul{
+    position: absolute;
+    right:  100px;
+}
+
+.footer-right li a {
+    color: #fff !important;
+    padding: 3px;
+}
+
+.footer-bottom{
+    padding: 0 !important;
+}
+
+.footer-bottom ul{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+input#email {
+    width:  80%;
+    background-color: #242629;
+    color: #fff;
+}
+
+.subscribe-mail input{
+    border-radius: 0px;
+}
+
+.footer-section ul{
+    margin: 0 auto;
+    display: table;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.footer-section ul h5{
+    color: #fff;
+    /* font-size: 1.1em;
+    font-weight: 600; */
+}
+
+.footer-section ul li .nav-link {
+    padding: 0;
+    color:  #fff;
+}
+
+.footer-section btn{
+    width: 20%;
+}
+
+/* Top SLider */
+
+.carousel-caption p a{
+    color: #000;
+    font-weight: 600;
+    text-decoration: underline;
+    line-height: 1;
+}
+
+.carousel-control-prev{
+    margin-left: 5%;
+}
+
+.carousel-control-next {
+    margin-right: 5%;
+}
+
+a.patient.btn, a.doctor.btn, a.hospital.btn {
+    background: #000;
+    border: 0;
+    border-radius: 0;
+}
+
+  /* .animateLongName {
+    background: red;
+    position: relative;
+    animation: topAnimate 5s infinite;
+  }
+
+  @keyframes topAnimate {
+    from {left: 0px;}
+    to {left: 700px;}
+  } */
+
+  /* Carousel Item */
+  .carousel-control-next-icon,.carousel-control-prev-icon{
+        padding: 10%;
+  }
+
+  .carousel-item{
+      /* background-color: dodgerblue; */
+  }
+
+.carousel-item img{
+    opacity: 60%;
+    margin: 0 auto;
+    display: table;
+    max-width: 100%;
+}
+
+/* Index Content */
+
+.indexContent{
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.left-content{
+    margin-top: 15px;
+    font-size: 1.2em;
+    /* font-weight: 600; */
+    line-height: 1.5;
+}
+
+.span{
+    text-align: justify!important;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.left-content h1, .left-content h5{
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.indexContent .heloDoc_mobile img{
+    float: right;
+    width: 250px;
+}
+
+.appStore {
+    margin-top: 10px;
+    font-weight: 600;
+    width: 40%;
+}
+
+.appStore img {
+    max-width: 150px;
+    margin-top: 5px;
+}
+
+#demo {
+    position: relative;
+    margin-top: -23px;
+}
+
+.indexParagraph {
+    margin-top: 10px;
+    /* margin-bottom: 15px; */
+}
+
+.indexParagraph h5{
+    color: #3490dc;
+}
+
+.indexParagraph h3 {
+    color: #3490dc;
+    font-weight: 600;
+}
+
+.indexParagraph ul {
+    margin-top: 20px;
+}
+
+.indexParagraph ul li{
+    list-style: none;
+}
+
+
+
+#footer{
+    margin-top: -23px;
+}
+
+
+/* ------------------------------------- */
+
+/* top slider */
+* { box-sizing: border-box; }
+/* $duration: 30s; */
+
+.row.col-12.justify-content-between.top-nav {
+    padding: 0 23px;
+    padding-right: 6px;
+    padding-top: -6px;
+}
+
+.top-nav .col-md-2, .top-nav .col-md-8{
+    margin-top: 10px;
+}
+
+@-webkit-keyframes ticker {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes ticker {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.ticker-wrap {
+
+    /* position: fixed;
+    top: 0; */
+    /* width: 70%; */
+    overflow: hidden;
+    background-color: rgba(#000, 0.9);
+    /* padding-left: 100%; */
+    box-sizing: content-box;
+    /* left: 18%; */
+}
+
+  .ticker {
+
+    display: inline-block;
+    white-space: nowrap;
+    /* padding-right: 100%; */
+    box-sizing: content-box;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-name: ticker;
+    animation-name: ticker;
+    -webkit-animation-duration: 30s;
+    animation-duration: 30s;
+    /* width: 80%; */
+  }
+
+    .ticker__item {
+
+        display: inline-block;
+        /* padding: 0 2rem; */
+        font-size: 14px;
+        color: #f10c0c;
+        font-weight: 600;
+
+    }
+
+
+/* Patient page */
+.hospital .btn, .patient .btn{
+    color: #fff;
+    font-weight: 600;
+    margin: 0 auto;
+    background: #000;
+    display: table;
+    border-radius: 0px;
+}
+
+.patient h1,.hospital h1{
+    color: #6eb3eb;
+    font-weight: 600;
+}
+
+.patient .subHeading,.hospital .subHeading{
+    font-size: 1.3rem;
+    line-height: 1.3;
+    color: #a8a9ab;
+    font-weight: 600;
+}
+
+.patient h5,.hospital h5{
+    color: #000;
+    font-weight: 600;
+}
+
+
+.vDivider {
+    border-left: 1px solid #38546d;
+    width: 1px;
+    height: 228px;
+    position: absolute;
+    right: 284px;
+    top: -5px;
+}
+
+.steps h3 {
+    border: 1px solid;
+    font-weight: 600;
+    color: #b97106;
+    margin-top: 30px;
+    padding: 5px;
+}
+
+.medCond h3{
+    font-weight: 600;
+    color: red;
+}
+
+.pIcons{
+    margin: 0 auto;
+    display: table;
+}
+
+.pIcons img{
+    width:  100px;
+    height: 100px;
+}
+
+.grid h6{
+    margin-top: 15px!important;
+    margin: 0 auto;
+    display: inline-flex;
+    font-weight: 600;
+    font-size: 21px;
+    font-family: 'UberMoveText', 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    color: #3490dc;
+    text-align: center;
+}
+
+.grid p {
+    margin-top: 15px;
+    text-align: justify;
+    margin-bottom: 40px;
+}
+
+.benefits{
+    background: #fff;
+    padding: 0;
+    margin: 0 auto;
+    display: inline-flex;
+    font-family: 'UberMoveText', 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    color: #000;
+}
+
+.benefits .col-md-3{
+    margin-top: 20px;
+}
+/* End */
+
+.common{
+    margin-top: 5%;
+}
+
+/* Doctor Page */
+button.doc.btn.btn-primary {
+    /* float: left; */
+    background: dodgerblue;
+    border: none;
+    border-radius: 0px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 auto;
+    display: table;
+}
+
+.doctor h4 {
+    color: red;
+    font-weight: 600;
+}
+
+.doctor h3 {
+    color: #ffb000;
+    font-weight: 600;
+}
+
+.doctor h2 {
+    color: forestgreen;
+    font-weight: 600;
+}
+
+.doctor .row{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.vDividerHospital {
+    border-left: 1px solid #38546d;
+    width: 1px;
+    height: 181px;
+    position: absolute;
+    left: 42%;
+    top: -5px;
+}
+/* End */
+
+
+/* Hospital */
+
+a.hospital.btn.btn-primary{
+    color: #fff;
+    font-weight: 600;
+    margin: 0 auto;
+    background: #000;
+    display: table;
+    border-radius: 0px;
+    border: none;
+}
+
+button.packagebtn.btn {
+    margin-top: 10px;
+    background: #000;
+    width: 14%;
+}
+
+
+.hospital h4{
+    margin: 0 auto;
+    display: table;
+    font-weight: 600;
+    color: #9d00ff;
+}
+
+.hospitalNetwork .col-md-3,.hospitalNetwork .col-sm-12{
+    margin: 0 auto;
+}
+
+.hospitalNetwork .col-md-3 img{
+    width: 90%;
+    height: 65%;
+}
+
+.subscription-package h5{
+    color: #fff;
+    text-align: center;
+    /* font-weight: 600; */
+    background: #000;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.subscription-package small{
+    font-weight: 600;
+}
+
+.subscription-package .content{
+    margin-top: 10px;
+}
+
+.subscription-package .content li{
+    list-style: none;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.subscription-package{
+    background-image: url(../images/package-background.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 10%;
+    padding-top: 3% !important;
+}
+
+.subscriptionpackage .card .card-header{
+    background: #125ea5;
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.subscriptionpackage .card{
+    border: none;
+}
+
+button#subscribe {
+    float: right;
+}
+
+.subscriptionpackage label{
+    font-weight: 600;
+}
+
+
+/* end */
+
+
+/* e-prescription section */
+.eprescription .col-sm-12 p{
+    font-weight: 600;
+}
+
+.eprescription_paragraph{
+    margin: 0 auto;
+    line-height: 4;
+    display: table;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+/* end */
+
+/* privacy */
+.privacy h4 p{
+    font-size: 0.9rem;
+    background: #000;
+    padding: 10px;
+    color: #fff;
+    font-weight: 600;
+}
+.privacy img{
+    width: 330px;
+    height: 252px;
+}
+/* end */
+
+/* login page */
+.login{
+    /* background-image: url(); */
+}
+/* end */
+
+/* How it Works */
+.how-it-works h3{
+    color: #3776bd;
+    font-weight: 600;
+    display: table;
+    margin: 0 auto;
+}
+.how-it-works h5{
+    color: #000;
+    font-weight: 600;
+    margin: 0 auto;
+    display: table;
+}
+/* End */
+
+/* investor */
+span.question {
+    color: #0095ff;
+    font-weight: 600;
+    font-size: 1.3em;
+    line-height: 1;
+}
+/* end */
+
+/* help section */
+.help i{
+    font-weight: 600;
+    margin: 10px;
+}
+/* end */
+
+.patient_login{
+    /* background: url('../images/login/01.png'); */
+    margin-top: -23px;
+    background-repeat: no-repeat;
+}
+
+.doctor_login{
+    /* background: url('../images/login/03.png'); */
+    margin-top: -23px;
+    background-repeat: no-repeat;
+}
+
+.hospital_login{
+    /* background: url('../images/login/07.png'); */
+    margin-top: -23px;
+    background-repeat: no-repeat;
+}
+
+.card-header{
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    color:#fff;
+    background-color: #3776bd;
+}
+
+.card button.btn.btn-primary {
+    background: #000;
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.textImage img {
+    width: 100%;
+    height: 275px;
+}
+
+.btn{
+    border: 0 !important;
+    border-radius: 0 !important;
+    width:  100px;
+}
+
+.right-position {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+    width: 30%;
+}
+
+.left-position {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+    width: 30%;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+}
+
+.carousel-caption{
+    /* transform: translate(18%, -148%); */
+    /* bottom: 0 !important;
+    width: 40%;
+    left: 20px !important;
+    position: relative;
+    z-index: 999; */
+}
+
+.tab-content h5, .tab-content p{
+    color: #fff;
+    font-weight: 600;
+}
+
+
+.sub-section-menu{
+    /* padding: 10px; */
+    /* margin-top: 1px;
+    margin-left: 8%; */
+    margin-top: 1px;
+    margin-left: 8%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 1.3em;
+    font-family: 'UberMoveText', 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    color: #000;
+}
+
+
+.sub-section-menu li{
+    margin: 10px;
+}
+
+.sub-section-menu li a{
+    color: #fff !important;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+.tab-pane p {
+    background: #00b8ff;
+}
+
+.tab-pane h5 {
+    background: #8084b9;
+}
+
+
+.primary_menu .dropdown-menu {
+    background: #53c5c7;
+    border-radius: 0px;
+    padding: 0;
+    margin-top: 0px;
+    border: 0;
+}
+
+.primary-right .dropdown-menu {
+    background: #53c5c7;
+    border-radius: 0px;
+    padding: 0;
+    margin-top: 0px;
+    border: 0;
+}
+
+.dropdown-menu.dropdown-menu-right.show {
+    width: 100%;
+}
+
+a.dropdown-item {
+    width: 100% !important;
+    background: transparent !important;
+    border-bottom: 2px solid #fff;
+    border-radius: 8px;
+    padding: 7px;
+}
+
+/* .nav-item:hover {
+    background-color: #53c5c7;
+} */
+
+.carousel-control-prev{
+    margin-left: 0px !important;
+}
+
+.carousel-control-next{
+    margin-right: 0px !important;
+}
+
+.carousel-control-next, .carousel-control-prev{
+    width: 5% !important;
+}
+
+.about-us h3,.privacy-policy h3{
+        /* color: #569acb; */
+        font-weight: 600;
+        margin: 0 auto;
+        display: table;
+        /* border-bottom: 5px solid #53c4c8; */
+        width: 100%;
+}
+
+hr{
+    height: 2px;
+    background-color:#377ab8;
+}
+
+/* mobile responsive */
+@media (min-width: 320px) and (max-width: 480px) {
+    a.patient.btn{
+        margin: 20px auto;
+    }
+    .vDivider{
+        display:none;
+    }
+    .common{
+        margin-top: 0px !important;
+    }
+    h5{
+        margin: 0 auto;
+        display: table;
+    }
+    #footer ul.quick-links li {
+        margin: 0 auto;
+        display: table;
+    }
+    #footer h5 {
+        padding-left: 10px;
+        /* border-left: 3px solid #eeeeee; */
+        padding-bottom: 6px;
+        /* margin-bottom: 20px; */
+        color: #000;
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 22px;
+    }
+
+    ul.list-unstyled.list-inline.social{
+        display: table;
+        margin: 0 auto;
+        margin-top: 10px;
+    }
+
+    .row.powered_by {
+        margin: 0 auto;
+        display: table;
+    }
+
+    ul.navbar-brand.footer_menu {
+        display: table;
+        margin: 0 auto;
+    }
+    a#navbarDropdown {
+        width: 320px;
+    }
+
+}
+@media (min-width: 767px) and (max-width: 1366px) {
+    .vDivider{
+        display:none;
+    }
+}
