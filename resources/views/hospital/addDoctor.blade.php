@@ -61,6 +61,8 @@
 
                         <form method="post" action="{{url('admin/hospital/addDoctorAction')}}" enctype="multipart/form-data">
                             @csrf
+
+                            <input type="hidden" name="hospitalName" value="{{$hospitalInfo['hospitalName']}}" />
                             <input name="hospitalUserId" type="hidden" value={{$hosUid}} />
                             <div class="row">
                                 {{-- <input name="uid" value="{{$uid}}" type="text"> --}}
@@ -91,7 +93,7 @@
                                     <label>Hospital Branch</label>
                                     <select id="hospital" class="form-control" name="branchuid">
                                         <option value="">Select Branch</option>
-                                        @if($branchCounter > 0)     
+                                        @if($branchCounter > 0)
                                             @foreach ($branchInfo as $key => $item)
                                                 {{--@if (isset($item['branchuid']) && isset($item['address']))--}}
 
@@ -101,7 +103,7 @@
                                                      {{$item['branch']}} - {{$item['address']}}</option>
                                                 {{--@endif--}}
                                             @endforeach
-                                            
+
                                         @else
                                             <option value="{{$hospitalInfo['hospitalUid']}}">
                                                      {{$hospitalInfo['hospitalName']}} - {{$hospitalInfo['hospitalAddress']}}</option>
@@ -126,6 +128,7 @@
                                 <div class="form-group col-md-6">
                                     <label>Gender</label> <i class="iconFa fa fa-asterisk color-red"></i>
                                     <select class="form-control" name="gender" required>
+                                        <option value=" ">Select Gender</option>
                                         <option vale="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
@@ -144,7 +147,7 @@
                                 <div class="form-group col-md-6">
                                     <label>District</label> <i class="iconFa fa fa-asterisk color-red"></i>
                                     <select class="form-control" type="text" name="district">
-                                        <option>Select district</option>
+                                        <option  value=" ">Select district</option>
                                         @foreach ($districtlist as $item)
                                             <option value="{{$item['name']}}">{{$item['name']}}</option>
                                         @endforeach
@@ -153,7 +156,7 @@
                                 <div class="form-group col-md-6">
                                     <label>Type</label> <i class="iconFa fa fa-asterisk color-red"></i>
                                     <select class="form-control" type="text" name="type" required>
-                                        <option>Select Type</option>
+                                        <option value=" ">Select Type</option>
                                         <option value="GENERAL">General</option>
                                         <option value="PEDIATRIC">Pediatric</option>
                                     </select>

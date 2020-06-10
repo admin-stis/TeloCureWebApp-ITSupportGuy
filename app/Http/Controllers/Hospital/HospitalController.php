@@ -289,6 +289,7 @@ class HospitalController extends Controller
 
     public function addDoctorAction(Request $request)
     {
+        //dd($request->all());
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
@@ -328,6 +329,7 @@ class HospitalController extends Controller
             'email' =>  'required',
             'district' => 'required',
             'type' => 'required',
+            'hospitalName' => 'required'
             //'registration' => 'required|min:5',
 
         ]);
@@ -362,8 +364,10 @@ class HospitalController extends Controller
             array_push($branch,$item->data());
         }
 
-        /*if(empty($branch)){
+        if(empty($branch)){
             // $brInfo = $hosRef->where('hospitalUserId','=',$brId);
+            //print_r($branch);
+            //dd(1);
 
             $brInfo = $hosRef->where('hospitalUid','=',$brId);
 
@@ -375,11 +379,13 @@ class HospitalController extends Controller
                 array_push($branch,$item->data());
             }
 
-            $hosCode = strtoupper(substr($branch[0]['hospitalName'],0,2));
+            //$hosCode = strtoupper(substr($branch[0]['hospitalName'],0,2));
 
         }else{
-            $hosCode = strtoupper(substr($branch[0]['hospitalName'],0,2));
-        }*/
+            //$hosCode = strtoupper(substr($branch[0]['hospitalName'],0,2));
+        }
+
+        //dd($branch);
 
         // add bank-info to doctor
         $hospitalUser = Session::get('user');
@@ -457,7 +463,8 @@ class HospitalController extends Controller
             'gender' => $request->gender,
             'price' => 0,
             'totalRating' => 0,
-            'totalCount' => 0
+            'totalCount' => 0,
+            'hospitalName' => $request->hospitalName
         ];
 
         $docRef->set($data);
@@ -493,7 +500,6 @@ class HospitalController extends Controller
         ]);
 
         $doc_user->collection('others')->document($docRef->id())->set([
-
             'branchId' => $request->branchuid, //Hospital Branch ID
             //'nid' => ""
         ]);
@@ -651,7 +657,7 @@ class HospitalController extends Controller
                 ->document($uid);
         }*/
 
-        $uid = substr($uid, 2);
+        //$uid = substr($uid, 2);
         //dd($uid);
         $info = $database->collection('doctors')->document($uid)->delete();
 
@@ -742,8 +748,8 @@ class HospitalController extends Controller
       return view('hospital.doctorProfile')->with($data);
     }
 
-    public function help(){
-        return view('hospital/portalHelp');
+    public function portalHelp(){
+        return view('hospital/help');
     }
 
     // Hospital Bank information feature
@@ -758,6 +764,7 @@ class HospitalController extends Controller
 
         $hos = $database->collection('hospital_users')->document($id);
         $data['info'] = $hos->collection('bank_info')->document($id)->snapshot()->data();
+        $data['attr'] = "disabled";
 
         if($data['info'] != null ){
             return view('hospital/bank_info')->with($data);
@@ -791,14 +798,20 @@ class HospitalController extends Controller
                         ->withErrors($v->errors());
         }
 
-        $info->document($id)->collection('bank_info')->document($id)->set([
-            'accountName' => $request->accountName,
-            'bankName' => $request->bankName,
-            'accountNumber' => $request->accountNumber,
-            'swiftCode' => $request->swiftCode,
-        ],['merge' => true]);
 
-        Session::flash('add-bank-info','Bank information added.');
+        $data['info'] = $info->document($id)->collection('bank_info')->document($id)->snapshot()->data();
+
+        if($data['info'] != null ){
+            Session::flash('add-bank-info-warn','You are not allowed to add multiple account.');
+        }else{
+            $info->document($id)->collection('bank_info')->document($id)->set([
+                'accountName' => $request->accountName,
+                'bankName' => $request->bankName,
+                'accountNumber' => $request->accountNumber,
+                'swiftCode' => $request->swiftCode,
+            ],['merge' => true]);
+            Session::flash('add-bank-info','Bank information added.');
+        }
 
         return redirect()->back();
 

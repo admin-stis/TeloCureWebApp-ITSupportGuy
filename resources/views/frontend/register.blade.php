@@ -175,6 +175,9 @@
                                     <div class="">
                                         <input class="form-control" type="password" name="password">
                                     </div>
+                                    <small>
+                                        <p>Password is required with a minimum of 8 characters. Should have letter and number.</p>
+                                    </small>
                                 </div>
 
                                 <div class="form-group col-md-12">

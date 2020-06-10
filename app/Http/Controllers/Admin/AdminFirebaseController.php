@@ -211,7 +211,7 @@ class AdminFirebaseController extends Controller
             'name' => 'required|alpha|max:15',
             'lastname' => 'required|alpha|max:10',
             'email' => 'required',
-            'password' => 'required|min:8|alpha_num|confirmed',
+            'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/|confirmed',
             'mobile' =>  'required|digits:11',
         ]);
 
@@ -257,6 +257,7 @@ class AdminFirebaseController extends Controller
             "online" => false,
             "rejected" => false,
             "createdAt" => new Timestamp(new DateTime()),
+            "hospitalName"=> ""
         ]);
 
         return redirect('login/doctor');
@@ -274,7 +275,7 @@ class AdminFirebaseController extends Controller
             'name' => 'required|alpha|max:15',
             'lastname' => 'required|alpha|max:10',
             'email' => 'required',
-            'password' => 'required|min:8|alpha_num|confirmed',
+            'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/|confirmed',
             'mobile' =>  'required|digits:11',
         ]);
 
@@ -379,7 +380,7 @@ class AdminFirebaseController extends Controller
 
         if($request->title =='doctor'){
           $v = validator::make($request->all(),[
-              'password' => 'required|min:8|alpha_num',
+              'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
               'common' =>  'required|max:14',
           ]);
 
@@ -390,7 +391,7 @@ class AdminFirebaseController extends Controller
         }
         else if($request->title =='patient'){
           $v = validator::make($request->all(),[
-              'password' => 'required|min:8|alpha_num',
+              'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
               'common' =>  'required|max:14',
           ]);
 
@@ -404,7 +405,7 @@ class AdminFirebaseController extends Controller
             $userRef = $database->collection('hospital_users');
 
             $v = validator::make($request->all(),[
-                'password' => 'required',
+                'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
                 'common' =>  'required',
             ]);
 
@@ -453,7 +454,7 @@ class AdminFirebaseController extends Controller
             $password = $request->password;
 
             $v = validator::make($request->all(),[
-                'password' => 'required',
+                'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
                 'common' =>  'required',
             ]);
 
@@ -888,7 +889,7 @@ class AdminFirebaseController extends Controller
       $password = $r->Password;
 
       $v = validator::make($r->all(),[
-              'Password' => 'required|min:8|alpha_num'
+              'Password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'
           ]);
 
       if($v->fails()){
