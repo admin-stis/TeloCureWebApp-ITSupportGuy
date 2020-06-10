@@ -30,15 +30,16 @@ class passwordLinkEmail extends Mailable
      */
     public function build()
     {
-        $address = 'helodoc@example.com';
-        $subject = 'This mail is from helo doc!';
-        $name = 'Helo Doc';
+        $address = 'support@telocure.com';
+        $subject = 'Login Information';
+        $name = 'TeloCure';
+        $receiver = $this->otp->name ;
 
         return $this->view('mails.passwordLink')
                     ->from($address, $name)
                     // ->cc($address, $name)
                     // ->bcc($address, $name)
-                    ->replyTo($address, $name)
+                    ->replyTo($address, $receiver)
                     ->subject($subject)
                     ->with([ 'otp' => $this->otp]);
     }

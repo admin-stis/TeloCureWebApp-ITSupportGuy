@@ -11,6 +11,12 @@
 |
 */
 
+//localization
+Route::get('lang/{locale}', function ($locale) {
+    session()->put('locale', $locale);
+    return redirect()->back();
+});
+
 // Route for frontend
 
 Route::get('/service/{title}', 'Frontend\FrontendController@services');

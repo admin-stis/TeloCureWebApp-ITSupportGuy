@@ -68,10 +68,10 @@
                                         </a>
                                         <ul class="sub">
                                             <li class="nav-item item">
-                                                <a href="#" class="">English</a>
+                                                <a href="{{url('lang/en')}}" class="">English</a>
                                             </li>
                                             <li class="nav-item item">
-                                                <a href="#" class="active">Bangla</a>
+                                                <a href="{{url('lang/bn')}}" class="active">Bangla</a>
                                             </li>
                                         </ul>
                                     </li> <!--                                    <li class="nav-item dropdown ">
@@ -127,58 +127,58 @@
                                             <a href="index-3.html" class="nav-link">Home Page 3</a>
                                         </li>
                                     </ul> --}}
-                                    <a href="{{url('/')}}" class="nav-link">Home</a>
+                                    <a href="{{url('/')}}" class="nav-link">{{ __('Home')}}</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">Product & Services</a>
+                                    <a href="#" class="nav-link dropdown-toggle">{{__('Product & Services')}}</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
-                                            <a href="{{ url('service/patient') }}" class="nav-link">Patient</a>
+                                            <a href="{{ url('service/patient') }}" class="nav-link">{{__('Patient')}}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{ url('service/doctor') }}" class="nav-link">Doctor</a>
+                                            <a href="{{ url('service/doctor') }}" class="nav-link">{{__('Doctor')}}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{ url('service/hospital') }}" class="nav-link">Hospital</a>
+                                            <a href="{{ url('service/hospital') }}" class="nav-link">{{__('Hospital')}}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{ url('service/e-prescription') }}" class="nav-link">E-prescription</a>
+                                            <a href="{{ url('service/e-prescription') }}" class="nav-link">{{__('E-prescription')}}</a>
                                         </li>
                                     </ul>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="{{ url('about') }}" class="nav-link">About Us</a>
+                                    <a href="{{ url('about') }}" class="nav-link">{{__('About Us')}}</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="{{ url('privacy') }}" class="nav-link">Privacy</a>
+                                    <a href="{{ url('privacy') }}" class="nav-link">{{__('Privacy')}}</a>
                                 </li>
 
 
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">Help</a>
+                                    <a href="#" class="nav-link dropdown-toggle">{{__('Help')}}</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
-                                            <a href="{{ url('help/faq') }}" class="nav-link">FAQ</a>
+                                            <a href="{{ url('help/faq') }}" class="nav-link">{{__('FAQ')}}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a  href="{{ url('help/howitworks') }}" class="nav-link">How It Works</a>
+                                            <a  href="{{ url('help/howitworks') }}" class="nav-link">{{__('How It Works')}}</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{url('contact')}}" class="nav-link">Contact Us</a>
+                                    <a href="{{url('contact')}}" class="nav-link">{{__('Contact Us')}}</a>
                                 </li>
                             </ul>
                             <div class="nav-srh">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a href="{{url('loginarea')}}" class="nav-link">Login</a>
+                                        <a href="{{url('loginarea')}}" class="nav-link">{{__('Login')}}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{url('registerarea')}}" class="nav-link">Sign Up</a>
+                                        <a href="{{url('registerarea')}}" class="nav-link">{{__('Sign Up')}}</a>
                                     </li>
                                 </ul>
 
@@ -281,7 +281,7 @@
                     <div class="col-sm-6 col-lg-3">
                         <div class="footer-item">
                             <div class="footer-contact footer-quick">
-                                <h3>Contact Us</h3>
+                                <h3>{{__('Contact Us')}}</h3>
                                 <ul>
                                     <li>
                                         <i class="icofont-ui-message"></i>
@@ -304,19 +304,19 @@
                     <div class="col-sm-6 col-lg-2">
                         <div class="footer-item">
                             <div class="footer-quick">
-                                <h3>Product & Service</h3>
+                                <h3>{{ __('Product & Services')}}</h3>
                                 <ul>
                                     <li>
-                                        <a href="{{ url('service/patient') }}">Patient</a>
+                                        <a href="{{ url('service/patient') }}">{{__('Patient')}}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('service/doctor') }}">Doctor</a>
+                                        <a href="{{ url('service/doctor') }}">{{__('Doctor')}}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('service/hospital') }}">Hospital</a>
+                                        <a href="{{ url('service/hospital') }}">{{__('Hospital')}}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('service/e-prescription') }}">E-prescription</a>
+                                        <a href="{{ url('service/e-prescription') }}">{{__('E-prescription')}}</a>
                                     </li>
 
                                 </ul>
@@ -326,20 +326,20 @@
                     <div class="col-sm-6 col-lg-2">
                         <div class="footer-item">
                             <div class="footer-quick">
-                                <h3>Quick Links</h3>
+                                <h3>{{__('Quick Links')}}</h3>
                                 <ul>
 
                                     <li>
-                                        <a href="https://telocure.com/loginarea">My Account</a>
+                                        <a href="https://telocure.com/loginarea">{{__('My Account')}}</a>
                                     </li>
                                     <li>
-                                        <a href="https://telocure.com/registerarea">Sign Up</a>
+                                        <a href="https://telocure.com/registerarea">{{__('Sign Up')}}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('help/faq') }}"">FAQ</a>
+                                        <a href="{{ url('help/faq') }}"">{{__('FAQ')}}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('help/howitworks') }}"">How TeloCure Works</a>
+                                        <a href="{{ url('help/howitworks') }}"">{{__('How TeloCure Works')}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -348,19 +348,19 @@
                     <div class="col-sm-6 col-lg-2">
                         <div class="footer-item">
                             <div class="footer-quick">
-                                <h3>Others</h3>
+                                <h3>{{__('Others')}}</h3>
                                 <ul>
                                     <li>
-                                        <a href="{{ url('privacy') }}">Privacy</a>
+                                        <a href="{{ url('privacy') }}">{{__('Privacy')}}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('appsprivacy') }}" target="_blank">Apps Privacy</a>
+                                        <a href="{{ url('appsprivacy') }}" target="_blank">{{__('Apps Privacy')}}</a>
                                     </li>
                                     <li>
-                                        <a target="_blank" href="{{url('terms')}}">Terms and Conditions</a>
+                                        <a target="_blank" href="{{url('terms')}}">{{__('Terms and Conditions')}}</a>
                                     </li>
                                     <li>
-                                        <a target="_blank" href="{{url('refund')}}">Payment and Refund Policy</a>
+                                        <a target="_blank" href="{{url('refund')}}">{{__('Payment and Refund Policy')}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -416,11 +416,11 @@
 
             <div class="row">
                 <ul class="footer-bottom">
-                    <li class="list-inline-item"><a href="{{url('/')}}" class="nav-link">Home</a></li>
+                    <li class="list-inline-item"><a href="{{url('/')}}" class="nav-link">{{__('Home')}}</a></li>
                     <li class="list-inline-item"><a class="nav-link">|</a></li>
-                    <li class="list-inline-item"><a href="{{ url('about') }}" class="nav-link">About</a></li>
+                    <li class="list-inline-item"><a href="{{ url('about') }}" class="nav-link">{{__('About')}}</a></li>
                     <li class="list-inline-item"><a class="nav-link">|</a></li>
-                    <li class="list-inline-item"><a href="{{ url('contact') }}" class="nav-link">Contact Us</a></li>
+                    <li class="list-inline-item"><a href="{{ url('contact') }}" class="nav-link">{{__('Contact Us')}}</a></li>
                 </ul>
             </div>
             </div>

@@ -32,7 +32,7 @@ class MailSendController
         $objDemo = new \stdClass();
         $objDemo->code = $otp ;
         // $objDemo->code = 'Demo Two Value';
-        $objDemo->sender = 'TeloCure';
+        $objDemo->sender = 'TeloCure Team';
         $objDemo->receiver = $receiver;
 
         Mail::to($receiver)->send(new passwordLinkEmail($objDemo));

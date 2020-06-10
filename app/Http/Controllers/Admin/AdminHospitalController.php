@@ -92,20 +92,20 @@ class AdminHospitalController extends Controller
    		return view('admin.approveHospital')->with('pending_hospital',$approveHospital);
 
    		}
-   		else if($status_name=='reject'){
+    		else if($status_name=='reject'){
    			$query = $doctorRef->where('approve','=',true);
    			$rejectHospital = $query->documents();
 
             $reject_hospital = array();
             foreach ($rejectHospital as $doctor) {
-              
+
                   array_push($reject_hospital, $doctor->data());
-                
+
               }
             $reject_hospital['status'] = 'Rejected' ;
         return view('admin.approveHospital')->with('pending_hospital',$reject_hospital);
-        
-        
+
+
    		}
    		else if($status_name == 'pending'){
    			$pending_hospital = array();
@@ -130,16 +130,16 @@ class AdminHospitalController extends Controller
         $hospital_user = $info->document($id);
         $userinfo = $hospital_user->snapshot();
 
-        // dd($userinfo['phone']);
         $hospital_user->update([
             ['path' => 'active', 'value' => true]
         ]);
 
+        $name = $userinfo['name'];
         $phone = $userinfo['phone'];
         $email = $userinfo['email'];
         $temp_pass = 'telocure'.''.mt_rand(1000000,99999999);
 
-        
+
         //password encryption.....
         $method = "AES-128-CBC";
         $key = 'SECRETOFTELOCURE';
@@ -159,6 +159,7 @@ class AdminHospitalController extends Controller
 
         $link = [
             'id' => $id,
+            'name' => $name,
             'phone' => $phone,
             'pass' => $temp_pass
         ];
@@ -172,7 +173,7 @@ class AdminHospitalController extends Controller
 
     public function planFrom($id){
         $data['uid'] = $id ;
-        return view('admin/plan')->with($data); 
+        return view('admin/plan')->with($data);
     }
 
     public function changePlan(Request $request)

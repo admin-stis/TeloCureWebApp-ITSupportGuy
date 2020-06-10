@@ -96,7 +96,7 @@ class HospitalController extends Controller
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
         $hospital = $database->collection('hospital_users')->where('hospitalUid','=',$id)->documents();
-    
+
         $data['uid'] = $id;
 
         $data['hospital'] = array();
@@ -162,7 +162,7 @@ class HospitalController extends Controller
 
         $hos = $info->set($data);
 
-        
+
 
 
         // $branch = $database->collection('hospitalBranch')->newDocument();
@@ -289,7 +289,6 @@ class HospitalController extends Controller
 
     public function addDoctorAction(Request $request)
     {
-        //print_r($request->all());
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
@@ -303,8 +302,7 @@ class HospitalController extends Controller
 
         $flag = false;
         $emailFlag = false;
-        
-        // echo '<pre>';
+
         foreach($doctor as $key=>$item){
           if(isset($item['phone']) && $item['phone'] == $request->phone){
             Session::flash('phonemsg','Contact number already exits.');
@@ -333,12 +331,12 @@ class HospitalController extends Controller
             //'registration' => 'required|min:5',
 
         ]);
-        
+
         if($v->fails()){
             return redirect()->back()
                         ->withInput()
                         ->withErrors($v->errors());
-        }     
+        }
 
         if($flag == true && $emailFlag == true){
           return redirect()->back()->withInput();
@@ -346,7 +344,7 @@ class HospitalController extends Controller
           return redirect()->back()->withInput();
         }elseif($flag == false && $emailFlag == true){
           return redirect()->back()->withInput();
-        }   
+        }
 
         $brId = $request->branchuid ;
 
@@ -418,7 +416,7 @@ class HospitalController extends Controller
         $uid = $hosCode.''.$docRef->id();
         $name = $request->firstname.' '.$request->lastname ;
 
-        
+
         /*********test*****************/
         $doc_user = $database->collection('doctors')->document($docRef->id());
         /******end***************/
@@ -454,7 +452,10 @@ class HospitalController extends Controller
             'doctorType' => $request->type,
             'dateOfBirth' => $request->dateOfBirth,
             'createdAt' => new Timestamp(new DateTime()),
-            'gender' => $request->gender
+            'gender' => $request->gender,
+            'price' => 0,
+            'totalRating' => 0,
+            'totalCount' => 0
         ];
 
         $docRef->set($data);
@@ -490,7 +491,7 @@ class HospitalController extends Controller
         ]);
 
         $doc_user->collection('others')->document($docRef->id())->set([
-          
+
             'branchId' => $request->branchuid, //Hospital Branch ID
             //'nid' => ""
         ]);
@@ -507,7 +508,7 @@ class HospitalController extends Controller
 
         $val = $MailSend->sendOtp($link,$email); //email
 
-        /* 
+        /*
             send through mobile
             --------------------------------
             */
@@ -518,7 +519,7 @@ class HospitalController extends Controller
             /********temporary commented will comment out for client****************/
             echo $this->singleSms($msisdn, $messageBody, $csmsId);
             /********end*********/
-        
+
         return redirect('/hospital');
     }
 
@@ -734,7 +735,7 @@ class HospitalController extends Controller
       }
 
       //dd($data['hinfo']);
-      
+
       return view('hospital.doctorProfile')->with($data);
     }
 
@@ -743,7 +744,7 @@ class HospitalController extends Controller
     }
 
     // Hospital Bank information feature
-    
+
     public function bank_info(){
 
         $firestore = app('firebase.firestore');
@@ -758,9 +759,9 @@ class HospitalController extends Controller
         if($data['info'] != null ){
             return view('hospital/bank_info')->with($data);
         }else{
-            return view('hospital/bank_info');    
+            return view('hospital/bank_info');
         }
-      
+
     }
 
 
@@ -772,7 +773,7 @@ class HospitalController extends Controller
         $hospitalUser = Session::get('user');
 
         if(isset($hospitalUser[0]['hospitalUid'])) $id = $hospitalUser[0]['hospitalUid'];
-        
+
         $info = $database->collection('hospital_users');
 
         $v = validator::make($request->all(),[
@@ -780,7 +781,7 @@ class HospitalController extends Controller
             'bankName' => 'required',
             'accountNumber' => 'required'
         ]);
-        
+
         if($v->fails()){
             return redirect()->back()
                         ->withInput()

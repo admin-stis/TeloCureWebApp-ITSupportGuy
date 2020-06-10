@@ -18,7 +18,7 @@ use DateTime;
 class AdminFirebaseController extends Controller
 {
 
-    
+
     public function index()
    	{
    		$database = app('firebase.database');
@@ -190,7 +190,7 @@ class AdminFirebaseController extends Controller
 
         $flag = false;
         $emailFlag = false;
-        
+
         // echo '<pre>';
         foreach($doctor as $key=>$item){
           if(isset($item['phone']) && $item['phone'] == $request->mobile){
@@ -207,7 +207,7 @@ class AdminFirebaseController extends Controller
                 break;
           }
         }
-      
+
         $v = validator::make($request->all(),[
             'name' => 'required|alpha|max:15',
             'lastname' => 'required|alpha|max:10',
@@ -216,7 +216,7 @@ class AdminFirebaseController extends Controller
             'mobile' =>  'required|digits:11',
         ]);
 
-        
+
         if($v->fails()){
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
@@ -263,7 +263,7 @@ class AdminFirebaseController extends Controller
             "rejected" => false,
             "createdAt" => new Timestamp(new DateTime()),
         ]);
-        
+
         //$doctorRef->set($validateData);
 
         return redirect('login/doctor');
@@ -290,13 +290,13 @@ class AdminFirebaseController extends Controller
         }
 
         //encrypted password...
-        
+
         $pass = $request->password ;
         $method = "AES-128-CBC";
         $key = 'SECRETOFTELOCURE';
         $iv = "1234567812345678" ;
         $password = openssl_encrypt($pass,$method,$key,0,$iv);
-        
+
         //end
 
         $patientRef->set([
@@ -390,11 +390,11 @@ class AdminFirebaseController extends Controller
         //dd($password);
 
         //dd($password);
-        
+
         //$password = $request->password;
-        
+
         //dd($password);
-        
+
         if($request->title =='doctor'){
           $v = validator::make($request->all(),[
               'password' => 'required|min:8|alpha_num',
@@ -467,7 +467,7 @@ class AdminFirebaseController extends Controller
 
         }
         else if($request->title =='admin'){
-            
+
             $userRef = $database->collection('admin');
             /*new code */
             //dd($userRef->documents());
@@ -520,7 +520,7 @@ class AdminFirebaseController extends Controller
             /* end */
         }
 
-       
+
         /*$v = validator::make($request->all(),[
             'password' => 'required|min:8|alpha_num',
             'common' =>  'required|max:14',
@@ -578,10 +578,10 @@ class AdminFirebaseController extends Controller
             //Edit from mafiz vai
             $MailSend = new MailSendController();
             $otp = mt_rand(10000,99999);
-            
+
             $val = $MailSend->sendOtp($otp,$email);
 
-            /* 
+            /*
             send through mobile
             --------------------------------
             */
@@ -736,7 +736,7 @@ class AdminFirebaseController extends Controller
           ->document($insertData->id())->set([
             'balance' => 0,
             'updatedTime' => new Timestamp(new DateTime()),
-        ]); 
+        ]);
 
         Session::flash('notification','Please wait. After admin approve you, a email will sent to your mail.');
         //return redirect('login/hospital')->with('notification','A email will be sent to your email.');
@@ -747,12 +747,12 @@ class AdminFirebaseController extends Controller
       $firestore = app('firebase.firestore');
       $database = $firestore->database();
       $disRef = $database->collection('districts');
-        
+
       if(isset($r->submit)){
         //dd($r->all());
         $id = $r->disId;
         $district = $disRef->document($id);
-        
+
         $district->update([
             ['path' => 'active' , 'value' => true]
         ]);
@@ -763,6 +763,8 @@ class AdminFirebaseController extends Controller
         $districtRef = $database->collection('districts');
 
             $data['district'] = $districtRef->documents();
+            $query = $districtRef->where('active','=',true);
+            $data['activeDistrict'] = $query->documents();
             $data['districtList'] = array();
 
             foreach($data['district'] as $key=>$item){
@@ -779,7 +781,7 @@ class AdminFirebaseController extends Controller
     }
 
     public function sendTempOtp(Request $request,$title){
-    
+
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
@@ -832,7 +834,7 @@ class AdminFirebaseController extends Controller
               }
             }
           }
-          
+
           $MailSend = new MailSendController();
           $temp_pass = 'telocure'.''.mt_rand(1000000,99999999);
           $val = $MailSend->sendResetPassword($temp_pass,$reqData);
@@ -921,7 +923,7 @@ class AdminFirebaseController extends Controller
         Session::flash('error-changepassword','Password length must be 8');
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
-          
+
       if($title == 'admin') $userCollection = $database->collection('admin');
       elseif($title == 'hospital') $userCollection = $database->collection('hospital_users');
       elseif($title == 'doctor') {
@@ -939,9 +941,9 @@ class AdminFirebaseController extends Controller
           //$uid = $doctorArr[0]['uid'];
           $id = substr($id,2);
         }else{
-          $id = $id; 
+          $id = $id;
         }
-      } 
+      }
 
       $method = "AES-128-CBC";
       $key = 'SECRETOFTELOCURE';
@@ -991,8 +993,8 @@ class AdminFirebaseController extends Controller
           'content_available'=>false
           // 'notification'=>$notified,
             );
-          
-    
+
+
       $jsondata = json_encode($fields);
 
 //      dd($jsondata);
@@ -1006,12 +1008,12 @@ class AdminFirebaseController extends Controller
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);    
-        
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
+
         $result = curl_exec($ch);
-        
+
         if ($result === FALSE) {
       die('Problem occurred: ' . curl_error($ch));
       }

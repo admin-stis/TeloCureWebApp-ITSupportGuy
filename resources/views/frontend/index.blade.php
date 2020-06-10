@@ -63,11 +63,11 @@
 			      <ul class="nav nav-tabs tabs-left" role="tablist">
 				      <li role="presentation" class="active">
 				      	<!-- <a href="#patient" aria-controls="home" role="tab" data-toggle="tab">Patient</a> -->
-				      	<a href="#patient" aria-controls="home" role="tab" data-toggle="tab" class="active" aria-selected="true">Patient</a>
+				      	<a href="#patient" aria-controls="home" role="tab" data-toggle="tab" class="active" aria-selected="true">{{__('Patient')}}</a>
 				      </li>
-				      <li role="presentation"><a href="#doctor" aria-controls="profile" role="tab" data-toggle="tab">Doctor</a></li>
-				      <li role="presentation"><a href="#hospital" aria-controls="messages" role="tab" data-toggle="tab">Hospital</a></li>
-				      <li role="presentation"><a href="#e-prescription" aria-controls="settings" role="tab" data-toggle="tab">E-prescription</a></li>
+				      <li role="presentation"><a href="#doctor" aria-controls="profile" role="tab" data-toggle="tab">{{__('Doctor')}}</a></li>
+				      <li role="presentation"><a href="#hospital" aria-controls="messages" role="tab" data-toggle="tab">{{__('Hospital')}}</a></li>
+				      <li role="presentation"><a href="#e-prescription" aria-controls="settings" role="tab" data-toggle="tab">{{__('E-prescription')}}</a></li>
 			    </ul>
 		    </div>
 		    <!-- <div class="col-sm-12">
@@ -100,9 +100,9 @@
                         </span>
                         <br><br>-->
                         <div class="pt-10 btn-area" style="margin-left:0px;">
-                            <a href="{{url('service/patient')}}" class="nav-link" style="padding:0px;">More information</a><br>
-                            <a href="{{url('register/patient')}}" class="btn drop-btn"><span>JOIN NOW</span></a>
-                            <a class="btn drop-btn" href="{{url('login/patient')}}"><span>SIGN IN</span></a>
+                            <a href="{{url('service/patient')}}" class="nav-link" style="padding:0px;">{{__('More information')}}</a><br>
+                            <a href="{{url('register/patient')}}" class="btn drop-btn"><span>{{ __('JOIN NOW')}}</span></a>
+                            <a class="btn drop-btn" href="{{url('login/patient')}}"><span>{{ __('SIGN IN')}}</span></a>
                         </div>
                     </div>
 
@@ -135,9 +135,9 @@
                     </div> -->
 <!-- <br>-->
                         <div class="pt-10 btn-area" style="margin-left:0px;">
-                            <a href="{{url('service/doctor')}}" class="more nav-link" style="padding:0px;">More information</a><br>
-                            <a href="{{url('/register/doctor')}}" class="btn drop-btn" style="pointer-events: all; cursor: pointer;">JOIN NOW</a>
-                            <a href="{{url('/login/doctor')}}" class="btn drop-btn" style="pointer-events: all; cursor: pointer;">SIGN IN</a>
+                            <a href="{{url('service/doctor')}}" class="more nav-link" style="padding:0px;">{{ __('More information')}}</a><br>
+                            <a href="{{url('/register/doctor')}}" class="btn drop-btn" style="pointer-events: all; cursor: pointer;">{{ __('JOIN NOW')}}</a>
+                            <a href="{{url('/login/doctor')}}" class="btn drop-btn" style="pointer-events: all; cursor: pointer;">{{ __('SIGN IN')}}</a>
 
                         </div>
 
@@ -159,9 +159,9 @@
 <br> -->
 
                         <div class="pt-10  btn-area" style="margin-left:0px;">
-                            <a href="{{url('service/hospital')}}" class="more nav-link" style="padding:0px;">More information</a><br>
-                            <a href="{{url('/register/hospital')}}" class="btn drop-btn">JOIN NOW</a>
-                            <a href="{{url('/login/hospital')}}" class="btn drop-btn">SIGN IN</a>
+                            <a href="{{url('service/hospital')}}" class="more nav-link" style="padding:0px;">{{__('More information')}}</a><br>
+                            <a href="{{url('/register/hospital')}}" class="btn drop-btn">{{ __('JOIN NOW')}}</a>
+                            <a href="{{url('/login/hospital')}}" class="btn drop-btn">{{ __('SIGN IN')}}</a>
                         </div>
                 </div>
 
@@ -204,22 +204,24 @@
                     <div class="col-sm-6 col-lg-4">
                         <div class="google-play">
 
-                        	<h3>Download the App</h3>
-                            <h4 class="patient">Patients</h4>
+                        	<h3>@php echo __('Download the App'); @endphp</h3>
+                            <h4 class="patient">@php echo __('Patients'); @endphp</h4>
                             <p>
-                            	Get TeloCure on your phone and get immediate medical attention. We designed this app to provide you medical care online anytime, anywhere on your smartphone.
+                            	@php echo __('Get TeloCure on your phone and get immediate medical attention. We designed this app to provide you medical care online anytime, anywhere on your smartphone.'); @endphp
 							</p>
-							<h6>Patient App</h6>
-                            <a href="#"><img src="{{asset('assets/img/google-play.png')}}" alt="Doctor App"></a>
+							<h6>@php echo __('Patient App'); @endphp</h6>
+                            <a href="#"><img src="{{asset('assets/img/google-play.png')}}" alt="Patient App"></a>
                         </div>
                     </div>
                     <div class="col-lg-1"></div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="google-play">
 
-                        	<h4 class="doctor">Doctors</h4>
-                            <p>Download our app to provide patients with urgent care at your convenience.</p>
-                            <h6 class="doctor-app">Doctor App</h6>
+                        	<h4 class="doctor">@php echo __('Doctors'); @endphp</h4>
+                            <p>
+                                @php echo __('Download our app to provide patients with urgent care at your convenience.'); @endphp
+                            </p>
+                            <h6 class="doctor-app">@php echo __('Doctor App'); @endphp</h6>
                             <a href="https://play.google.com/store/apps/details?id=com.provider.telocure&hl=en_US"><img src="{{asset('assets/img/google-play.png')}}" alt="Doctor App"></a>
                         </div>
                     </div>
@@ -248,8 +250,12 @@
                     <div class="col-lg-6 col-sm-12">
                         <div class="welcome-item welcome-right">
                             <div class="section-title-two">
-                                <!-- <span>Why HeloDoc</span>-->
-                                <h3>Why TeloCure</h3>
+                                <h3>
+                                    @php
+                                        //echo __('Why TeloCure');
+                                        echo __('Doctor App');
+                                    @endphp
+                                </h3>
                             </div>
                             <ul>
                                 <li class="wow fadeInUp" data-wow-delay=".3s">
@@ -257,7 +263,7 @@
                                     <div class="welcome-inner">
                                         <!-- <h3>Certified Doctors</h3> -->
                                         <p>
-                                        	It’s similar to an office visit, but instead of going over to the doctor’s office you can consult them from the comfort of your home, work or anywhere that is convenient for you. Our certified physicians can assess and make a diagnosis, recommend the necessary treatment and send you your required prescription.
+                                        	@php echo __('It’s similar to an office visit, but instead of going over to the doctor’s office you can consult them from the comfort of your home, work or anywhere that is convenient for you. Our certified physicians can assess and make a diagnosis, recommend the necessary treatment and send you your required prescription.'); @endphp
                                         </p>
                                     </div>
                                 </li>
@@ -266,7 +272,7 @@
                                     <div class="welcome-inner">
                                         <!-- <h3>Emergency 24 hours</h3> -->
                                         <p>
-                                        	More than ever TeloCure is needed as it helps with social distancing. Keep yourself and your family safe by getting medical attention. With the ongoing COVID-19 pandemic we encourage you to stay home and stay safe.
+                                        	@php echo __('More than ever TeloCure is needed as it helps with social distancing. Keep yourself and your family safe by getting medical attention. With the ongoing COVID-19 pandemic we encourage you to stay home and stay safe.'); @endphp
                                         </p>
                                     </div>
                                 </li>
@@ -293,7 +299,7 @@
                         <div class="speciality-left">
                             <div class="section-title-two">
                                 <!-- <span>Speciality</span> -->
-                                <h3>Why TeloCure</h3>
+                                <h3>@php echo __('Why TeloCure'); @endphp</h3>
                             </div>
                             <div class="speciality-item">
                                 <div class="row m-0">
@@ -302,11 +308,11 @@
                                             <!-- <i class="icofont-check-circled"></i> -->
                                             <!-- <h3>Child Care</h3> -->
                                             <p>
-                                                It's similar to an office visit, but instead of going over to the doctor’s office you can consult them from the comfort of your home, work or anywhere that is convenient for you. Our certified physicians can assess and make a diagnosis, recommend the necessary treatment and send you your required prescription.
+                                                @php echo __("It's similar to an office visit, but instead of going over to the doctor’s office you can consult them from the comfort of your home, work or anywhere that is convenient for you. Our certified physicians can assess and make a diagnosis, recommend the necessary treatment and send you your required prescription."); @endphp
                                             </p>
 
                                             <p>
-                                                More than ever TeloCure is needed as it helps with social distancing. Keep yourself and your family safe by getting medical attention. With the ongoing COVID-19 pandemic we encourage you to stay home and stay safe.
+                                                @php echo __("More than ever TeloCure is needed as it helps with social distancing. Keep yourself and your family safe by getting medical attention. With the ongoing COVID-19 pandemic we encourage you to stay home and stay safe."); @endphp
                                             </p>
                                         </div>
                                     </div>
@@ -360,7 +366,7 @@
                         <div class="speciality-left">
                             <div class="section-title-two">
                                 <!-- <span>Speciality</span> -->
-                                <h3>TeloCure</h3>
+                                <h3>@php echo __('TeloCure'); @endphp</h3>
                             </div>
                             <div class="speciality-item">
                                 <div class="row m-0">
@@ -369,7 +375,8 @@
                                             <!-- <i class="icofont-check-circled"></i> -->
                                             <!-- <h3>Child Care</h3> -->
                                             <p>
-                                            	A health care platform to find doctors near you, book an appointment, consult via video on your smartphone, and get medication information through e-prescription services. <br> Our doctors are available 24/7 to meet your medical needs.<br> Get access to primary health care from anywhere in Bangladesh at an affordable price.
+                                                @php echo __('A health care platform to find doctors near you, book an appointment, consult via video on your smartphone, and get medication information through e-prescription services.') ; echo '<br>'; echo __('Our doctors are available 24/7 to meet your medical needs.'); @endphp
+                                                <br> @php echo __('Get access to primary health care from anywhere in Bangladesh at an affordable price.'); @endphp
 											</p>
                                         </div>
                                     </div>
@@ -423,7 +430,7 @@
                         <div class="speciality-left">
                             <div class="section-title-two">
                                 <!-- <span>Speciality</span> -->
-                                <h3>See how an online medical visit works.</h3>
+                                <h3>@php echo __('See how an online medical visit works.'); @endphp</h3>
                             </div>
                             <div class="speciality-item">
                                 <div class="row m-0">
@@ -432,7 +439,7 @@
                                             <!-- <i class="icofont-check-circled"></i> -->
                                             <!-- <h3>Child Care</h3> -->
                                             <p>
-Through TeloCure visit your doctor from anywhere and at anytime virtually. Sign up to TeloCure and book your appointment to see your doctor for a regular check-up or for urgent care, get connected to a doctor immediately. Watch the video to see how an online visit works.
+@php echo __('Through TeloCure visit your doctor from anywhere and at anytime virtually. Sign up to TeloCure and book your appointment to see your doctor for a regular check-up or for urgent care, get connected to a doctor immediately. Watch the video to see how an online visit works.');@endphp
 											</p>
                                         </div>
                                     </div>

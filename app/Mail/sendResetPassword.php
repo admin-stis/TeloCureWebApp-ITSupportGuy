@@ -31,7 +31,7 @@ class sendResetPassword extends Mailable
     public function build()
     {
         $address = 'support@telocure.com';
-        $subject = 'Temporary password !';
+        $subject = 'Temporary password ';
         $name = 'TeloCure';
 
         return $this->view('mails.sendResetPassword')

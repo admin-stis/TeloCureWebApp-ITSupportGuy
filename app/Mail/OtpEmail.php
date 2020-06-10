@@ -15,7 +15,7 @@ class OtpEmail extends Mailable
      * Create a new message instance.
      *
      * @return void
-     */
+    */
 
     public $otp;
 
@@ -28,10 +28,11 @@ class OtpEmail extends Mailable
      * Build the message.
      *
      * @return $this
-     */
+    */
+
     public function build()
     {
-        
+
         return $this->from('support@telocure.com')
                     ->view('mails.otp')
                     ->text('mails.otp_plain')
@@ -40,6 +41,6 @@ class OtpEmail extends Mailable
                             'testVarOne' => '1',
                             'testVarTwo' => '2',
                       ]);
-                             
+
     }
 }

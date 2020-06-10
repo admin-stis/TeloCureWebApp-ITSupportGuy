@@ -14,7 +14,9 @@
 <?php }
 	else{
  ?>
-<p>your registation is rejected for some reason plese contac us helodoc.example.com</p>
+
+<p>For any questions or query, please feel free to contact us at <strong>support@telocure.com</strong> or call us at <strong>09614501100</strong> </p>
+
 <?php } ?>
   </body>
 </html>
