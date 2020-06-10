@@ -362,7 +362,7 @@ class HospitalController extends Controller
             array_push($branch,$item->data());
         }
 
-        if(empty($branch)){
+        /*if(empty($branch)){
             // $brInfo = $hosRef->where('hospitalUserId','=',$brId);
 
             $brInfo = $hosRef->where('hospitalUid','=',$brId);
@@ -379,7 +379,7 @@ class HospitalController extends Controller
 
         }else{
             $hosCode = strtoupper(substr($branch[0]['hospitalName'],0,2));
-        }
+        }*/
 
         // add bank-info to doctor
         $hospitalUser = Session::get('user');
@@ -413,9 +413,9 @@ class HospitalController extends Controller
 
         $docRef = $database->collection('doctors')->newDocument();
 
-        $uid = $hosCode.''.$docRef->id();
+        //$uid = $hosCode.''.$docRef->id();
+        $uid = $docRef->id();
         $name = $request->firstname.' '.$request->lastname ;
-
 
         /*********test*****************/
         $doc_user = $database->collection('doctors')->document($docRef->id());
@@ -432,7 +432,8 @@ class HospitalController extends Controller
         }
 
         $data = [
-            'uid' => $hosCode.''.$docRef->id(),
+            //'uid' => $hosCode.''.$docRef->id(),
+            'uid' => $docRef->id(),
             'password' => '',
             //'hospitalUserId' => $request->hospitalUserId,
             'hospitalUid' => $request->hospitalUserId,
@@ -443,6 +444,7 @@ class HospitalController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'district' => $request->district,
+            'districtId' => '',
             'photoUrl' => $url,
             'online' => false,
             'active'=> false,
@@ -700,7 +702,8 @@ class HospitalController extends Controller
     {
       $firestore = app('firebase.firestore');
       $db = $firestore->database();
-      $uid = substr($id, 2);
+      //$uid = substr($id, 2);
+      $uid = $id ;
       $docRef = $db->collection('doctors')->document($uid);
       $data['doctorProfile'] = $docRef->snapshot()->data();
       $data['documents'] = $docRef->collection('documents')->document($uid)->snapshot()->data();
