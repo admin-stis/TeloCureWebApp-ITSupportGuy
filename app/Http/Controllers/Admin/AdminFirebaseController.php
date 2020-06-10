@@ -191,7 +191,6 @@ class AdminFirebaseController extends Controller
         $flag = false;
         $emailFlag = false;
 
-        // echo '<pre>';
         foreach($doctor as $key=>$item){
           if(isset($item['phone']) && $item['phone'] == $request->mobile){
             Session::flash('phonemsg','Contact number already exits.');
@@ -231,8 +230,6 @@ class AdminFirebaseController extends Controller
 
         $doctorRef = $database->collection('doctors')->newDocument();
 
-        //$password = $request->password ;
-
         //encrypted password...
         /***********temporary commented***********/
         $pass = $request->password ;
@@ -241,7 +238,6 @@ class AdminFirebaseController extends Controller
         $iv = "1234567812345678" ;
         $password = openssl_encrypt($pass,$method,$key,0,$iv);
         /*****************end**********************/
-        //end
 
         //testing
         //$password = encrypt($request->password);
@@ -253,7 +249,6 @@ class AdminFirebaseController extends Controller
             'name'=> $request->name.' '.$request->lastname,
             'phone' => $request->mobile,
             'password' => $password,
-            //'role' => '',
             "totalRating" => 0,
             "price" => 0,
             "totalCount" => 0,
@@ -263,8 +258,6 @@ class AdminFirebaseController extends Controller
             "rejected" => false,
             "createdAt" => new Timestamp(new DateTime()),
         ]);
-
-        //$doctorRef->set($validateData);
 
         return redirect('login/doctor');
     }
@@ -288,8 +281,6 @@ class AdminFirebaseController extends Controller
         if($v->fails()){
             return redirect()->back()->withErrors($v->errors());
         }
-
-        //encrypted password...
 
         $pass = $request->password ;
         $method = "AES-128-CBC";
@@ -374,7 +365,6 @@ class AdminFirebaseController extends Controller
     public function loggedIn(Request $request)
     {
 
-        //dd($request->all());
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
@@ -386,14 +376,6 @@ class AdminFirebaseController extends Controller
         $key = 'SECRETOFTELOCURE';
         $iv = "1234567812345678" ;
         $password = openssl_encrypt($pass,$method,$key,0,$iv);
-
-        //dd($password);
-
-        //dd($password);
-
-        //$password = $request->password;
-
-        //dd($password);
 
         if($request->title =='doctor'){
           $v = validator::make($request->all(),[
@@ -429,8 +411,6 @@ class AdminFirebaseController extends Controller
             $email = $request->common ;
             $query = $userRef->where('email','=',$email)->where('password','=',$password);
 
-            // dd($query);
-
             if($v->fails()){
                 return redirect()->back()
                   ->withInput()
@@ -463,7 +443,6 @@ class AdminFirebaseController extends Controller
                     return redirect('/2fa')->with($helodoc2fa);
                 }
             }
-
 
         }
         else if($request->title =='admin'){
@@ -520,7 +499,6 @@ class AdminFirebaseController extends Controller
             /* end */
         }
 
-
         /*$v = validator::make($request->all(),[
             'password' => 'required|min:8|alpha_num',
             'common' =>  'required|max:14',
@@ -574,7 +552,6 @@ class AdminFirebaseController extends Controller
             $request->session()->put('user',$userArr);
             $request->session()->put('district',$districtList);
 
-
             //Edit from mafiz vai
             $MailSend = new MailSendController();
             $otp = mt_rand(10000,99999);
@@ -625,8 +602,6 @@ class AdminFirebaseController extends Controller
         }
     }
     //End
-
-
 
     // 05-05-2020
     /*public function sethospitalusers(Request $request)
@@ -761,7 +736,6 @@ class AdminFirebaseController extends Controller
 
       }else{
         $districtRef = $database->collection('districts');
-
             $data['district'] = $districtRef->documents();
             $query = $districtRef->where('active','=',true);
             $data['activeDistrict'] = $query->documents();
@@ -825,11 +799,11 @@ class AdminFirebaseController extends Controller
                 }else{
                   $uid = $item['uid'];
                   $hospitalized = $item['hospitalized'];
-                  if($hospitalized == false){
-                    $uid = $uid ;
-                  }elseif($hospitalized == true){
-                    $uid = substr($uid, 2);
-                  }
+                //   if($hospitalized == false){
+                //     $uid = $uid ;
+                //   }elseif($hospitalized == true){
+                //     $uid = substr($uid, 2);
+                //   }
                 }
               }
             }
@@ -851,7 +825,6 @@ class AdminFirebaseController extends Controller
 
           if($title == "admin") $password = $pass ;
           else $password = $password;
-
 
           $userData->update([
             ['path' => 'password' , 'value' => $password]
@@ -918,7 +891,6 @@ class AdminFirebaseController extends Controller
               'Password' => 'required|min:8|alpha_num'
           ]);
 
-
       if($v->fails()){
         Session::flash('error-changepassword','Password length must be 8');
             return redirect()->back()->withInput()->withErrors($v->errors());
@@ -936,13 +908,12 @@ class AdminFirebaseController extends Controller
           array_push($doctorArr,$value->data());
         }
 
-
-        if(isset($doctorArr[0]['hospitalized']) && $doctorArr[0]['hospitalized'] == true){
-          //$uid = $doctorArr[0]['uid'];
-          $id = substr($id,2);
-        }else{
-          $id = $id;
-        }
+        // if(isset($doctorArr[0]['hospitalized']) && $doctorArr[0]['hospitalized'] == true){
+        //   //$uid = $doctorArr[0]['uid'];
+        //   $id = substr($id,2);
+        // }else{
+        //   $id = $id;
+        // }
       }
 
       $method = "AES-128-CBC";

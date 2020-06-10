@@ -34,7 +34,7 @@ class AdminDoctorController extends Controller
       }
 
       $data['noOfPendingDoctor'] = count($data['pendingDoctor']);
-      
+
       //$data['noOfPendingDoctor'] = 0 ;
       foreach($data['pendingDoctor'] as $key=>$pending){
        //   $data['noOfPendingDoctor']++;
@@ -237,17 +237,18 @@ class AdminDoctorController extends Controller
         $hospitalized = $value['hospitalized'];
       }
 
-      if(isset($hospitalized) && $hospitalized == true) $did = substr($uid,2);
-      else $did = $uid;
+      //if(isset($hospitalized) && $hospitalized == true) $did = substr($uid,2);
+      //else $did = $uid;
+      $did = $uid;
 
-   		$docRef = $db->collection('doctors')->document($did);
+   	  $docRef = $db->collection('doctors')->document($did);
       $snapsot = $docRef->snapshot();
 
    		$docRef->set([
    			'active'=>true
    		],['merge' => true]);
 
-       $data = ['message' => 'This message is from hello doc','flag'=>true];
+       $data = ['message' => 'This message is from TeloCure','flag'=>true];
        $send_to = $snapsot['email'];
 
 
@@ -279,8 +280,10 @@ class AdminDoctorController extends Controller
         $hospitalized = $value['hospitalized'];
       }
 
-      if(isset($hospitalized) && $hospitalized == true) $did = substr($uid,2);
-      else $did = $uid;
+    //   if(isset($hospitalized) && $hospitalized == true) $did = substr($uid,2);
+    //   else $did = $uid;
+
+      $did = $uid;
 
       $docRef = $db->collection('doctors')->document($did);
       $snapsot = $docRef->snapshot();
@@ -317,8 +320,9 @@ class AdminDoctorController extends Controller
         $hospitalized = $value['hospitalized'];
       }
 
-      if(isset($hospitalized) && $hospitalized == true) $did = substr($uid,2);
-      else $did = $uid;
+    //   if(isset($hospitalized) && $hospitalized == true) $did = substr($uid,2);
+    //   else $did = $uid;
+      $did = $uid;
 
       $docRef = $db->collection('doctors')->document($did);
       $data['doctorProfile'] = $docRef->snapshot()->data();
@@ -332,13 +336,8 @@ class AdminDoctorController extends Controller
 
         $data['hospitalDetails'] = $hospital->document($hospitalBranchId)->snapshot()->data() ;
         if($data['hospitalDetails'] != null){
-          //$hospitalInfo = $hospital->where('hospitalUserId','=',$hospitalBranchId);
-          //$hData = $hospitalInfo->documents();
           $data['hinfo'] = $data['hospitalDetails'];
-          /*foreach ($data['hosDetails'] as $key => $value) {
-              array_push($data['hinfo'], $value->data());
-          }*/
-        }
+         }
         else{
             $hospital = $db->collection('hospital_users');
             $data['hinfo'] = $hospital->document($hospitalBranchId)->snapshot()->data() ;
@@ -400,6 +399,7 @@ class AdminDoctorController extends Controller
 
         $hUid = $request->hospitalUid ;
 
+        /*
         if($hUid != false){
             $hospitalUid = substr($uid, 2);
             $docRef = $doctorRef
@@ -408,7 +408,11 @@ class AdminDoctorController extends Controller
             $docRef = $doctorRef
                 ->document($uid);
         }
-        
+        */
+
+        $docRef = $doctorRef
+                ->document($uid);
+
         $email = $request->email ;
 
         if(isset($request['photoUrl'])){
@@ -443,8 +447,6 @@ class AdminDoctorController extends Controller
         }else{
             $purl = '';
         }
-
-
 
       $branch = $docRef->collection('others')->document($docRef->id())->snapshot()->data();
 
@@ -588,14 +590,17 @@ class AdminDoctorController extends Controller
 
         $hUid = $request->hospitalUid ;
 
-        if($hUid != ''){
+        /*if($hUid != ''){
             $hospitalUid = substr($uid, 2);
             $docRef = $doctorRef
                 ->document($hospitalUid);
         }else{
             $docRef = $doctorRef
                 ->document($uid);
-        }
+        }*/
+
+        $docRef = $doctorRef->document($uid);
+
         // $snapsot = $docRef->snapshot();
 
         //dd($docRef);
