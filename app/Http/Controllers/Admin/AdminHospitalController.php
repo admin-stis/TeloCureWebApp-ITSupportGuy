@@ -139,7 +139,6 @@ class AdminHospitalController extends Controller
         $email = $userinfo['email'];
         $temp_pass = 'telocure'.''.mt_rand(1000000,99999999);
 
-
         //password encryption.....
         $method = "AES-128-CBC";
         $key = 'SECRETOFTELOCURE';
@@ -154,8 +153,6 @@ class AdminHospitalController extends Controller
         $MailSend = new MailSendController();
 
         $urllink = 'link' ;
-
-        //$link = $urllink.'/'.$id.'/'.$phone.'/'.$temp_pass ;
 
         $link = [
             'id' => $id,

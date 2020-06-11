@@ -30,8 +30,8 @@ class sendEmail extends Mailable
      */
     public function build()
     {
-        $address = 'telocure@example.com';
-        $subject = 'This mail is from telocure !';
+        $address = 'support@telocure.com';
+        $subject = 'Registration status';
         $name = 'TeloCure';
 
         return $this->view('mails.customer_mail')

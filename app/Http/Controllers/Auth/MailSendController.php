@@ -31,6 +31,7 @@ class MailSendController
 
         $objDemo = new \stdClass();
         $objDemo->code = $otp ;
+        //dd($objDemo->code);
         // $objDemo->code = 'Demo Two Value';
         $objDemo->sender = 'TeloCure Team';
         $objDemo->receiver = $receiver;
@@ -38,7 +39,7 @@ class MailSendController
         Mail::to($receiver)->send(new passwordLinkEmail($objDemo));
 
         if (Mail::failures()){
-          return flase;
+          return false;
         }else{
           return true;
         }

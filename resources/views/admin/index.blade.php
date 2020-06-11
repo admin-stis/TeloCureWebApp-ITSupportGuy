@@ -154,7 +154,7 @@
                 <div class="inner">
                   <h4 class="text-center text-bold">Hospital</h4>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{url('admin/hospital')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->

@@ -33,13 +33,12 @@ class passwordLinkEmail extends Mailable
         $address = 'support@telocure.com';
         $subject = 'Login Information';
         $name = 'TeloCure';
-        $receiver = $this->otp->name ;
+        //$receiver = $this->otp->name ;
 
         return $this->view('mails.passwordLink')
                     ->from($address, $name)
                     // ->cc($address, $name)
                     // ->bcc($address, $name)
-                    ->replyTo($address, $receiver)
                     ->subject($subject)
                     ->with([ 'otp' => $this->otp]);
     }
