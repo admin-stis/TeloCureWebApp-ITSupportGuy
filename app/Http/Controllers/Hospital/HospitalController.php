@@ -51,7 +51,8 @@ class HospitalController extends Controller
         $id = $data['hospitalUser'][0]['hospitalUid'];
 
         $docRef = $database->collection('doctors');
-        $q = $docRef->where('hospitalized','=',true);
+        //$q = $docRef->where('hospitalized','=',true);
+        $q = $docRef->where('hospitalUid','=', $id);
         $doctors = $q->documents();
 
         $data['hospitalsDoctor'] = array();

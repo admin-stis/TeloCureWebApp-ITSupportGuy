@@ -1,6 +1,7 @@
 @extends('hospital.layout')
 
 @section('content')
+
 @php
     if(isset($hospitalUser[0]['hospitalUid'])) $id = $hospitalUser[0]['hospitalUid']; else $id = '';
     if(isset($hospitalUser[0]['uid'])) $uid = $hospitalUser[0]['uid']; else $uid = '';
@@ -11,6 +12,7 @@
     if(isset($hospitalUser[0]['hospitalAddress'])) $hospitalAddress = $hospitalUser[0]['hospitalAddress']; else $hospitalAddress = 'N/A' ;
     if(isset($hospitalUser[0]['plan'])) $plan = ucfirst($hospitalUser[0]['plan']); else $plan = 'N/A' ;
     if(isset($hospitalUser[0]['active'])) $approve = $hospitalUser[0]['active'];
+
 @endphp
 
 <input id="uid" type="hidden" value="{{$id}}"/>
@@ -139,7 +141,7 @@
               <!-- /.card-header -->
              <div class="card-body">
 
-                    <table class="table">
+                    <table class="table ">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -190,7 +192,14 @@
                         <strong>{{ Session::get('success') }}</strong>
                     </div>
                 @endif
-                  <table id="table" class="table table-bordered table-hover">
+
+                <div class="row">
+                    <input id="search" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
+                </div>
+
+                <div class="col-md-6 col-lg-6 jquery-script-clear"></div>
+
+                  <table id="table" class="table table-bordered table-hover doctorListTable">
                     <thead>
                     <tr>
                       <th class="text-center">Sl</th>
@@ -217,7 +226,7 @@
                                 <td>{{$item['phone']}}</td>
                                 <td>{{$item['email']}}</td>
                                 <td>@if(isset($item['doctorType'])){{$item['doctorType']}} @else N/A @endif</td>
-                                
+
                                 <td>
                                                       @php
                                                         if(isset($item['totalRating']) && isset($item['totalCount']) && $item['totalCount'] > 0)
@@ -240,7 +249,7 @@
                                                       @endphp
                                                     </td>
                                                     <td>@if(isset($item['price'])){{$item['price']}} Tk @else N/A @endif</td>
-                                                    
+
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="{{url('hospital/viewDoctor/'.$item['uid'])}}">View</a>
                                     <a class="btn btn-sm btn-danger" href="{{url('hospital/deleteDoctor/'.$item['uid'])}}">Delete</a>
@@ -259,7 +268,6 @@
             <!-- /.card -->
           </section>
           <!-- /.Left col -->
-
 
         </div>
         <!-- /.row (main row) -->
@@ -330,11 +338,33 @@
             });
         });
 
-</script>
+    </script>
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 
+    $(document).ready(function () {
+        $('.doctorListTable').paginate({
+            'elemsPerPage': 10,
+                'maxButtons': 6
+        });
+    });
 
+    $(document).ready(function(){
+        $('.dp li a').click(function(){
+            let v = $(this).attr('href');
+            $('v').addClasses('btn-success');
+            $('v').removeClass('btn-success');
 
-
+        });
+    });
+    </script>
 
      @endsection
