@@ -720,22 +720,39 @@ class AdminFirebaseController extends Controller
     }
 
     public function manageDistrict(Request $r){
+
       $firestore = app('firebase.firestore');
       $database = $firestore->database();
       $disRef = $database->collection('districts');
 
-      if(isset($r->submit)){
-        //dd($r->all());
-        $id = $r->disId;
-        $district = $disRef->document($id);
+      if(isset($r->submit) && $r->submit == 'active'){
 
-        $district->update([
-            ['path' => 'active' , 'value' => true]
-        ]);
+        $data['distArr'] = $r->disId ;
+
+        foreach($data['distArr'] as $key => $item){
+            $district = $disRef->document($item);
+            $district->update([
+                ['path' => 'active' , 'value' => true]
+            ]);
+        }
+
         Session::flash('msg','District activated.');
         return redirect('/admin/district');
 
-      }else{
+      }elseif(isset($r->submit) && $r->submit == 'deactive'){
+        $data['distArr'] = $r->disId ;
+
+        foreach($data['distArr'] as $key => $item){
+            $district = $disRef->document($item);
+            $district->update([
+                ['path' => 'active' , 'value' => false]
+            ]);
+        }
+
+        Session::flash('msg','District deactivated.');
+        return redirect('/admin/district');
+      }
+      else{
         $districtRef = $database->collection('districts');
             $data['district'] = $districtRef->documents();
             $query = $districtRef->where('active','=',true);

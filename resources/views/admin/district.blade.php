@@ -25,23 +25,34 @@
           @if(Session::has('msg'))
             <ul><p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('msg') }}</p></ul>
           @endif
-          <div class="card-title"><span style="margin-left:22px">District</span></div>
-          @php
+          <div class="card-header"><span style="margin-left:22px">Change District Status</span></div>
 
-          @endphp
           <div class="card-body">
             <form class="" method="post" action="{{url('admin/district')}}">
               @csrf
+              {{--
+                <div class="form-group">
+                    <select class="form-control" name="disId">
+                    <option>Select district</option>
+                    @foreach($districtList as $item)
+                        <option value="{{$item['id']}}">{{$item['name']}}</option>
+                    @endforeach
+                    </select>
+                </div>
+              --}}
               <div class="form-group">
-                <select class="form-control" name="disId">
-                  <option>Select district</option>
-                  @foreach($districtList as $item)
-                    <option value="{{$item['id']}}">{{$item['name']}}</option>
+                  @foreach($districtList as $key=>$item)
+                  {{-- <input type="checkbox" id="vehicle1" name="disId" value="{{$item['id']}}">{{$item['name']}} --}}
+                  <div class="row">
+                    <input type="checkbox" id="disId" class="form-control col-md-1" name="disId[{{$key}}]" value="{{$item['id']}}" style="height:20px;">
+                    <label @if($item['active'] == true) class="text-success" @else class="" @endif for="disId[{{$item['id']}}]"> {{$item['name']}}</label>
+                  </div>
+                    <br>
                   @endforeach
-                </select>
               </div>
               <div class="form-group">
-                <button class="btn btn-sm btn-primary" name="submit" value="submit">Submit</button>
+                <button class="btn btn-sm btn-success" name="submit" value="active">Active</button>
+                <button class="btn btn-sm btn-danger" name="submit" value="deactive">Deactive</button>
               </div>
             </form>
           </div>
@@ -49,9 +60,6 @@
         </div>
       </div>
     </section>
-
-
-    
 
 <script>
 
