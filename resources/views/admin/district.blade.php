@@ -33,21 +33,20 @@
               {{--
                 <div class="form-group">
                     <select class="form-control" name="disId">
-                    <option>Select district</option>
-                    @foreach($districtList as $item)
-                        <option value="{{$item['id']}}">{{$item['name']}}</option>
-                    @endforeach
+                        <option>Select district</option>
+                        @foreach($districtList as $item)
+                            <option value="{{$item['id']}}">{{$item['name']}}</option>
+                        @endforeach
                     </select>
                 </div>
               --}}
-              <div class="form-group">
+              <div class="row col-md-12">
                   @foreach($districtList as $key=>$item)
                   {{-- <input type="checkbox" id="vehicle1" name="disId" value="{{$item['id']}}">{{$item['name']}} --}}
-                  <div class="row">
-                    <input type="checkbox" id="disId" class="form-control col-md-1" name="disId[{{$key}}]" value="{{$item['id']}}" style="height:20px;">
-                    <label @if($item['active'] == true) class="text-success" @else class="" @endif for="disId[{{$item['id']}}]"> {{$item['name']}}</label>
-                  </div>
-                    <br>
+                <div class="col-md-3 row">
+                  <input type="checkbox" id="disId" class="col-md-2" name="disId[{{$key}}]" value="{{$item['id']}}" style="height:20px;margin-right:10px;">
+                  <label @if($item['active'] == true) class="text-success" @else class="" @endif for="disId[{{$item['id']}}]" style="margin-right:10px;"> {{$item['name']}}</label>
+              </div>
                   @endforeach
               </div>
               <div class="form-group">

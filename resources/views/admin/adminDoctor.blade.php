@@ -103,11 +103,11 @@
                         </div>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body"  style="overflow-x:auto;">
+                    <div class="card-body">
                             <div class="tab-content p-0">
                             <!-- Morris chart - Sales -->
                                 <div class="chart tab-pane active" id="revenue-chart"
-                                    style="position: relative;">
+                                    style="position: relative;    overflow-x: auto;">
                                     <div class="row">
                                         <input id="search" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
                                     </div>

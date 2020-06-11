@@ -39,7 +39,7 @@
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
 					@if (isset($doctorProfile['photoUrl']))
-                        <img class="img-rounded" src="{{$doctorProfile['photoUrl']}}" alt="{{$doctorProfile['name']}}"/>
+                        <img style="width:100px;height:100px;" class="img-rounded" src="{{$doctorProfile['photoUrl']}}" alt="{{$doctorProfile['name']}}"/>
                     @else
                         <span class="userIcon fa fa-user-circle"></span>
                     @endif
