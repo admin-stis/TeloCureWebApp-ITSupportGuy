@@ -4,7 +4,7 @@
 <!-- Content Header (Page header) -->
     @php
         $revenue = json_encode($rev) ;
-        
+
         //-----------------------------------------------
         $todayData=0;
         $curWeekData=0;
@@ -36,7 +36,7 @@
             $rKey = $rev[$i]['start'];
             $rKeyDate = explode('-', $rKey);
 
-            if($rev[$i]['start'] == $today){ 
+            if($rev[$i]['start'] == $today){
                 $dailyIncome += $income;
             }
 
@@ -248,7 +248,7 @@
                     <span class="text   col-md-5 col-sm-12">Address</span>
                     <span class="">:</span>
                     <span class="text   col-md-6 col-sm-12">
-                    @if(isset($doctorInfo['presentAddress'])){{$doctorInfo['presentAddress']}}
+                    @if(isset($others['presentAddress'])){{$others['presentAddress']}}
                     @else N/A
                       @endif
                    </span>

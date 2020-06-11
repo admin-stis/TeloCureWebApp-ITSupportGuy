@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body">
+                    <div class="card-body"  style="overflow-x:auto;">
                             <div class="tab-content p-0">
                             <!-- Morris chart - Sales -->
                                 <div class="chart tab-pane active" id="revenue-chart"

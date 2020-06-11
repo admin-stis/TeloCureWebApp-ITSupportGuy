@@ -23,16 +23,19 @@ class DoctorController extends Controller
         $doctorData = Session::get('user');
 
         if($doctorData != null){
-            
+
+            /*
             if( isset($doctorData[0]['hospitalized']) && $doctorData[0]['hospitalized'] == true){
                 $uid = substr($doctorData[0]['uid'],2);
             }else{
                 $uid = $doctorData[0]['uid'];
             }
+            */
+
+            $uid = $doctorData[0]['uid'];
 
             $data['doctorInfo'] = $db->collection('doctors')->document($uid)->snapshot();
             $data['bank_info'] = $db->collection('doctors')->document($uid)->collection('bank_info')->document($uid)->snapshot();
-
             $data['regNoInfo'] = $db->collection('doctors')->document($uid)->snapshot();
 
             //new
@@ -54,7 +57,6 @@ class DoctorController extends Controller
 
             $sortingDate = array('date');
             $sortingValue = array('value');
-
 
             for($i = 0; $i < $counter; $i++){
                 if(isset($data['visited'][$i]['transactionHistory'])){
@@ -81,39 +83,33 @@ class DoctorController extends Controller
 
             for($i = 1; $i < $counter1; $i++){
                 $totalAmountRev += $sortingValue[$i];
-                
+
                 $data['revenueByDate'] = array('id' => $uid ,'title' => $sortingValue[$i].'Tk','start' => $sortingDate[$i],'end' => '');
                 array_push($data['rev'] , $data['revenueByDate']);
             }
 
             array_push($data['tRev'],$totalAmountRev);
-            
+
             $docArr = $data['doctorInfo']->data();
 
             $docArrInfo = $data['regNoInfo']->data();
-            
-            //dd($docArrInfo['regNo']);
-            
+
             if(isset($docArrInfo['regNo'])){
                 if($docArrInfo['regNo'] != null){
                 	if($docArrInfo['hospitalized'] == false){
-                		//dd(2);
 	                    return view('doctor.index')->with($data);
 	                }else{
-	                	//dd(1);
-	                	return $this->fares($uid);
+	                	return $this->fares($uid); // Because dashboard will not visible for hospital doctor
 	                }
                 }else{
-                    // return view('doctor.complete-profile');
-                    return $this->completeProfile();   
+                    return $this->completeProfile();
                 }
             }else{
-                //return view('doctor.complete-profile');
-                return $this->completeProfile();  
+                return $this->completeProfile();
             }
         }else{
             return redirect('login/doctor');
-        }    
+        }
     }
 
     public function completeProfile()
@@ -125,12 +121,15 @@ class DoctorController extends Controller
         $doctorData = Session::get('user');
 
         if($doctorData != null){
-            
+
+            /*
             if( isset($doctorData[0]['hospitalized']) && $doctorData[0]['hospitalized'] == true){
                 $id = substr($doctorData[0]['uid'],2);
             }else{
                 $id = $doctorData[0]['uid'];
             }
+            */
+            $id = $doctorData[0]['uid'];
         }
 
         $docRef = $db->collection('doctors')->document($id);
@@ -167,7 +166,7 @@ class DoctorController extends Controller
         }
 
         $data['districtlist'] = AdminController::district();
-        
+
         return view('doctor.editProfile')->with($data);
     }
 
@@ -179,17 +178,17 @@ class DoctorController extends Controller
         $sessData = session()->all();
 
         /******************************New Code used hospital doctor id**************/
-        $doctorData = Session::get('user');
+        /*$doctorData = Session::get('user');
         if( isset($doctorData[0]['hospitalized']) && $doctorData[0]['hospitalized'] == true){
             $id = substr($doctorData[0]['uid'],2);
         }else{
             $id = $id;
-        }
+        }*/
         /*******************end******************************/
         //dd($doctorData);
 
 
-        if(isset($sessData['user'])){           
+        if(isset($sessData['user'])){
             $docRef = $db->collection('doctors')->document($id);
             $data['others'] = $docRef->collection('others')->document($id)->snapshot()->data();
             $data['bank_info'] = $docRef->collection('bank_info')->document($id)->snapshot()->data();
@@ -217,7 +216,7 @@ class DoctorController extends Controller
 
             // print_r("expression");
             // dd($data['bank_info']);
-            
+
             if(isset($data['doctorProfile']['regNo'])){
                 if($data['doctorProfile']['regNo'] != null){
                     return view('doctor.profile')->with($data);
@@ -227,14 +226,14 @@ class DoctorController extends Controller
                         return view('doctor.complete-profile')->with($data);
                     }else{
                         return view('doctor.complete-profile');
-                    } 
+                    }
                 }
             }else{
                 if(isset($data['bank_info']) && $data['bank_info'] != null){
                         return view('doctor.complete-profile')->with($data);
                     }else{
                         return view('doctor.complete-profile');
-                    } 
+                    }
             }
         }else{
             return redirect('login/doctor');
@@ -297,21 +296,14 @@ class DoctorController extends Controller
     //end
 
     public function fares($id){
-        
+
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
         $visits = $database->collection('visits');
 
-        /******************************New Code used hospital doctor id**************/
-        $doctorData = Session::get('user');
-        if( isset($doctorData[0]['hospitalized']) && $doctorData[0]['hospitalized'] == true){
-            $id = substr($doctorData[0]['uid'],2);
-        }else{
-            $id = $id;
-        }
-        /*******************end******************************/
-        
+        $id = $id;
+
         $query = $visits->where('doctorUid','=',$id);
         $visitData = $query->documents();
 
@@ -327,7 +319,7 @@ class DoctorController extends Controller
             ->collection('others')->document($id)->snapshot()->data();
 
         $docRef = $database->collection('doctors')->document($id);
-        $data['bank_info'] = $docRef->collection('bank_info')->document($id)->snapshot()->data();    
+        $data['bank_info'] = $docRef->collection('bank_info')->document($id)->snapshot()->data();
 
         $doctorArr = $data['doctor']->data();
 
@@ -340,14 +332,14 @@ class DoctorController extends Controller
                         return view('doctor.complete-profile')->with($data);
                     }else{
                         return view('doctor.complete-profile');
-                    }    
+                    }
             }
         }else{
             if(isset($data['bank_info']) && $data['bank_info'] != null){
                         return view('doctor.complete-profile')->with($data);
                     }else{
                         return view('doctor.complete-profile');
-                    }  
+                    }
         }
     }
 
@@ -357,14 +349,16 @@ class DoctorController extends Controller
         $db = $firestore->database();
 
         /******************************New Code used hospital doctor id**************/
+        /*
         $doctorData = Session::get('user');
         if( isset($doctorData[0]['hospitalized']) && $doctorData[0]['hospitalized'] == true){
             $id = substr($doctorData[0]['uid'],2);
         }else{
             $id = $id;
         }
+        */
         /*******************end******************************/
-        
+
         $docRef = $db->collection('doctors')->document($id);
         $data['bank_info'] = $docRef->collection('bank_info')->document($id)->snapshot()->data();
         $data['documents'] = $docRef->collection('documents')->document($id)->snapshot()->data();
@@ -383,12 +377,6 @@ class DoctorController extends Controller
         $uid = $request->uid ;
 
         $doctorData = Session::get('user');
-       
-        if( isset($doctorData[0]['hospitalized']) && $doctorData[0]['hospitalized'] == true){
-            $uid = substr($doctorData[0]['uid'],2) ;
-        }else{
-            $uid = $request->uid ;
-        }
 
         if(isset($request['photoUrl'])){
 
@@ -452,7 +440,7 @@ class DoctorController extends Controller
             'bankName' =>  $request->bankName,
             'accountNumber' => $request->accountNo,
             'swiftCode' =>  $request->swiftCode,
-            
+
         ];
 
         $hosbranch = $docRef->collection('others')->document($uid)->snapshot()->data();
@@ -483,7 +471,7 @@ class DoctorController extends Controller
         $docRef->collection('bank_info')->document($uid)->set($bankInfo,['merge' => 'true']);
         $docRef->collection('documents')->document($uid)->set($docInfo,['merge' => 'true']);
         $docRef->collection('others')->document($uid)->set($others,['merge' => 'true']);
-        
+
         Session::flash('update_msg','Profile Updated.');
         return redirect()->back();
 

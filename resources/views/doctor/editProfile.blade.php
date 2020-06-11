@@ -4,8 +4,6 @@
 
 @php
 
-    // dd($doctorProfile);
-
     if(isset($doctorProfile[0]['hospitalUserId'])) $hospitalUid = $doctorProfile[0]['hospitalUserId']; else $hospitalUserId = '';
 
     if(isset($doctorProfile[0]['district'])) $district = $doctorProfile[0]['district']; else $hospitalUserId = '';

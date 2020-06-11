@@ -14,7 +14,7 @@
                @php
                    if(isset($doctorProfile['uid']))
                     $uid = trim($doctorProfile['uid']);
-                   
+
                @endphp
                <li class="breadcrumb-item active">Profile</li>
             </ol>
@@ -39,7 +39,7 @@
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
 					@if (isset($doctorProfile['photoUrl']))
-                        <img src="{{$doctorProfile['photoUrl']}}" alt="{{$doctorProfile['name']}}"/>
+                        <img class="img-rounded" src="{{$doctorProfile['photoUrl']}}" alt="{{$doctorProfile['name']}}"/>
                     @else
                         <span class="userIcon fa fa-user-circle"></span>
                     @endif
@@ -66,7 +66,7 @@
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
 				<!-- SIDEBAR BUTTONS -->
-				
+
                 <div class="">
                     <p style="margin:0 auto;display:table">Rating<p>
                     <p style="margin:0 auto;display:table">
@@ -84,7 +84,7 @@
                     @endphp
                     </p>
                 </div>
-                
+
                 <div class="">
                     @if(isset($doctorProfile['price']))
                     <p style="margin:0 auto;display:table">Price : {{$doctorProfile['price']}} Tk</p>
@@ -93,7 +93,7 @@
                     @endif
                 </div>
 
-                <div class="" style="">
+                <div class="" style="margin:0 auto;display:table">
                     <a style="float-right;" class="btn btn-sm btn-primary" href="{{url('doctor/profile/edit/'.$uid)}}">Edit</a>
                 </div>
 				<!-- END SIDEBAR BUTTONS -->
@@ -135,7 +135,7 @@
                             <li class="col-md-2 btn btn-xs btn-default"><a style="border:0px;" class="btn btn-xs btn-default" data-toggle="pill" href="#contact">Contact</a></li>
 
                             <li class="col-md-3 btn btn-xs btn-default"><a class="btn btn-xs btn-default" data-toggle="pill" href="#h">Hospital</a></li>
-                            
+
 
                             <li class="col-md-2 btn btn-xs btn-default"><a style="border:0px;" class="btn btn-xs btn-default" data-toggle="pill" href="#documents">Document</a></li>
                             <li class="col-md-3 btn btn-xs btn-default"><a style="border:0px;" class="btn btn-xs btn-default" data-toggle="pill" href="#bankInfo">Bank Information</a></li>
@@ -230,7 +230,7 @@
                                 </div>--}}
                             </div>
                         </div>
-                        
+
                                     @php //dd($hinfo); @endphp
                         <div id="h" class="tab-pane fade">
                             @if(isset($hinfo['hospitalName']))
@@ -276,7 +276,7 @@
                                 </div>
                             </div>
                             @else
-                            <div class="" style="margin-top:10px;"><h3>Independent Doctor</h3></div>
+                            <div class="" style="margin-top:10px;"><p class="text-center">Independent Doctor</p></div>
                             @endif
                         </div>
 
@@ -333,6 +333,15 @@
                                 </div>
                             </div>
                         </div>
+
+                        @php
+
+                        if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == true)
+                            $display = "none";
+                        else $display = "block";
+
+                        @endphp
+
                         <div id="bankInfo" class="tab-pane fade">
                             <div class="" style="margin-top:10px;">
                                 <div class="row col-md-12">
@@ -342,7 +351,7 @@
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">@if(isset($bank_info['accountName'])){{$bank_info['accountName']}} @endif</span>
                                 </div>
-                                <div class="row col-md-12">
+                                <div class="row col-md-12" style="display: {{$display}}">
                                     <label class="col-md-5">
                                         <h6>Account Number</h6>
                                     </label>
@@ -363,7 +372,7 @@
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
                                     @if(isset($bank_info['swiftCode'])){{$bank_info['swiftCode']}}@endif
-                                
+
                                     </span>
                                 </div>
                             </div>

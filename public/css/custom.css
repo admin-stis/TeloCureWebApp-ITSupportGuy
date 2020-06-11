@@ -17,8 +17,8 @@
     float: none;
     margin: 0 auto;
     display: table;
-    width: 50%;
-    height: 50%;
+    width: 150px;
+    height: 150px;
     -webkit-border-radius: 50% !important;
     -moz-border-radius: 50% !important;
     border-radius: 50% !important;

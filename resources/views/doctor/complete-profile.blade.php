@@ -17,10 +17,13 @@
         else $id = "";
 
         if(isset($doctorInfo[0]['doctorType'])) $type = $doctorInfo[0]['doctorType'];
-        else $type = ""; 
+        else $type = "";
+
+        if(isset($doctorInfo[0]['gender'])) $gender = $doctorInfo[0]['gender'];
+        else $gender = "";
 
         if(isset($doctorInfo[0]['district'])) $dis = $doctorInfo[0]['district'];
-        else $dis = ""; 
+        else $dis = "";
 
         //dd($doctorInfo);
         //dd($district);
@@ -53,7 +56,7 @@
                 </div>
             </div>
             <div class="card-body col-md-12 col-sm-12">
-                
+
                 @if ($errors->any())
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -92,8 +95,8 @@
                                 <label class="control-label">Gender <i class="iconFa fa fa-asterisk color-red"></i> </label>
                                 <select name="gender" type="text" required="required" class="form-control">
                                     <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="Male" @if($gender == 'Male') selected @endif>Male</option>
+                                    <option value="Female" @if($gender == 'Female') selected @endif>Female</option>
                                 </select>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-12">
@@ -106,7 +109,7 @@
                             </div> --}}
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="control-label">BMDC Registration Number <i class="iconFa fa fa-asterisk color-red"></i> </label>
-                                <input  name="regNo" type="number" required="required" class="form-control" placeholder="" value="@if(isset($doctorInfo[0]['regNo'])){{$doctorInfo[0]['regNo']}}@else{{old('regNo')}}@endif"/>
+                                <input  name="regNo" type="text" required="required" class="form-control" placeholder="" value="@if(isset($doctorInfo[0]['regNo'])){{$doctorInfo[0]['regNo']}}@else{{old('regNo')}}@endif"/>
                             </div>
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="">Academic Degree <i class="iconFa fa fa-asterisk color-red"></i> </label>
@@ -134,10 +137,12 @@
 
                                 <select name="district" type="text" required="required" class="form-control" >
                                     <option value="">Select District</option>
+                                    {{-- <option value="{{$dis}}" selected>{{$dis}}</option> --}}
                                     @foreach ($district as $key=>$item)
+                                        @php //print_r($item); @endphp
                                         <option value="{{$item['name']}}"
 
-                                        @if($item['name'] == $district) selected @endif
+                                        @if($item['name'] == $dis) selected @endif
 
                                         >{{$item['name']}}</option>
                                     @endforeach
@@ -214,16 +219,17 @@
                                 <input name="bankName" type="text" required="required" class="form-control" placeholder="" value="{{old('bankName')}}"/>
                                 @endif
                             </div>
-
+                            @if(isset($bank_info['accountNumber']))
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12" style="display: none;">
+                                <label class="">Bank Account Number <i class="iconFa fa fa-asterisk color-red"></i></label>
+                                <input name="accountNo" type="number" required="required" class="form-control" placeholder="" value="{{$bank_info['accountNumber']}}" readonly />
+                            </div>
+                            @else
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="">Bank Account Number <i class="iconFa fa fa-asterisk color-red"></i></label>
-
-                                @if(isset($bank_info['accountNumber']))
-                                <input name="accountNo" type="number" required="required" class="form-control" placeholder="" value="{{$bank_info['accountNumber']}}" readonly />
-                                @else
                                 <input name="accountNo" type="number" required="required" class="form-control" placeholder="" value="{{old('accountNo')}}"/>
-                                @endif
                             </div>
+                            @endif
 
                             {{--
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
@@ -240,8 +246,8 @@
                                 <input name="swiftCode" type="text" class="form-control" placeholder="" value="{{old('swiftCode')}}"  />
                                 @endif
                             </div>
-                            
-                            
+
+
                         </div>
                     </div>
 
