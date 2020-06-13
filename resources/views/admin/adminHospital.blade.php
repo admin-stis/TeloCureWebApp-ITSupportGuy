@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
 <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -138,9 +140,7 @@
                                                     if(isset($item['hospitalAddress'])) $hospitalAddress = $item['hospitalAddress']; else $hospitalAddress = 'N/A' ;
                                                     if(isset($item['plan'])) $plan = ucfirst($item['plan']); else $plan = 'N/A' ;
                                                     if(isset($item['active'])) $approve = $item['active']; else $approve = false;
-                                                    if(isset($item['bankInfoUpdateRequest']))
-                                                        $bankInfoUpdateRequest = $item['bankInfoUpdateRequest'];
-                                                    else $bankInfoUpdateRequest = false;
+
                                                 @endphp
 
                                                 <tr>
@@ -152,12 +152,22 @@
                                                     <td>{{$hospitalAddress}}</td>
                                                     <td>{{$plan}}</td>
                                                     <td>
-                                                        {{-- <a style="margin-top:5px;" class="btn btn-primary btn-sm" href="{{url('admin/viewHospitalUser')}}">View</a> --}}
+
+
+
+                                                       {{-- <a style="margin-top:5px;" class="btn btn-primary btn-sm" href="{{url('admin/viewHospitalUser')}}">View</a> --}}
                                                         @if($approve == true)
+
                                                             <a  style="margin-top:5px;width:100%;" class="btn btn-info btn-sm" disabled>Approved</a>
-                                                            <a  style="margin-top:5px;width:100%;" class="btn btn-primary btn-sm" href="{{url('admin/updateBankInfo/'.$id)}}">
-                                                                Change Bank Information
-                                                            </a>
+                                                            @if(isset($item['bankInfoUpdateRequest']) && $item['bankInfoUpdateRequest'] == true)
+                                                                <a  type="button" style="margin-top:5px;width:100%;" class="btn btn-primary btn-sm" href="{{url('admin/updateBankInfo/'.$id)}}">
+                                                                    Change Bank Information
+                                                                </a>
+                                                            @else
+                                                                <a  style="margin-top:5px;width:100%;" class="btn btn-default btn-sm" disabled>
+                                                                    Change Bank Information
+                                                                </a>
+                                                            @endif
                                                             {{-- <a  style="margin-top:5px;" class="btn btn-danger btn-sm" href="{{url('admin/unapproveHospitalUser')}}">Reject</a> --}}
                                                         @elseif($approve == false)
                                                             <a  style="margin-top:5px;width:100%;" class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser/'.$id)}}">Approve</a>
@@ -167,6 +177,7 @@
                                                             {{-- <br><a   style="margin-top:5px;"class="btn btn-danger btn-sm" href="{{url('admin/unapproveHospitalUser')}}">Reject</a> --}}
                                                         @endif
                                                         <a  style="margin-top:5px;width:100%;width:100%;" class="btn btn-warning btn-sm" href="{{url('hospital/planchange/'.$id)}}">Change Plan</a>
+
                                                     </td>
                                                 </tr>
 

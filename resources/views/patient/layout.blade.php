@@ -3,10 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> HeloDoc | Patient</title>
+  <title> TeloCure | Patient</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Favicon-->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/img/favicon.png')}}">
+    <!--End-->
   <!-- Font Awesome -->
+  <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
   <link rel="stylesheet" href="{{ asset('backend/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -172,7 +176,7 @@
     <a href="index3.html" class="brand-link">
       <img src="{{ asset('backend/dist/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">HeloDoc</span>
+      <span class="brand-text font-weight-light">TeloCure</span>
     </a>
 
     <!-- Sidebar -->

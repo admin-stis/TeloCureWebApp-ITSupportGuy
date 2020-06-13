@@ -6,6 +6,11 @@
   <title> TeloCure | Doctor</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--Favicon-->
+  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/img/favicon.png')}}">
+  <!--End-->
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('backend/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
@@ -247,7 +252,7 @@
     {{-- <div class="float-right d-none d-sm-inline-block"> <b>Version</b> 3.0 </div> --}}
   </footer>
 
-  
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

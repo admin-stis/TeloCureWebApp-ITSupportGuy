@@ -142,7 +142,7 @@
                                                             $totalRating = $item['totalRating'];
                                                             $totalCount = $item['totalCount'];
                                                             $rating = floor($totalRating/$totalCount);
-                                                            for($i = 0;$rating < $count; $i++)
+                                                            for($i = 0;$i < $rating; $i++)
                                                             {
                                                                 echo '<span class="fa fa-star" style="color:green"></span>';
                                                             }

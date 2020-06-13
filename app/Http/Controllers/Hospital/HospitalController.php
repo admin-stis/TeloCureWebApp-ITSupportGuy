@@ -832,7 +832,7 @@ class HospitalController extends Controller
             $MailSend = new MailSendController();
             $MailSend->sendRequest($data,$email,$receiver);
 
-            $updateBankFlag = $info->document($id)->snapshot()->data();
+            $updateBankFlag = $info->document($id);
 
             $updateBankFlag->update([
                 ['path' => 'bankInfoUpdateRequest', 'value' => true ]

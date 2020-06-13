@@ -30,7 +30,6 @@
         <link rel="stylesheet" href="{{url('assets/css/responsive.css')}}">
         <!-- Media Query -->
         <link rel="stylesheet" href="{{url('assets/css/media-queries.css')}}">
-
         <!-- <link rel="icon" type="image/png" href="{{url('assets/img/logo.png')}}"> -->
     </head>
     <body>

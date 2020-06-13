@@ -299,7 +299,7 @@ class AdminFirebaseController extends Controller
             'email'=> $request->email,
             'name'=> $request->name,
             'lastname' => $request->lastname,
-            'phone' => $request->phone,
+            'phone' => $request->mobile,
             'password' => $password,
             'gender' => '',
             'weight' => '',
@@ -633,12 +633,13 @@ class AdminFirebaseController extends Controller
         $database = $firestore->database();
 
         $v = validator::make($request->all(),[
-            'name'     => 'required|regex:/^[\pL\s\-]+$/u',
+            'name'  => 'required|regex:/^[\pL\s\-]+$/u',
             'hospitalName' => 'required|max:25|regex:/^[\pL\s\-]+$/u',
             'hospitalAddress' => 'required|max:100',
             'phone' =>  'required|max:14',
             'plan' => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'bankInfoUpdateRequest' => false
         ]);
 
         $hosRef = $database->collection('hospital_users');
@@ -960,11 +961,10 @@ class AdminFirebaseController extends Controller
         $hosInfo = $database->collection('hospital_users');
         $ref = $hosInfo->document($id)->snapshot()->data();
 
-        if($request->submit){
+        if($request->update == 'update'){
             if($ref['bankInfoUpdateRequest'] == true){
                 $updateInfo = $hosInfo->document($id)
-                    ->collection('bank_info')->document($id)
-                    ->snapshot()->data();
+                    ->collection('bank_info')->document($id);
 
                 $updateInfo->update([
                     ['path' => 'accountName', 'value' => $request->accountName],
@@ -984,9 +984,9 @@ class AdminFirebaseController extends Controller
 
                 if(isset($doctorInfo) && !empty($doctorInfo)){
                     foreach($doctorInfo as $item){
-                        $docData = $docInfo->document($item['id'])
-                            ->collection('bank_info')->document($item['id'])
-                            ->snapshot()->data();
+                        $docData = $docInfo->document($item['uid'])
+                            ->collection('bank_info')->document($item['uid'])
+                            ;
 
                         $docData->update([
                             ['path' => 'accountName', 'value' => $request->accountName],
@@ -997,6 +997,9 @@ class AdminFirebaseController extends Controller
                     }
                 }
             }
+
+            Session::flash('add-bank-info','Bank information updated successfully.');
+            echo 'true';
         }else{
             $data['id'] = $id ;
             return view('admin/updateBankInfo')->with($data);

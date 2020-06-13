@@ -12,7 +12,6 @@ class PatientController extends Controller
     {
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
-
         $patientData = $database->collection('users');
     }
 
@@ -46,9 +45,13 @@ class PatientController extends Controller
             // }
         }
 
-        $data['pres'] = array();
-        foreach ($presId as $key => $value) {
-            array_push($data['pres'],$value->data());
+        if(isset($presId)){
+            $data['pres'] = array();
+            foreach ($presId as $key => $value) {
+                array_push($data['pres'],$value->data());
+            }
+        }else{
+            $data['pres'] = array();
         }
 
         return view('patient.index')->with($data);
@@ -130,15 +133,22 @@ class PatientController extends Controller
             $doctor = $queryDoctor->documents();
         }
 
-        $data['doctor'] = array();
-
-        foreach($doctor as $key=>$value){
-            array_push($data['doctor'],$value->data());
+        if(isset($doctor)){
+            $data['doctor'] = array();
+            foreach($doctor as $key=>$value){
+                array_push($data['doctor'],$value->data());
+            }
+        }else{
+            $data['doctor'] = array();
         }
 
-        $data['pres'] = array();
-        foreach ($presId as $key => $value) {
-            array_push($data['pres'],$value->data());
+        if(isset($presId)){
+            $data['pres'] = array();
+            foreach ($presId as $key => $value) {
+                array_push($data['pres'],$value->data());
+            }
+        }else{
+            $data['pres'] = array();
         }
         // end
 
@@ -222,7 +232,7 @@ class PatientController extends Controller
         foreach($data['visits'] as $visitInfo){
             $docId = $prescription->collection($dId);
             $presId = $docId->documents();
-            
+
             $queryDoctor = $doctorData->where('uid','=',$dId);
             $doctor = $queryDoctor->documents();
 
@@ -284,7 +294,7 @@ class PatientController extends Controller
         foreach($data['visits'] as $visitInfo){
             $docId = $prescription->collection($dId);
             $presId = $docId->documents();
-            
+
             $queryDoctor = $doctorData->where('uid','=',$dId);
             $doctor = $queryDoctor->documents();
 
@@ -309,7 +319,7 @@ class PatientController extends Controller
                 array_push($data['pres'],$val);
             }
         }
-        
+
         return view('patient/diagnosis')->with($data);
     }
 }

@@ -17,10 +17,8 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-
     <section class="content">
         <div class="container-fluid">
-
                 <div class="row">
             <!-- Left col -->
                     <section class="col-lg-12">
@@ -48,7 +46,7 @@
                                     <ul><p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('add-bank-info-warn') }}</p></ul>
                                 @endif
 
-                                <form method="POST" action="{{url('hospital/updateBankInfo/'.$id)}}" />
+                                <form method="POST" action="{{url('admin/updateBankInfo/'.$id)}}" />
                                     @csrf
                                     <input type="hidden" name="id" value="{{$id}}" />
                                     <div class="row">
@@ -63,16 +61,16 @@
                                             value="{{old('accountName')}}"/>
                                         </div>
 
+
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                             <label class="">Bank Name <i class="iconFa fa fa-asterisk color-red"></i></label>
                                             <input name="bankName" type="text" required="required" class="form-control" placeholder=""
-                                            value="{{$info['bankName']}}"/>
+                                            value="{{old('bankName')}}"/>
                                         </div>
-
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                             <label class="">Bank Account Number <i class="iconFa fa fa-asterisk color-red"></i></label>
                                             <input name="accountNumber" type="text" required="required" class="form-control" placeholder=""
-                                            value="{{$info['accountNumber']}}"/>
+                                            value="{{old('accountNumber')}}"/>
                                         </div>
 
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12">
@@ -88,7 +86,7 @@
                                         </div> --}}
 
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                                                <button class="btn btn-sm btn-primary"
+                                                <button type="submit" name="update" value="update" class="btn btn-sm btn-primary"
                                                 >Submit</button>
                                             </div>
 
