@@ -64,6 +64,8 @@ Route::group(['namespace' => 'Admin' ,'middleware' => 'checkuser' ], function ()
     Route::get('admin/deactiveDoctor/{id}','AdminDoctorController@deactiveDoctor');
     Route::get('admin/dprofile/{id}','AdminDoctorController@doctorProfileById');
 
+    Route::any('admin/updateBankInfo/{id}','AdminFirebaseController@updateBankInfo');
+
     Route::any('admin/district','AdminFirebaseController@manageDistrict');
 
     // Route::get('admin/')

@@ -209,7 +209,7 @@ class AdminFirebaseController extends Controller
 
         $v = validator::make($request->all(),[
             'name' => 'required|alpha|max:15',
-            'lastname' => 'required|alpha|max:10',
+            'lastname' => 'required|regex:/^[\pL\s]+$/u|max:15',
             'email' => 'required',
             'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/|confirmed',
             'mobile' =>  'required|digits:11',
@@ -953,6 +953,56 @@ class AdminFirebaseController extends Controller
 
     }
 
+    public function updateBankInfo(Request $request, $id){
+        $firestore = app('firebase.firestore');
+        $database = $firestore->database();
+
+        $hosInfo = $database->collection('hospital_users');
+        $ref = $hosInfo->document($id)->snapshot()->data();
+
+        if($request->submit){
+            if($ref['bankInfoUpdateRequest'] == true){
+                $updateInfo = $hosInfo->document($id)
+                    ->collection('bank_info')->document($id)
+                    ->snapshot()->data();
+
+                $updateInfo->update([
+                    ['path' => 'accountName', 'value' => $request->accountName],
+                    ['path' => 'bankName', 'value' => $request->bankName],
+                    ['path' => 'accountNumber', 'value' => $request->accountNumber],
+                    ['path' => 'swiftCode', 'value' => $request->swiftCode],
+                ]);
+
+                $docInfo = $database->collection('doctors');
+                $query = $docInfo->where('hospitalUid','=',$id);
+                $docRef = $query->documents();
+
+                $doctorInfo = array();
+                foreach($docRef as $item){
+                    array_push($doctorInfo,$item->data());
+                }
+
+                if(isset($doctorInfo) && !empty($doctorInfo)){
+                    foreach($doctorInfo as $item){
+                        $docData = $docInfo->document($item['id'])
+                            ->collection('bank_info')->document($item['id'])
+                            ->snapshot()->data();
+
+                        $docData->update([
+                            ['path' => 'accountName', 'value' => $request->accountName],
+                            ['path' => 'bankName', 'value' => $request->bankName],
+                            ['path' => 'accountNumber', 'value' => $request->accountNumber],
+                            ['path' => 'swiftCode', 'value' => $request->swiftCode],
+                        ]);
+                    }
+                }
+            }
+        }else{
+            $data['id'] = $id ;
+            return view('admin/updateBankInfo')->with($data);
+        }
+    }
+
     public function mobinotification($token,$senderName,$senderPhoto,$senderID){
 
       // $token = $_GET['token'];
@@ -1004,7 +1054,7 @@ class AdminFirebaseController extends Controller
         $result = curl_exec($ch);
 
         if ($result === FALSE) {
-      die('Problem occurred: ' . curl_error($ch));
+        die('Problem occurred: ' . curl_error($ch));
       }
 
       curl_close($ch);

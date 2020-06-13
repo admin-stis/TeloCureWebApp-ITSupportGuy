@@ -6,6 +6,7 @@ use App\Mail\passwordLinkEmail;
 use App\Mail\sendResetPassword;
 use App\Mail\subscribe;
 use App\Mail\contactUs;
+use App\Mail\SendRequest;
 use Mail;
 
 class MailSendController
@@ -21,7 +22,7 @@ class MailSendController
         Mail::to($receiver)->send(new OtpEmail($objDemo));
 
         if (Mail::failures()){
-          return flase;
+          return false;
         }else{
           return true;
         }
@@ -42,6 +43,21 @@ class MailSendController
           return false;
         }else{
           return true;
+        }
+    }
+
+    public function sendRequest($data,$sender,$receiver){
+        $obj = new \stdClass();
+        $obj->code = $data;
+        $obj->sender = $sender;
+        $obj->receiver = $receiver;
+
+        Mail::to($receiver)->send(new SendRequest($obj));
+
+        if (Mail::failures()){
+            return false;
+        }else{
+            return true;
         }
     }
 

@@ -351,13 +351,18 @@
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">@if(isset($bank_info['accountName'])){{$bank_info['accountName']}} @endif</span>
                                 </div>
-                                <div class="row col-md-12" style="display: {{$display}}">
+
+                                <div class="row col-md-12">
                                     <label class="col-md-5">
                                         <h6>Account Number</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">@if(isset($bank_info['accountNumber'])){{$bank_info['accountNumber']}} @endif</span>
+                                    <span class="col-md-5">
+                                    @if(isset($bank_info['accountNumber'])){{$bank_info['accountNumber']}}@endif
+
+                                    </span>
                                 </div>
+
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
                                         <h6>Bank Name</h6>

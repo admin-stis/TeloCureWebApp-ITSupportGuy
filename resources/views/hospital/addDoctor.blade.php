@@ -93,12 +93,13 @@
                                     <label>Hospital Branch</label>
                                     <select id="hospital" class="form-control" name="branchuid">
                                         <option value="">Select Branch</option>
+                                        <option value="{{$hospitalInfo['hospitalUid']}}">
+                                            {{$hospitalInfo['hospitalName']}} - {{$hospitalInfo['hospitalAddress']}}</option>
+
                                         @if($branchCounter > 0)
+
                                             @foreach ($branchInfo as $key => $item)
                                                 {{--@if (isset($item['branchuid']) && isset($item['address']))--}}
-
-                                                    <option value="{{$hospitalInfo['hospitalUid']}}">
-                                                     {{$hospitalInfo['hospitalName']}} - {{$hospitalInfo['hospitalAddress']}}</option>
                                                     <option value="{{$item['branchUid']}}">
                                                      {{$item['branch']}} - {{$item['address']}}</option>
                                                 {{--@endif--}}

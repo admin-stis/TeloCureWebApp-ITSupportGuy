@@ -163,9 +163,6 @@ class HospitalController extends Controller
 
         $hos = $info->set($data);
 
-
-
-
         // $branch = $database->collection('hospitalBranch')->newDocument();
 
         /*
@@ -290,7 +287,6 @@ class HospitalController extends Controller
 
     public function addDoctorAction(Request $request)
     {
-        //dd($request->all());
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
@@ -799,9 +795,11 @@ class HospitalController extends Controller
                         ->withErrors($v->errors());
         }
 
+        $data['info'] = $info->document($id)->collection('bank_info')->document($id)
+            ->snapshot()->data();
 
-        $data['info'] = $info->document($id)->collection('bank_info')->document($id)->snapshot()->data();
-
+        /**************Temporary commented*********************/
+        /*
         if($data['info'] != null ){
             Session::flash('add-bank-info-warn','You are not allowed to add multiple account.');
         }else{
@@ -813,10 +811,49 @@ class HospitalController extends Controller
             ],['merge' => true]);
             Session::flash('add-bank-info','Bank information added.');
         }
+        */
+        /*****************End*************************************/
+        $email = $hospitalUser[0]['email'];
+
+        $adminInfo = $database->collection('admin')
+            ->document('super')->snapshot()->data();
+
+        $receiver = $adminInfo['email'];
+
+        if($request->edit == 'edit' ){
+            $data = [
+                'name' => $hospitalUser[0]['hospitalName'],
+                'accountName' => $request->accountName,
+                'bankName' => $request->bankName,
+                'accountNumber' => $request->accountNumber,
+                'swiftCode' => $request->swiftCode
+            ];
+
+            $MailSend = new MailSendController();
+            $MailSend->sendRequest($data,$email,$receiver);
+
+            $updateBankFlag = $info->document($id)->snapshot()->data();
+
+            $updateBankFlag->update([
+                ['path' => 'bankInfoUpdateRequest', 'value' => true ]
+            ]);
+
+            Session::flash('add-bank-info','Request sent successfully.');
+        }else{
+            $info->document($id)->collection('bank_info')->document($id)->set([
+                'accountName' => $request->accountName,
+                'bankName' => $request->bankName,
+                'accountNumber' => $request->accountNumber,
+                'swiftCode' => $request->swiftCode,
+            ],['merge' => true]);
+
+            Session::flash('add-bank-info','Bank information added.');
+        }
 
         return redirect()->back();
 
     }
+
 
 
 }

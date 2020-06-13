@@ -2,15 +2,6 @@
 
 @section('content')
 
-@php
-    //dd($hospitalUser);
-    /*
-    if(isset($attr))
-        $disabled = $attr;
-    else dd(123);
-    */
-@endphp
-
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -98,36 +89,45 @@
 
 	                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
 	                                <label class="">Name on the Account <i class="iconFa fa fa-asterisk color-red"></i></label>
-	                                <input name="accountName" type="text" required="required" class="form-control" placeholder="" value="{{old('presentAddress')}}"/>
+                                    <input name="accountName" type="text" required="required" class="form-control" placeholder=""
+                                    value="@if(isset($info['accountName'])) {{$info['accountName']}} @else {{old('accountName')}} @endif"/>
 	                            </div>
 
 	                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
 	                                <label class="">Bank Name <i class="iconFa fa fa-asterisk color-red"></i></label>
-	                                <input name="bankName" type="text" required="required" class="form-control" placeholder="" value="{{old('bankName')}}"/>
+                                    <input name="bankName" type="text" required="required" class="form-control" placeholder=""
+                                    value="@if(isset($info['bankName'])) {{$info['bankName']}} @else {{old('bankName')}} @endif"/>
 	                            </div>
 
 	                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
 	                                <label class="">Bank Account Number <i class="iconFa fa fa-asterisk color-red"></i></label>
-	                                <input name="accountNumber" type="number" required="required" class="form-control" placeholder="" value="{{old('accountNumber')}}"/>
+                                    <input name="accountNumber" type="text" required="required" class="form-control" placeholder=""
+                                    value="@if(isset($info['accountNumber'])) {{$info['accountNumber']}} @else {{old('accountNumber')}} @endif"/>
 	                            </div>
-
-	                            {{--
-	                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
-	                                <label class="">Branch Name <i class="iconFa fa fa-asterisk color-red"></i></label>
-	                                <input name="branchName" type="text" required="required" class="form-control" placeholder=""/>
-	                            </div>
-	                            --}}
 
 	                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
 	                                <label class="">Swift Code/Routing Number</label>
-	                                <input name="swiftCode" type="text" class="form-control" placeholder="" value="{{old('swiftCode')}}"/>
+                                    <input name="swiftCode" type="text" class="form-control" placeholder=""
+                                    value="@if(isset($info['swiftCode'])) {{$info['swiftCode']}} @else {{old('swiftCode')}} @endif"/>
 	                            </div>
 
-	                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+	                            {{-- <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                     <button class="btn btn-sm btn-primary"
                                     @if(isset($attr)) {{$attr}} @endif
                                     >Submit</button>
-                                </div>
+                                </div> --}}
+
+                                @if($info == null)
+                                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                        <button class="btn btn-sm btn-primary"
+                                        >Submit</button>
+                                    </div>
+                                @else
+                                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                        <button class="btn btn-sm btn-primary" name="edit" value="edit"
+                                        >Edit</button>
+                                    </div>
+                                @endif
 
                             </form>
 

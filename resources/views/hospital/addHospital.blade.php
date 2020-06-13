@@ -74,7 +74,7 @@ else $hospitalName  = 'N/A';
 
                     <div class="form-group row">
                         <label for="branch" class="col-md-4 col-form-label text-md-right">Address <i class="iconFa fa fa-asterisk color-red"></i></label>
-                        <div class="col-md-6"><textarea id="address" type="text" name="address" value="{{old('address')}}" required="required" class="form-control ">Enter address</textarea></div>
+                        <div class="col-md-6"><textarea id="address" type="text" name="address" value="{{old('address')}}" required="required" class="form-control " placeholder="Enter address"></textarea></div>
                     </div>
 
                     <div class="form-group row  d-none">

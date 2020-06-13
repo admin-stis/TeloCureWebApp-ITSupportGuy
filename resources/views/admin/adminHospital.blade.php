@@ -90,7 +90,7 @@
             <!-- ./col -->
           </div>
           <!-- /.row -->
-    <div class="card">
+            <div class="card">
                     <div class="card-header">
                         <div class="col-md-12">
                             <span class=""><i class="fas fa-list mr-1"></i> List of Hospital User</span>
@@ -137,7 +137,10 @@
                                                     if(isset($item['hospitalName'])) $hospitalName = $item['hospitalName']; else $hospitalName = 'N/A' ;
                                                     if(isset($item['hospitalAddress'])) $hospitalAddress = $item['hospitalAddress']; else $hospitalAddress = 'N/A' ;
                                                     if(isset($item['plan'])) $plan = ucfirst($item['plan']); else $plan = 'N/A' ;
-                                                    if(isset($item['active'])) $approve = $item['active']; else $approve = 'false';
+                                                    if(isset($item['active'])) $approve = $item['active']; else $approve = false;
+                                                    if(isset($item['bankInfoUpdateRequest']))
+                                                        $bankInfoUpdateRequest = $item['bankInfoUpdateRequest'];
+                                                    else $bankInfoUpdateRequest = false;
                                                 @endphp
 
                                                 <tr>
@@ -146,12 +149,15 @@
                                                     <td>{{$phone}}</td>
                                                     <td>{{$email}}</td>
                                                     <td>{{$hospitalName}}</td>
-                                                    <td>{{$hospitalAddress}}</td> 
+                                                    <td>{{$hospitalAddress}}</td>
                                                     <td>{{$plan}}</td>
                                                     <td>
                                                         {{-- <a style="margin-top:5px;" class="btn btn-primary btn-sm" href="{{url('admin/viewHospitalUser')}}">View</a> --}}
                                                         @if($approve == true)
                                                             <a  style="margin-top:5px;width:100%;" class="btn btn-info btn-sm" disabled>Approved</a>
+                                                            <a  style="margin-top:5px;width:100%;" class="btn btn-primary btn-sm" href="{{url('admin/updateBankInfo/'.$id)}}">
+                                                                Change Bank Information
+                                                            </a>
                                                             {{-- <a  style="margin-top:5px;" class="btn btn-danger btn-sm" href="{{url('admin/unapproveHospitalUser')}}">Reject</a> --}}
                                                         @elseif($approve == false)
                                                             <a  style="margin-top:5px;width:100%;" class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser/'.$id)}}">Approve</a>
