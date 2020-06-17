@@ -11,7 +11,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{url('/patient')}}">Home</a></li>
               <li class="breadcrumb-item active">Patient</li>
             </ol>
           </div><!-- /.col -->
@@ -50,7 +50,13 @@
                       <i class="fas fa-ellipsis-v"></i>
                       <i class="fas fa-ellipsis-v"></i>
                     </span>
+
+                    @if(isset($patientData[0]['name']))
                     <span class="text">Name  : {{$patientData[0]['name']}}</span>
+                    @else
+                    <span class="text">Name  : N/A</span>
+                    @endif
+
                   </li>
 
                   <li>
@@ -58,7 +64,23 @@
                       <i class="fas fa-ellipsis-v"></i>
                       <i class="fas fa-ellipsis-v"></i>
                     </span>
-                    <span class="text">Designation MBBS</span>
+                    @isset($patientData[0]['email'])
+                    <span class="text">Email :  {{$patientData[0]['email']}}</span>
+                    @else
+                    <span class="text">Email  : N/A</span>
+                    @endif
+                </li>
+
+                  <li>
+                    <span class="handle">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+
+                    @if(isset($patientData[0]['phone']))
+                    <span class="text">Contact No : {{$patientData[0]['phone']}}</span>
+                    @else <span class="text">Contact No  : N/A</span>
+                    @endif
                   </li>
 
                   <li>
@@ -66,7 +88,7 @@
                       <i class="fas fa-ellipsis-v"></i>
                       <i class="fas fa-ellipsis-v"></i>
                     </span>
-                    <span class="text">Cell : {{$patientData[0]['phone']}}</span>
+                    <span class="text">Blood Group : @if(isset($patientData[0]['bloodGroup'])) {{$patientData[0]['bloodGroup']}} @else N/A @endif</span>
                   </li>
 
                   <li>
@@ -74,23 +96,17 @@
                       <i class="fas fa-ellipsis-v"></i>
                       <i class="fas fa-ellipsis-v"></i>
                     </span>
-                    <span class="text">Blood Group @if(isset($patientData[0]['bloodGroup'])) {{$patientData[0]['bloodGroup']}} @else N/A @endif</span>
-                  </li>
-
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <span class="text">Date of Birth  @if(isset($patientData[0]['dateOfBirth'])) {{$patientData[0]['dateOfBirth']}} @else N/A @endif</span>
+                    <span class="text">Date of Birth  : @if(isset($patientData[0]['dateOfBirth'])) {{$patientData[0]['dateOfBirth']}} @else N/A @endif</span>
                   </li>
 
                 </ul>
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
+                @if(isset($patientData[0]['uid']))
                 <a href="{{'patient/edit/'.$patientData[0]['uid']}}" class="btn btn-sm btn-info float-right">
                     <i class="fas fa-edit"></i> Edit</a>
+                @endif
               </div>
             </div>
             <!-- /.card -->
@@ -106,7 +122,7 @@
                 </h3>
               </div>
               <!-- /.card-header -->
-              
+
               <div class="card-body">
                 <ul class="row todo-list" data-widget="todo-list">
                     @foreach($pres as $key => $val)
@@ -122,7 +138,7 @@
                     </li>
                     @endforeach
                 </ul><!-- /.card-body -->
-                
+
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
@@ -132,7 +148,11 @@
             </div>
             <!-- /.card -->
           </section>
-
+          <section class="col-lg-12">
+            @if(Session::has('edit-success'))
+                <ul><p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('edit-success') }}</p></ul>
+            @endif
+          </section>
           <section class="col-lg-12 connectedSortable">
             <!-- TO DO List -->
             <div class="card">
@@ -152,7 +172,7 @@
                       <th class="text-center">Rating</th>
                       <th class="text-center">Duration</th>
                       <th class="text-center">Cost</th>
-                      {{--<th class="text-center">Diagnosis</th>--}}
+                      <th class="text-center">Diagnosis</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -166,10 +186,12 @@
                                 $date_b = new DateTime($visit['callEndTime']);
 
                                 $interval = date_diff($date_b,$date_a);
+
                                 echo '<tr>';
                                 echo '<td>'.$visit['callStartTime']->get()->format('d-m-Y').'</td>';
                                 echo '<td>'.$visit['doctor']['name'].'</td>';
-                                if($totalRating != 0 && $totalCount != 0){
+
+                                /*if($totalRating != 0 && $totalCount != 0){
                                     $rating = $totalRating/$totalCount;
                                     echo '<td>'.$rating.'</td>';
                                 }else{
@@ -181,11 +203,51 @@
                                     echo '<td>'.$visit['transactionHistory']['subTotalRounded'].' Tk</td>';
                                 }else{
                                     echo '<td>0 Tk</td>';
+                                }*/
+
+                                $rate = '';
+
+                                if(isset($totalRating) && isset($totalCount) && $totalCount > 0)
+                                {
+                                    $rating = $totalRating/$totalCount;
+                                    /*
+                                    for($i = 0;$i < $rating; $i++)
+                                    {
+                                        $rate .= '<span class="fa fa-star" style="color:#d4af37"></span>';
+                                    }
+                                    */
+                                    echo '<td>'.round($rating,2).'</td>';
                                 }
-                                //echo '<td><a class="btn btn-small btn-info"><i class="fa fa-eye"></i> 
-                                //View</a></td>';
-                                echo '</tr>';
+
+                                else
+                                {
+                                    $rating = 0;
+                                    /*
+                                    for($i = 0;$i < 5; $i++)
+                                    {
+                                        $rate .= '<span class="fa fa-star" style=""></span>';
+                                    }
+                                    echo '<td>'.$rate.'</td>';
+                                    */
+                                    echo '<td>'.$rating.'</td>';
+                                }
+
+                                echo '<td>'.$interval->format("%H:%I:%S").'</td>';
+                                if(isset($visit['transactionHistory']['subTotalRounded'])){
+                                    echo '<td>'.$visit['transactionHistory']['subTotalRounded'].' Tk</td>';
+                                }else{
+                                    echo '<td>0 Tk</td>';
+                                }
+                                $pId = $visit['patientUid'];
+                                $dId = $visit['doctorUid'];
+                                $prId = $visit['prescriptionId'];
                             @endphp
+                                <td>
+                                    <a href="{{url('patient/diagnosis/'.$pId.'/'.$dId.'/'.$prId)}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i>
+                                View</a></td>
+
+                               </tr>
+
 
                         @endforeach
                     </tbody>

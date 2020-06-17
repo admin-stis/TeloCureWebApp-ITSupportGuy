@@ -166,7 +166,7 @@
 
                                 <input name="old_photoUrl" type="hidden" class="form-control" value="{{$doctorProfile['photoUrl']}}" />
                                 <input name="photoUrl" type="file" class="form-control" placeholder="" value="{{$doctorProfile['photoUrl']}}"/>
-                                </div>
+                            </div>
 
 
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">

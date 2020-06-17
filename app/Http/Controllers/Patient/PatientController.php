@@ -35,16 +35,25 @@ class PatientController extends Controller
             array_push($data['visits'],$value->data());
         }
 
+        //echo '<pre>';
+        // print_r($data['visits']);
+        // dd(1);
+
         $presInfo = array();
+
         foreach($data['visits'] as $visitInfo){
-            $docId = $prescription->collection($visitInfo['doctorUid'])->orderBy('createdDate', 'DESC')->limit(5);
+            //echo $visitInfo['doctorUid'];
+            $docId = $prescription->collection($visitInfo['doctorUid'])
+            ->orderBy('createdDate', 'DESC')->limit(5);
             $presId = $docId->documents();
+            //print_r($presId);
+
             // $presId = $docId->document($visitInfo['prescriptionId']);
             // foreach ($presId as $key => $value) {
             // array_push($prescriptionDetail, $value->data());
             // }
         }
-
+        //dd(1);
         if(isset($presId)){
             $data['pres'] = array();
             foreach ($presId as $key => $value) {
@@ -62,7 +71,15 @@ class PatientController extends Controller
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
-        $data['userProfile'] = session::get('user');
+        $data['userProfileData'] = session::get('user');
+
+        $docRef = $database->collection('users');
+
+        if(isset($data['userProfileData']) && $data['userProfileData'] != null){
+            $uid = $data['userProfileData'][0]['uid'];
+        }
+
+        $data['userProfile'] = $docRef->document($uid)->snapshot()->data();
 
         return view('patient/profile')->with($data);
     }
@@ -161,6 +178,8 @@ class PatientController extends Controller
 
         $patientData = $database->collection('users');
 
+        $district = $database->collection('districts');
+
         $queryPatient = $patientData->where('uid','=',$uid);
         $patient = $queryPatient->documents();
         $data['patient'] = array();
@@ -169,6 +188,14 @@ class PatientController extends Controller
             array_push($data['patient'],$value->data());
         }
 
+        $querydistrict = $district->where('active','=',true);
+        $districtData = $querydistrict->documents();
+        $data['district'] = array();
+
+        foreach($districtData as $key=>$value){
+            array_push($data['district'],$value->data());
+        }
+        //dd($data);
         return view('patient/edit')->with($data);
     }
 
@@ -180,7 +207,15 @@ class PatientController extends Controller
         $uid =  $request->uid ;
         $docRef = $database->collection('users')->document($uid);
 
-        //dd(1);
+        if(isset($request['photoUrl'])){
+            $fileName = $request['photoUrl']->getClientOriginalName();
+
+            $fileName = $uid.''.$fileName;
+            $request['photoUrl']->move(public_path('images/profilepic'), $fileName);
+            $url = "http://telocure.com/api/download/".$fileName;
+        }else{
+            $url = $request->old_photoUrl;
+        }
 
         $docRef->update([
                 ['path' => 'uid' , 'value' => $uid],
@@ -192,9 +227,10 @@ class PatientController extends Controller
                 ['path' => 'height' , 'value' => $request->height],
                 ['path' => 'district' , 'value' => $request->district],
                 ['path' => 'email' , 'value' => $request->email],
-                ['path' => 'phone' , 'value' => $request->phone]
+                ['path' => 'phone' , 'value' => $request->phone],
+                ['path' => 'photoUrl', 'value' => $url]
             ]);
-
+        Session::flash('edit-success','Profile updated Successfully.');
         return redirect('patient');
 
     }
@@ -321,5 +357,9 @@ class PatientController extends Controller
         }
 
         return view('patient/diagnosis')->with($data);
+    }
+
+    public function help(){
+        return view('patient/help');
     }
 }

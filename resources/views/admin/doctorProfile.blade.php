@@ -71,20 +71,22 @@
                 </div>
                 --}}
 
-                <div class="">
+                <div class="margin:0 auto;display:table">
                     <p style="margin:0 auto;display:table">Rating <p>
+                    <p style="margin:0 auto;display:table">
                     @php
                         if(isset($doctorProfile['totalRating']) && isset($doctorProfile['totalCount']) && $doctorProfile['totalCount'] > 0)
                         {
                             $totalRating = $doctorProfile['totalRating'];
                             $totalCount = $doctorProfile['totalCount'];
                             $rating = floor($totalRating/$totalCount);
-                            for($i = 0;$rating < $count; $i++)
+                            for($i = 0;$i < $rating; $i++)
                             {
                                 echo '<span class="fa fa-star"></span>';
                             }
                         }
                     @endphp
+                    </p>
                 </div>
                 <div class="">
                     @if(isset($doctorProfile['price']))

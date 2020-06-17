@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+    //dd($district);
+@endphp
+
 <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -10,7 +14,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/patient')}}">Home</a></li>
             <li class="breadcrumb-item active">Dashboard</li>
           </ol>
         </div><!-- /.col -->
@@ -44,48 +48,86 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form role="form" method="post" action="{{url('patient/editAction/'.$patient[0]['uid'])}}">
+                <form role="form" method="post" action="{{url('patient/editAction/'.$patient[0]['uid'])}}" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="uid" value="{{$patient[0]['uid']}}">
                     <div class="col-md-12">
                         <div class="row">
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                <label class="control-label">Profile Picture <i class="iconFa fa fa-asterisk color-red"></i> </label>
+
+                                {{--<input name="photoUrl" type="file" class="form-control" placeholder="" />--}}
+
+                                <input name="old_photoUrl" type="hidden" class="form-control"
+                                value="@if(isset($patient[0]['photoUrl'])){{$patient[0]['photoUrl']}} @endif" />
+                                <input name="photoUrl" type="file" class="form-control" placeholder="" value="@if(isset($patient[0]['photoUrl'])){{$patient[0]['photoUrl']}} @endif"/>
+                            </div>
+
                             <div class="form-group col-sm-12">
                                 <label>Name :</label>
                                 <input class="form-control" name="name" value="{{$patient[0]['name']}}">
                             </div>
                             <div class="form-group col-sm-6">
                                 <label>Date of Birth :</label>
-                                <input class="form-control" name="dateOfBirth" value="{{$patient[0]['dateOfBirth']}}">
+                                <input class="form-control" name="dateOfBirth" type="date"
+                                value="@if(isset($patient[0]['dateOfBirth'])){{$patient[0]['dateOfBirth']}}@endif">
                             </div>
                             <div class="form-group col-sm-6">
+
                                 <label>Gender :</label>
-                                <input class="form-control" name="gender" value="{{$patient[0]['gender']}}">
+                                <select class="form-control" type="text" name="gender" required>
+                                    <option value=" ">Select Gender</option>
+                                    <option value="Male" @if(isset($patient[0]['gender']) && $patient[0]['gender'] == 'Male') selected @endif>Male</option>
+                                    <option value="Female" @if(isset($patient[0]['gender']) && $patient[0]['gender'] == 'Female') selected @endif>Female</option>
+                                </select>
+
                             </div>
                             <div class="form-group  col-sm-4">
                                 <label>Blood Group :</label>
-                                <input class="form-control" name="bloodGroup" value="{{$patient[0]['bloodGroup']}}">
+                                <select name="bloodGroup" class="form-control" required>
+                                    <option value="A+" @if(isset($patient[0]['bloodGroup']) && $patient[0]['bloodGroup'] == 'A+') selected @endif>A+</option>
+                                    <option value="A-" @if(isset($patient[0]['bloodGroup']) && $patient[0]['bloodGroup'] == 'A-') selected @endif>A-</option>
+                                    <option value="AB+" @if(isset($patient[0]['bloodGroup']) && $patient[0]['bloodGroup'] == 'AB+') selected @endif>AB+</option>
+                                    <option value="AB-" @if(isset($patient[0]['bloodGroup']) && $patient[0]['bloodGroup'] == 'AB-') selected @endif>AB-</option>
+                                    <option value="B+" @if(isset($patient[0]['bloodGroup']) && $patient[0]['bloodGroup'] == 'B+') selected @endif>B+</option>
+                                    <option value="B-" @if(isset($patient[0]['bloodGroup']) && $patient[0]['bloodGroup'] == 'B-') selected @endif>B-</option>
+                                    <option value="O+" @if(isset($patient[0]['bloodGroup']) && $patient[0]['bloodGroup'] == 'O+') selected @endif>O+</option>
+                                    <option value="O-" @if(isset($patient[0]['bloodGroup']) && $patient[0]['bloodGroup'] == 'O-') selected @endif>O-</option>
+                                </select>
                             </div>
                             <div class="form-group  col-sm-4">
                                 <label>weight :</label>
-                                <input class="form-control" name="weight" value="{{$patient[0]['weight']}}">
+                                <input class="form-control" name="weight"
+                                value="@if(isset($patient[0]['weight'])){{$patient[0]['weight']}}@endif">
                             </div>
                             <div class="form-group  col-sm-4">
                                 <label>Height :</label>
-                                <input class="form-control" name="height" value="{{$patient[0]['height']}}">
+                                <input class="form-control" name="height"
+                                value="@if(isset($patient[0]['height'])){{$patient[0]['height']}}@endif">
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="form-group col-sm-12">
                                 <label>District :</label>
-                                <input class="form-control" name="district" value="{{$patient[0]['district']}}">
+                                <select name="district" class="form-control" required>
+                                    <option value=" ">Select District</option>
+                                    @foreach ($district as $item)
+                                        <option value="{{$item['name']}}"
+                                        @if(isset($patient[0]['district']) && $item['name'] == $patient[0]['district']) selected @endif
+                                        >{{$item['name']}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group  col-sm-6">
                                 <label>Email :</label>
-                                <input class="form-control" name="email" value="{{$patient[0]['email']}}">
+                                <input class="form-control" name="email"
+                                value="@if(isset($patient[0]['email'])){{$patient[0]['email']}}@endif">
                             </div>
                             <div class="form-group  col-sm-6">
                                 <label>Phone :</label>
-                                <input class="form-control" name="phone" value="{{$patient[0]['phone']}}">
+                                <input class="form-control" name="phone"
+                                value="@if(isset($patient[0]['phone'])){{$patient[0]['phone']}}@endif">
                             </div>
                         </div>
                         <div>

@@ -90,6 +90,8 @@ Route::group(['namespace' => 'Admin' ,'middleware' => 'checkuser' ], function ()
     Route::get('admin/hospitalUser/{status}','AdminHospitalController@hosStatus');
 
     Route::get('admin/servicenav','AdminServiceController@index');
+    Route::get('admin/service','AdminServiceController@serviceInfo');
+    Route::get('admin/finance','AdminServiceController@financialInfo');
 
 });
 
@@ -186,6 +188,7 @@ Route::group(['namespace'=>'Patient', 'middleware' => 'checkPatient'],function()
     Route::get('patient/edit/{id}','PatientController@edit');
     Route::POST('patient/editAction/{id}','PatientController@editAction');
     Route::get('patient/profile','PatientController@profile');
+    Route::get('patient/help','PatientController@help');
 });
 //end
 

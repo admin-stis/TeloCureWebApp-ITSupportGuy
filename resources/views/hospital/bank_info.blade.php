@@ -117,7 +117,7 @@
                                     >Submit</button>
                                 </div> --}}
 
-                                @if($info == null)
+                                @if(isset($info) == null)
                                     <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                         <button class="btn btn-sm btn-primary"
                                         >Submit</button>
@@ -137,10 +137,6 @@
     </div>
 </div>
 
-
 </section>
-
-
-
 
 @endsection

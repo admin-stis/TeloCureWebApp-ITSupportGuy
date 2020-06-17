@@ -37,7 +37,7 @@
         <!-- Main row -->
         <div class="row">
           <!-- Left col -->
-          <section class="row col-lg-12 connectedSortable">
+          <section class="row col-lg-12">
             <div class="col-lg-4 col-md-4 col-sm-12" style="background:#fff;padding:15px;">
                 <h5>Patient By Gender</h5><hr>
                 <canvas id="mycanvas"></canvas>
@@ -56,7 +56,7 @@
                   <div class="inner">
                     <h4 class="text-center text-bold">Service Info</h4>
                   </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="{{url('admin/service')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
               <div class="col-lg-6 col-md-6" style="margin-top:20px;">
@@ -65,7 +65,7 @@
                   <div class="inner">
                     <h4 class="text-center text-bold">Financial Info</h4>
                   </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="{{url('admin/finance')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
 
               <!-- ./col -->
@@ -73,6 +73,63 @@
           </section>
 
           <!-- /.Left col -->
+
+          {{-- Patient information with diagnosis --}}
+          <section class="col-lg-12">
+            <div class="card">
+               <div class="card-header">
+                  <div class="col-md-12">
+                     <span class=""><i class="fas fa-list mr-1"></i>Financial Information</span>
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+               </div>
+               <!-- /.card-header -->
+               <div class="card-body">
+                  <div class="tab-content p-0">
+                     <!-- Morris chart - Sales -->
+                     <div class="chart tab-pane active" id="revenue-chart"
+                        style="position: relative;">
+                        <div class="row">
+                           <input id="search" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Phone</th>
+                                    <th>Gender</th>
+                                    <th>District</th>
+                                    <th>Diagnosis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i = 0; @endphp
+                                @foreach ($arr as $item)
+
+                                    <tr>
+                                        <td>{{$item['name']}}</td>
+                                        <td>{{$item['phone']}}</td>
+                                        <td>{{$item['gender']}}</td>
+                                        <td>{{$item['district']}}</td>
+                                        <td>
+                                            <span class="col-md-4">Respiration : @if(isset($item['diagnosis'][$i]['resp'])){{$item['diagnosis'][$i]['resp']}} @else N/A @endif</span>
+                                            <span class="col-md-4">Blood Pressure : @if(isset($item['diagnosis'][$i]['bpm'])){{$item['diagnosis'][$i]['bpm']}} @else N/A @endif</span>
+                                            <span class="col-md-4">Temparature :@if(isset($item['diagnosis'][$i]['temp'])){{$item['diagnosis'][$i]['temp']}} @else N/A @endif</span>
+                                        </td>
+                                    </tr>
+                                @php $i++; @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="col-md-6 col-lg-6 jquery-script-clear"></div>
+                     </div>
+                  </div>
+               </div>
+               <!-- /.card-body -->
+            </div>
+
+         </section>
 
 
         </div>
@@ -90,8 +147,8 @@
                 success: function(data) {
                     var male = 0,female = 0;
                     for(var i in data){
-                        if(data[i].gender == 'MALE') male++ ;
-                        else if(data[i].gender == 'FEMALE') female++ ;
+                        if(data[i].gender == 'Male') male++ ;
+                        else if(data[i].gender == 'Female') female++ ;
                     }
 
                 var chartdata = {
@@ -165,8 +222,8 @@
                     //console.log(data[4].online);
                     var online = 0,offline = 0;
                     for(var i in data){
-                        if(data[i].online == 'true') online++ ;
-                        else if(data[i].online == 'false') offline++ ;
+                        if(data[i].online == true) online++ ;
+                        else if(data[i].online == false) offline++ ;
                     }
 
                 var chartdata = {

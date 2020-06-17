@@ -42,10 +42,19 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url('patient/help')}}" class="nav-link">
               <i class="nav-icon fas fa-question"></i>
               <p>
                 Help
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{url('changepassword/patient/'.$patientInfo[0]['uid'])}}" class="nav-link">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>
+                Change Password
               </p>
             </a>
           </li>

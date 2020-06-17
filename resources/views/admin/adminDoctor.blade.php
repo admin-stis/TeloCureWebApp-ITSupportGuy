@@ -122,6 +122,7 @@
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Rating</th>
                                                 <th scope="col">Price</th>
+                                                <th scope="col">Hospital</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -157,6 +158,7 @@
                                                       @endphp
                                                     </td>
                                                     <td>@if(isset($item['price'])){{$item['price']}} Tk @else N/A @endif</td>
+                                                    <td>@if(isset($item['hospitalName']) && $item['hospitalName'] !=null){{$item['hospitalName']}} @else N/A @endif</td>
                                                     <td>
                                                         @if(isset($item['uid']))
                                                             <a class="btn btn-sm btn-primary" href="{{url('admin/dprofile/'.trim($item['uid']))}}">View</a>

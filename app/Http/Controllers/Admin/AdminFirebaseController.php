@@ -293,8 +293,8 @@ class AdminFirebaseController extends Controller
 
         $patientRef->set([
             'uid' => $patientRef->id(),
-            'approve' => '',
-            'online' => '',
+            //'approve' => '',
+            'online' => false,
             'active'=> true,
             'email'=> $request->email,
             'name'=> $request->name,
@@ -305,11 +305,19 @@ class AdminFirebaseController extends Controller
             'weight' => '',
             'height' => '',
             'bloodGroup' => '',
-            'totalCount' => '',
-            'totalRating' => '',
+            'totalCount' => 0,
+            'totalRating' => 0,
+            'price' => 0,
+            'regNo' => null,
             'medication' => '',
             'smoke' => '',
-            'photoUrl' => ''
+            'photoUrl' => '',
+            'hospitalUid' => null,
+            'hospitalized' => false,
+            'doctorType' => null,
+            'district' => '',
+            'dicstrictId' => 0,
+            'createdAt' => new Timestamp(new DateTime()),
         ]);
 
         return redirect('login/patient');
@@ -321,7 +329,7 @@ class AdminFirebaseController extends Controller
      * @param $msisdn
      * @param $messageBody
      * @param $csmsId (Unique)
-     */
+    */
     public function singleSms($msisdn, $messageBody, $csmsId)
     {
         $api_token = "smartecch-23572135-15fc-459c-a718-4417c3537662"; //put ssl provided api_token here
@@ -632,15 +640,33 @@ class AdminFirebaseController extends Controller
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
+        // $v = validator::make($request->all(),[
+        //     // 'name'  => 'required|regex:/^[\pL\s\-]+$/u/',
+        //     // 'hospitalName' => 'required|max:25|regex:/^[\pL\s\-]+$/u/',
+        //     'name' => 'required|alpha',
+        //     'hospitalName' => 'required|alpha',
+        //     'hospitalAddress' => 'required|max:100',
+        //     'phone' =>  'required|max:14',
+        //     'plan' => 'required',
+        //     'email' => 'required',
+        //     'bankInfoUpdateRequest' => false
+        // ]);
+
+        /*
+
         $v = validator::make($request->all(),[
-            'name'  => 'required|regex:/^[\pL\s\-]+$/u',
-            'hospitalName' => 'required|max:25|regex:/^[\pL\s\-]+$/u',
+            'name' => 'required|alpha|max:15',
+            'hospitalName' => 'required|regex:/^[\pL\s]+$/u|max:15',
             'hospitalAddress' => 'required|max:100',
-            'phone' =>  'required|max:14',
-            'plan' => 'required',
             'email' => 'required',
-            'bankInfoUpdateRequest' => false
+            'plan' => 'required',
+            'bankInfoUpdateRequest' => false,
+            'phone' =>  'required|digits:11',
         ]);
+
+        */
+
+
 
         $hosRef = $database->collection('hospital_users');
         $hosData = $hosRef->documents();
@@ -679,9 +705,11 @@ class AdminFirebaseController extends Controller
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
         */
+        /*
         if($v->fails()){
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
+        */
 
         if($flag == true && $emailFlag == true){
           return redirect()->back()->withInput();
@@ -785,6 +813,8 @@ class AdminFirebaseController extends Controller
         if($title == 'doctor') $ref = $database->collection('doctors');
 
         if($title == 'hospital') $ref = $database->collection('hospital_users');
+
+        if($title == 'patient') $ref = $database->collection('users');
 
         $query = $ref->where('email','=',$reqData);
         $documents = $ref->documents();
@@ -891,6 +921,8 @@ class AdminFirebaseController extends Controller
         return view('doctor.changepassword')->with($data);
       }elseif($title == 'hospital'){
         return view('hospital.changepassword')->with($data);
+      }elseif($title == 'patient'){
+        return view('patient.changepassword')->with($data);
       }
     }
 
@@ -926,13 +958,16 @@ class AdminFirebaseController extends Controller
         foreach ($doctorInfo as $key => $value) {
           array_push($doctorArr,$value->data());
         }
+      }
+      elseif($title == 'patient') {
+        $userCollection = $database->collection('users');
+        $query = $userCollection->where('email','=',$email);
+        $doctorInfo = $query->documents();
+        $doctorArr = array();
 
-        // if(isset($doctorArr[0]['hospitalized']) && $doctorArr[0]['hospitalized'] == true){
-        //   //$uid = $doctorArr[0]['uid'];
-        //   $id = substr($id,2);
-        // }else{
-        //   $id = $id;
-        // }
+        foreach ($doctorInfo as $key => $value) {
+          array_push($doctorArr,$value->data());
+        }
       }
 
       $method = "AES-128-CBC";
@@ -973,6 +1008,11 @@ class AdminFirebaseController extends Controller
                     ['path' => 'swiftCode', 'value' => $request->swiftCode],
                 ]);
 
+                $statusChange = $hosInfo->document($id);
+                $statusChange->update([
+                    ['path' => 'bankInfoUpdateRequest', 'value' => false]
+                ]);
+
                 $docInfo = $database->collection('doctors');
                 $query = $docInfo->where('hospitalUid','=',$id);
                 $docRef = $query->documents();
@@ -985,8 +1025,7 @@ class AdminFirebaseController extends Controller
                 if(isset($doctorInfo) && !empty($doctorInfo)){
                     foreach($doctorInfo as $item){
                         $docData = $docInfo->document($item['uid'])
-                            ->collection('bank_info')->document($item['uid'])
-                            ;
+                            ->collection('bank_info')->document($item['uid']);
 
                         $docData->update([
                             ['path' => 'accountName', 'value' => $request->accountName],
@@ -999,7 +1038,8 @@ class AdminFirebaseController extends Controller
             }
 
             Session::flash('add-bank-info','Bank information updated successfully.');
-            echo 'true';
+            $data['id'] = $id ;
+            return view('admin/updateBankInfo')->with($data);
         }else{
             $data['id'] = $id ;
             return view('admin/updateBankInfo')->with($data);

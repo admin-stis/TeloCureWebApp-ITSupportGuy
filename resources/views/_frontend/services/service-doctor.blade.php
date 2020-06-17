@@ -23,23 +23,23 @@
                                           <!-- <button type="submit" class="btn service-doctor-btn">JOIN NOW</button> -->
                                       </div>
                                 </div>
-                                <div class="col-md-4">       
+                                <div class="col-md-4">
                                        <div class="text-left">
                                           <a class="btn drop-btn" href="{{url('login/doctor')}}"><span>SIGN IN</span></a>
-                    
+
                                           <!-- <button type="submit" class="btn service-doctor-btn">SIGN IN</button> -->
                                        </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="col-lg-6">
                         <div class="privacydetails-inner-left">
                             <!-- <img src="assets/img/privacy/UberIM_010182_3x2.jpg" alt="Service"> -->
                             <img src="{{asset('assets/img/service-doctor/service-doctor-image-1.png')}}" width="100%" style="padding-top:20px;" alt="Service">
                         </div>
-                    </div>                    
+                    </div>
                 </div>
 
                 <div class="row">
@@ -61,14 +61,14 @@
                             <p>As doctors, your health matters too, practice
 social- distancing during the COVID-19 pandemic and help your patients feel better
 via online visits using our app</p>
-                            <p><b>For every visit, we will take up to 5% to 20 % commission</b></p> 
+                            <p><b>For every visit, we will take up to 5% to 20 % commission</b></p>
                         </div>
                     </div>
                     <!-- <div class="col-lg-6">
                         <div class="privacydetails-inner-left">
                             <img src="assets/img/service-doctor/service-doctor-image-1.png" alt="Service">
                         </div>
-                    </div> -->                    
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@ via online visits using our app</p>
                 </div>
                 <hr>
                 <div class="row" style="margin-bottom:50px;margin-top:20px;">
-                    
+
                    <div class="col-lg-6 col-sm-12">
                         <div class="helodocwork-item helodocwork-right" style="margin-bottom:40px">
                             <ul>
@@ -150,7 +150,7 @@ via online visits using our app</p>
                     </div>
                     <div class="col-lg-6 col-sm-12">
                        <div class="privacydetails-inner-left">
-                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-02.jpg')}}" alt="Service">
+                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-021.jpg')}}" alt="Service">
                        </div>
                    </div>
 
@@ -186,13 +186,13 @@ via online visits using our app</p>
                     </div>
                    <div class="col-lg-6 col-sm-12">
                        <div class="privacydetails-inner-left">
-                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-03.jpg')}}" alt="Service">
+                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-031.jpg')}}" alt="Service">
                        </div>
                    </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- Blog -->
         <!-- <section class="workingprocess-area">
             <div class="container">
@@ -247,9 +247,9 @@ via online visits using our app</p>
         <!-- Service Details -->
         <!-- <div class="privacydetails-area ptb-100">
             <div class="container">
-                
+
                 <div class="row" style="margin-bottom:40px">
-                    
+
                        <div class="col-lg-6">
                            <div class="privacydetails-inner-left">
                                <img src="assets/img/privacy/default.jpg" alt="Service">
@@ -263,7 +263,7 @@ via online visits using our app</p>
                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, laudantium ullam, iure distinctio officia libero voluptatem obcaecati vero deleniti minima nemo itaque alias nisi eveniet soluta architecto quae laboriosam unde.</p>
                            </div>
                        </div>
-                    
+
                 </div>
             </div>
         </div> -->
@@ -296,13 +296,13 @@ via online visits using our app</p>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-sm-6 col-lg-6 wow fadeInUp" data-wow-delay=".3s">
                         <div class="privacydriverriderblog-item">
                             <div class="privacydriverriderblog-top">
                                 <a href="javascript:void()">
                                     <img src="assets/img/privacy/car-icon.png" alt="Blog">
-                                    
+
                                 </a>
                             </div>
                             <div class="privacydriverriderblog-bottom">
