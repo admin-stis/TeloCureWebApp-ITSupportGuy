@@ -89,7 +89,7 @@
         <a class="nav-link" data-widget="pushmenu" href="{{url('hospital')}}"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a href="{{url('hospital')}}" class="nav-link">Home</a>
       </li>
       <!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -308,6 +308,22 @@
             event.preventDefault();
             $('#weeklyEarning').show();
             $('#statements').hide();
+        });
+    });
+
+    $(document).ready(function () {
+        $('table').paginate({
+            'elemsPerPage': 10,
+                'maxButtons': 6
+        });
+    });
+
+    $(document).ready(function(){
+        $('.dp li a').click(function(){
+            let v = $(this).attr('href');
+            $('v').addClasses('btn-success');
+            $('v').removeClass('btn-success');
+
         });
     });
 </script>

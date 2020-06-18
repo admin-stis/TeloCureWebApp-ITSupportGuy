@@ -2,6 +2,14 @@
 
 @section('content')
 
+<style>
+    #search1 {
+        border: 1px solid !important;
+        padding: 10px;
+        margin-left: 17px;
+    }
+</style>
+
 @php
     if(isset($hospitalUser[0]['hospitalUid'])) $id = $hospitalUser[0]['hospitalUid']; else $id = '';
     if(isset($hospitalUser[0]['uid'])) $uid = $hospitalUser[0]['uid']; else $uid = '';
@@ -140,8 +148,10 @@
               </div>
               <!-- /.card-header -->
              <div class="card-body">
-
-                    <table class="table ">
+                <div class="row">
+                    <input id="search1" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
+                </div>
+                    <table class="table revTable">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -149,12 +159,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{--@foreach ($rev['rev'] as $key=>$item)
-                                <tr>
+                            @php //dd($rev['rev']);
+                            @endphp
+                            @foreach ($rev['rev'] as $key=>$item)
+
+                                <tr class="t1">
                                     <td><span>{{$item['date']}}</span></td>
                                     <td><span>{{$item['amount']}} Tk</span></td>
                                 </tr>
-                            @endforeach--}}
+
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -233,18 +247,12 @@
                                                         {
                                                             $totalRating = $item['totalRating'];
                                                             $totalCount = $item['totalCount'];
-                                                            $rating = floor($totalRating/$totalCount);
-                                                            for($i = 0;$rating < $count; $i++)
-                                                            {
-                                                                echo '<span class="fa fa-star" style="color:green"></span>';
-                                                            }
+                                                            $rating = round(($totalRating/$totalCount),1);
+                                                            echo $rating ;
                                                         }
                                                         else
                                                         {
-                                                          for($i = 0;$i < 5; $i++)
-                                                          {
-                                                            echo '<span class="fa fa-star"></span>';
-                                                          }
+                                                          echo '5';
                                                         }
                                                       @endphp
                                                     </td>
@@ -348,12 +356,22 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+        $("#search1").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("tbody tr.t1").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
     });
 
     $(document).ready(function () {
         $('.doctorListTable').paginate({
             'elemsPerPage': 10,
                 'maxButtons': 6
+        });
+        $('.revTable').paginate({
+            'elemsPerPage': 5,
+                'maxButtons': 4
         });
     });
 

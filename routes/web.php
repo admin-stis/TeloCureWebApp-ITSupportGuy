@@ -205,7 +205,14 @@ Route::group(['namespace'=>'Hospital', 'middleware' => 'checkHospital'],function
     Route::get('hospital/help','HospitalController@portalHelp');
     Route::get('hospital/bankinfo','HospitalController@bank_info');
     Route::post('hospital/addBank_infoAction','HospitalController@addBank_infoAction');
+
+
 });
+
+Route::get('/hospital/revenue','Hospital\HospitalController@revForHospital');
+Route::any('/hospital/revenue/{date}','Hospital\HospitalController@revByDate');
+Route::get('/hospital/revenuebymonth/{month}','Hospital\HospitalController@revByMonth');
+Route::get('/hospital/revenuebyyear/{year}','Hospital\HospitalController@revByYear');
 
 Route::get('admin/gethospital','Admin\AdminController@hospital');
 Route::get('admin/hospital/getBranch/{id}','Admin\AdminController@branch');

@@ -266,10 +266,39 @@ class AdminFirebaseController extends Controller
     //29-04-2020
     public function setpatients(Request $request)
     {
-
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
-        $patientRef = $database->collection('users')->newDocument();
+
+        $patientColl = $database->collection('users');
+        $patientDoc = $patientColl->documents();
+
+        $flag = false;
+        $emailFlag = false;
+        $patient = array();
+
+        foreach($patientDoc as $item){
+          array_push($patient,$item->data());
+        }
+
+        echo '<pre>';
+
+        foreach($patient as $key=>$item){
+          if(isset($item['phone']) && $item['phone'] == $request->mobile){
+            Session::flash('phonemsg','Contact number already exits.');
+            $flag = true ;
+            break;
+          }
+        }
+
+        //dd(1);
+
+        foreach($patient as $key=>$item){
+          if(isset($item['email']) && $item['email'] == $request->email){
+                Session::flash('emailmsg','Email already exits.');
+                $emailFlag = true ;
+                break;
+          }
+        }
 
         $v = validator::make($request->all(),[
             'name' => 'required|alpha|max:15',
@@ -279,9 +308,22 @@ class AdminFirebaseController extends Controller
             'mobile' =>  'required|digits:11',
         ]);
 
+        // if($v->fails()){
+        //     return redirect()->back()->withErrors($v->errors());
+        // }
+
         if($v->fails()){
-            return redirect()->back()->withErrors($v->errors());
+            return redirect()->back()->withInput()->withErrors($v->errors());
         }
+
+        if($flag == true && $emailFlag == true){
+          return redirect()->back()->withInput();
+        }elseif($flag == true && $emailFlag == false){
+          return redirect()->back()->withInput();
+        }elseif($flag == false && $emailFlag == true){
+          return redirect()->back()->withInput();
+        }
+
 
         $pass = $request->password ;
         $method = "AES-128-CBC";
@@ -290,6 +332,8 @@ class AdminFirebaseController extends Controller
         $password = openssl_encrypt($pass,$method,$key,0,$iv);
 
         //end
+
+        $patientRef = $database->collection('users')->newDocument();
 
         $patientRef->set([
             'uid' => $patientRef->id(),
@@ -640,17 +684,17 @@ class AdminFirebaseController extends Controller
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
-        // $v = validator::make($request->all(),[
-        //     // 'name'  => 'required|regex:/^[\pL\s\-]+$/u/',
-        //     // 'hospitalName' => 'required|max:25|regex:/^[\pL\s\-]+$/u/',
-        //     'name' => 'required|alpha',
-        //     'hospitalName' => 'required|alpha',
-        //     'hospitalAddress' => 'required|max:100',
-        //     'phone' =>  'required|max:14',
-        //     'plan' => 'required',
-        //     'email' => 'required',
-        //     'bankInfoUpdateRequest' => false
-        // ]);
+        /*$v = validator::make($request->all(),[
+            // 'name'  => 'required|regex:/^[\pL\s\-]+$/u/',
+            // 'hospitalName' => 'required|max:25|regex:/^[\pL\s\-]+$/u/',
+            'name' => 'required|alpha',
+            'hospitalName' => 'required|alpha',
+            'hospitalAddress' => 'required|max:100',
+            'phone' =>  'required|max:14',
+            'plan' => 'required',
+            'email' => 'required',
+            'bankInfoUpdateRequest' => false
+        ]);*/
 
         /*
 

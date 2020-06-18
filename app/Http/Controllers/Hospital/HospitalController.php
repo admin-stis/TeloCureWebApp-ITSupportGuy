@@ -63,9 +63,9 @@ class HospitalController extends Controller
             //$info->where
         }
 
-        //$data['rev'] = $this->totalRevenue($id);
+        $data['rev'] = $this->totalRevenue($id);
 
-        //dd($data['rev']);
+        //dd($data);
 
         return view('hospital.index')->with($data);
         //}
@@ -852,6 +852,250 @@ class HospitalController extends Controller
 
         return redirect()->back();
 
+    }
+
+    //new revenue code
+    public function revenueById($id){
+
+        $firestore = app('firebase.firestore');
+        $database = $firestore->database();
+
+        $visits = $database->collection('visits');
+        //$query = $visits->where('doctorUid','=',$id);
+        $visitDataArr = $visits->documents();
+
+        $visitArr = array();
+        foreach($visitDataArr as $item){
+            array_push($visitArr,$item->data());
+        }
+
+        $visitData = array();
+        foreach($visitArr as $item){
+            if($item['doctor']['hospitalUid'] == $id){
+                array_push($visitData,$item);
+            }
+            /*else{
+                $null = 'null';
+                array_push($visitData,$null);
+            }*/
+        }
+
+        //echo '<pre>';
+        $data['date'] = array();
+        $data['rev'] = array();
+        $data['trans'] = array();
+        $data['doctorUid'] = array();
+        $data['doctorName'] = array();
+        $data['doctorPhone'] = array();
+        $data['call'] = array();
+        $data['total'] = array();
+        $data['summary'] = array();
+        $totalRev = 0;
+
+        foreach($visitData as $val){
+            if($val != null){
+                $totalRev = $totalRev + $val['transactionHistory']['subTotalRounded'];
+                array_push($data['date'],$val['callStartTime']->get()->format('Y-m-d'));
+                array_push($data['rev'],$val['transactionHistory']['subTotalRounded']);
+                // array_push($data['doctorName'],$val['doctor']['name']);
+                // array_push($data['doctorPhone'],$val['doctor']['phone']);
+                array_push($data['doctorUid'],$val['doctorUid']);
+            }
+        }
+
+        $visitDoc = array_count_values($data['doctorUid']);
+        $docKey = array_keys($visitDoc);
+
+        $call = 0;
+        $total = 0 ;
+        foreach($visitData as $val){
+            if($val != null){
+                for($i = 0;$i < count($docKey); $i++){
+                    if($docKey[$i] == $val['doctorUid']){
+                        $call += 1 ;
+                        $total = $total + $val['transactionHistory']['subTotalRounded'];
+                    }
+                }
+                array_push($data['doctorUid'],$val['doctorUid']);
+                array_push($data['doctorName'],$val['doctor']['name']);
+                array_push($data['doctorPhone'],$val['doctor']['phone']);
+
+            }
+
+        }
+        array_push($data['call'],$call);
+        array_push($data['total'],$total);
+
+        $docCounter = count(array_count_values($data['doctorUid']));
+
+        for($i = 0; $i < $docCounter; $i++){
+            $arr1 = array(
+                'doctor' => $data['doctorName'][$i],
+                'phone' => $data['doctorPhone'][$i],
+                'revenue' => $data['total'][$i],
+                'calls' => $data['call'][$i],
+            );
+            array_push($data['summary'],$arr1);
+        }
+
+        $counter = count($data['date']);
+
+        $data['info'] = array();
+        $arr = array();
+
+        for($i = 0; $i < $counter; $i++){
+            $arr = array(
+                'id' => $id,
+                'date' => $data['date'][$i],
+                'doctor' => $data['doctorName'][$i],
+                'phone' => $data['doctorPhone'][$i],
+                'revenue' => $data['rev'][$i],
+                'totalRev' => $totalRev,
+                'calls' => $counter
+            );
+            array_push($data['info'],$arr);
+        }
+
+        /*echo json_encode($data['info']);
+
+        dd(1);
+
+        $counter = count($data['visited']);
+        $data['revenueByDate'] = array();
+        $data['revenueKey'] = array();
+        $data['revenueVal'] = array();
+        $data['rev'] = array();
+
+        $sortingDate = array('date');
+        $sortingValue = array('value');
+
+        for($i = 0; $i < $counter; $i++){
+            if(isset($data['visited'][$i]['transactionHistory'])){
+                $rVal = $data['visited'][$i]['transactionHistory']['subTotalRounded'];
+                $rKey = $data['visited'][$i]['transactionHistory']['createdDate']->get()->format('Y-m-d');
+
+                $sresult=array_search($rKey,$sortingDate);
+                if($sresult == null){
+                    array_push($sortingDate,$rKey);
+                    array_push($sortingValue,$rVal);
+                }else{
+                    $total=$sortingValue[$sresult]+$rVal;
+                    $replacements = array($sresult => $total);
+                    $sortingValue=array_replace($sortingValue, $replacements);
+                }
+            }
+        }
+
+        $counter1 = count($sortingDate);
+        for($i = 1; $i < $counter1; $i++){
+            $data['revenueByDate'] = array('id' => $id ,'title' => $sortingValue[$i].'Tk','start' => $sortingDate[$i],'end' => '');
+            array_push($data['rev'] , $data['revenueByDate']);
+        }
+
+        */
+        return $data;
+        //return view('hospital/hospitalrev')->with($data);
+
+    }
+
+    public function revForHospital(){
+
+        $data['hospitalUser'] = array();
+        $data['hospitalUser'] = Session::get('user');
+        $id = $data['hospitalUser'][0]['hospitalUid'];
+
+        $data = $this->revenueById($id);
+
+        return view('hospital/hospitalrev')->with($data);
+    }
+
+    public function revByDate(Request $request){
+        $data['hospitalUser'] = array();
+        $data['hospitalUser'] = Session::get('user');
+        $id = $data['hospitalUser'][0]['hospitalUid'];
+        $date = $request->date ;
+        $data = $this->revenueById($id);
+        //$counter = sizeof($data['info']);
+        $res = array();
+        $result = array();
+        $rev = 0 ;
+        foreach($data['info'] as $val){
+            if($val['date'] == $date){
+                $rev = $rev + $val['revenue'] ;
+            }
+            $res = array(
+                    'date' => $date,
+                    'rev' => $rev
+            );
+        }
+
+        array_push($result,$res);
+        return $result;
+    }
+    //end
+
+    //Revenue By Month
+    public function revByMonth($date){
+        $data['hospitalUser'] = array();
+        $data['hospitalUser'] = Session::get('user');
+        $id = $data['hospitalUser'][0]['hospitalUid'];
+        //$date = $request->date ;
+        $data = $this->revenueById($id);
+        //$counter = sizeof($data['info']);
+        $res = array();
+        $result = array();
+        $rev = 0 ;
+
+
+        $yrdata= strtotime($date);
+
+        $month = date('Y-m', $yrdata);
+
+        foreach($data['info'] as $val){
+            $curmonth = strtotime($val['date']);
+            $curmonth1 = date('Y-m', $curmonth);
+
+            if($curmonth1 == $month){
+                $rev = $rev + $val['revenue'] ;
+            }
+            $res = array(
+                'date' => $date,
+                'rev' => $rev
+            );
+        }
+
+        array_push($result,$res);
+        return $result;
+    }
+
+    //revenue by year
+    public function revByYear($year){
+        $data['hospitalUser'] = array();
+        $data['hospitalUser'] = Session::get('user');
+        $id = $data['hospitalUser'][0]['hospitalUid'];
+        //$date = $request->date ;
+        $data = $this->revenueById($id);
+        //$counter = sizeof($data['info']);
+        $res = array();
+        $result = array();
+        $rev = 0 ;
+
+        foreach($data['info'] as $val){
+            $curmonth = strtotime($val['date']);
+            $curmonth1 = date('Y', $curmonth);
+            if($curmonth1 == $year){
+                $rev = $rev + $val['revenue'] ;
+            }else{
+                $rev = 0;
+            }
+            $res = array(
+                'date' => $year,
+                'rev' => $rev
+            );
+        }
+
+        array_push($result,$res);
+        return $result;
     }
 
 

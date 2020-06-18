@@ -76,17 +76,18 @@
                 --}}
 
                 <div class="">
-                    <p style="margin:0 auto;display:table">Rating <p>
+                    <p style="margin:0 auto;display:table">Rating :
                     @php
                         if(isset($doctorProfile['totalRating']) && isset($doctorProfile['totalCount']) && $doctorProfile['totalCount'] > 0)
                         {
                             $totalRating = $doctorProfile['totalRating'];
                             $totalCount = $doctorProfile['totalCount'];
-                            $rating = floor($totalRating/$totalCount);
-                            for($i = 0;$rating < $count; $i++)
-                            {
-                                echo '<span class="fa fa-star"></span>';
-                            }
+                            $rating = round(($totalRating/$totalCount),1);
+                            echo $rating.'</p>' ;
+                        }
+                        else {
+                            $rating = 5 ;
+                            echo $rating.'</p>';
                         }
                     @endphp
                 </div>

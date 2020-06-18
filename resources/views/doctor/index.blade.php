@@ -4,7 +4,6 @@
 <!-- Content Header (Page header) -->
     @php
         $revenue = json_encode($rev) ;
-
         //-----------------------------------------------
         $todayData=0;
         $curWeekData=0;
@@ -17,11 +16,11 @@
 
         $day_of_week = $start_date->format("w");
 
-        $curWeek=date('Y-m-d', strtotime("-$day_of_week days", strtotime(date('Y-m-d'))));
+        $curWeek = date('Y-m-d', strtotime("-$day_of_week days", strtotime(date('Y-m-d'))));
 
-        $curMonth=date('Y-m');
+        $curMonth = date('Y-m');
 
-        $curYear=date('Y');
+        $curYear = date('Y');
 
         $dailyIncome = 0 ;
         $weeklyIncome = 0 ;

@@ -192,4 +192,6 @@ class AdminHospitalController extends Controller
         return redirect('admin/hospital') ;
     }
 
+    
+
 }
