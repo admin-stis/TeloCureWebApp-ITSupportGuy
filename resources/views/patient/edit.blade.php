@@ -131,7 +131,7 @@
                             </div>
                         </div>
                         <div>
-                            <button class="btn-small btn btn-success pull-right"><i class="fa fa-edit"> Edit</i></button>
+                            <button class="btn-sm btn btn-success pull-right">Update</button>
                         </div>
                     </div>
                 </form>

@@ -252,7 +252,8 @@
                                                         }
                                                         else
                                                         {
-                                                          echo '5';
+                                                          $rating = 5 ;
+                                                          echo $rating ;
                                                         }
                                                       @endphp
                                                     </td>

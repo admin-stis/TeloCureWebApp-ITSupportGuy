@@ -158,11 +158,19 @@
                            @endif
                            @if(isset($doctorProfile['totalRating']) && isset($doctorProfile['totalCount']) && $doctorProfile['totalCount'] > 0)
                            @php
-                           $rating = floor($doctorProfile['totalRating']/$doctorProfile['totalCount']);
-                           @endphp
+
                            <div class="well well-sm col-sm-12">
                               <label class="col-sm-6"><i  class="fa fa-star"></i> Rating :</label>
-                              <span class="col-sm-6">{{$rating}}</span>
+                              <span class="col-sm-6">
+                                @php
+                                        $rating = round(($totalRating/$totalCount),1);
+                                            echo $rating;
+                                        }else{
+                                            $rating = 5 ;
+                                            echo $rating;
+                                        }
+                                @endphp
+                           </span>
                            </div>
                            @endif
                            {{-- @if(isset($doctorProfile['totalCount']))

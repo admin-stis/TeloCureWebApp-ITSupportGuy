@@ -12,7 +12,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">E-preacription</li>
+              <li class="breadcrumb-item active">E-prescription</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -32,7 +32,7 @@
         <!-- Main row -->
         <div class="row">
           <!-- Left col -->
-          
+
 
           <section class="col-lg-12 connectedSortable">
             <!-- TO DO List -->
@@ -56,12 +56,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                        
-                        
+
+
                         @foreach ($pres as $key=>$val)
 
 
-                        @php 
+                        @php
                             $oldDate = strtotime($val['createdDate']->get()->format('m/d/Y'));
                             $newDate = date('m/d/Y',strtotime('+30 days',$oldDate));
                         @endphp

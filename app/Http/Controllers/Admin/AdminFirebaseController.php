@@ -582,7 +582,7 @@ class AdminFirebaseController extends Controller
         }
 
         if(!empty($userArr)){
-            if(isset($userArr[0]['email']))$email = $userArr[0]['email'];
+            if(isset($userArr[0]['email'])) $email = $userArr[0]['email'];
             /*$districtRef = $database->collection('districts');
 
             $data['district'] = $districtRef->documents();
@@ -684,17 +684,17 @@ class AdminFirebaseController extends Controller
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
-        /*$v = validator::make($request->all(),[
-            // 'name'  => 'required|regex:/^[\pL\s\-]+$/u/',
-            // 'hospitalName' => 'required|max:25|regex:/^[\pL\s\-]+$/u/',
+        // regex for alpha_spaces : /^[\pL\s]+$/u
+        $v = validator::make($request->all(),[
+            'name'  => 'required|regex:/^[\p{L} ]+$/u',
+            'hospitalName' => 'required|max:25|regex:/^[\pL\s\-]+$/u',
             'name' => 'required|alpha',
             'hospitalName' => 'required|alpha',
             'hospitalAddress' => 'required|max:100',
             'phone' =>  'required|max:14',
             'plan' => 'required',
-            'email' => 'required',
-            'bankInfoUpdateRequest' => false
-        ]);*/
+            'email' => 'required'
+        ]);
 
         /*
 
@@ -749,11 +749,11 @@ class AdminFirebaseController extends Controller
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
         */
-        /*
+
         if($v->fails()){
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
-        */
+
 
         if($flag == true && $emailFlag == true){
           return redirect()->back()->withInput();
@@ -778,7 +778,8 @@ class AdminFirebaseController extends Controller
             'hospitalName' => $request->hospitalName,
             'hospitalAddress' => $request->hospitalAddress,
             'comment' => $request->comment,
-            'login_attempt' => false
+            'login_attempt' => false,
+            'bankInfoUpdateRequest' => false
         ]);
 
         $balance = $hosRef->document($insertData->id())->collection('balance')

@@ -136,23 +136,23 @@
                     <label><i  class="fa fa-user"></i> Name :</label>
                     {{$userProfile ['name']}}
                 </div>
-               <div class="well well-sm col-sm-6">
+               <div class="well well-sm col-sm-12">
                    <label><i  class="fa fa-birthday-cake"></i> Date of Birth :</label>
                    @if(isset($userProfile ['dateOfBirth'])){{$userProfile ['dateOfBirth']}}@endif</div>
-                <div class="well well-sm col-sm-6">
+                <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-male"></i> Gender :</label>
                     @if(isset($userProfile ['gender'])){{$userProfile ['gender']}}@endif
                 </div>
-                <div class="well well-sm col-sm-4">
+                <div class="well well-sm col-sm-12">
                  <label><i  class="fa fa-tint"></i> Blood Group :</label>
                  @if(isset($userProfile ['bloodGroup'])){{$userProfile ['bloodGroup']}}@endif</div>
-                 <div class="well well-sm col-sm-4">
+                 <div class="well well-sm col-sm-12">
                   <label><i  class="fa fa-balance-scale"></i> Weight :</label>
                   @if(isset($userProfile ['weight'])){{$userProfile ['weight']}} KG @endif</div>
-                  <div class="well well-sm col-sm-4">
+                  <div class="well well-sm col-sm-12">
                    <label><i  class="fa fa-arrow-up"></i> Height :</label>@if(isset($userProfile ['height'])){{$userProfile ['height']}}@endif</div>
 
-                <div class="well well-sm col-sm-6">
+                <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-phone"></i> Phone :</label>
                     @if(isset($userProfile ['phone']))
                         {{$userProfile ['phone']}}
@@ -160,7 +160,7 @@
                         <span>N/A</span>
                     @endif
                 </div>
-                <div class="well well-sm col-sm-6">
+                <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-envelope"></i> Email :</label>
                     @if(isset($userProfile ['email'])){{$userProfile ['email']}}@endif
                 </div>

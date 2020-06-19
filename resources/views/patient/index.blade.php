@@ -216,12 +216,12 @@
                                         $rate .= '<span class="fa fa-star" style="color:#d4af37"></span>';
                                     }
                                     */
-                                    echo '<td>'.round($rating,2).'</td>';
+                                    echo '<td>'.round($rating,1).'</td>';
                                 }
 
                                 else
                                 {
-                                    $rating = 0;
+                                    $rating = 5;
                                     /*
                                     for($i = 0;$i < 5; $i++)
                                     {

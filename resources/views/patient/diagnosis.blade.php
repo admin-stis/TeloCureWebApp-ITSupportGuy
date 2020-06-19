@@ -54,11 +54,11 @@
                 <div class="">Phone : {{$patient[0]['phone']}}</div>
                 <div class="">Email : {{$patient[0]['email']}} </div>
 
-                <div class="">Blood Pressure : @if($pres[0]['vital']['bpm']){{$pres[0]['vital']['bpm']}} @else N/A @endif</div>
-                <div class="">Measure Time : @if($pres[0]['vital']['measureTime']){{$pres[0]['vital']['measureTime']->get()->format('d-m-Y')}}  @else N/A @endif</div>
-                <div class="">Respiration : @if($pres[0]['vital']['resp']){{$pres[0]['vital']['resp']}} @else N/A @endif</div>
-                <div class="">Temparature : @if($pres[0]['vital']['temp']){{$pres[0]['vital']['temp']}} @else N/A @endif</div>
-                
+                <div class="">Blood Pressure : @if(isset($pres[0]['vital']['bpm'])){{$pres[0]['vital']['bpm']}} @else N/A @endif</div>
+                <div class="">Measure Time : @if(isset($pres[0]['vital']['measureTime'])){{$pres[0]['vital']['measureTime']->get()->format('d-m-Y')}}  @else N/A @endif</div>
+                <div class="">Respiration : @if(isset($pres[0]['vital']['resp'])){{$pres[0]['vital']['resp']}} @else N/A @endif</div>
+                <div class="">Temparature : @if(isset($pres[0]['vital']['temp'])){{$pres[0]['vital']['temp']}} @else N/A @endif</div>
+
             </div>
             <!-- /.card-body -->
 

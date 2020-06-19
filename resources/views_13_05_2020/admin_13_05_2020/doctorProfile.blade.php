@@ -73,11 +73,11 @@
                         {
                             $totalRating = $doctorProfile['totalRating'];
                             $totalCount = $doctorProfile['totalCount'];
-                            $rating = floor($totalRating/$totalCount);
-                            for($i = 0;$rating < $count; $i++)
-                            {
-                                echo '<span class="fa fa-star"></span>';
-                            }
+                            $rating = round(($totalRating/$totalCount),1);
+                            echo $rating;
+                        }else{
+                            $rating = 5;
+                            echo $rating;
                         }
                     @endphp
                 </div>

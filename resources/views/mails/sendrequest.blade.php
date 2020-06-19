@@ -19,7 +19,6 @@
         <p class="alert alert-info"><strong>Bank Name : </strong>{{$data->code['bankName']}}</p>
         <p class="alert alert-info"><strong>Swift Code / Routing Number : </strong>{{$data->code['swiftCode']}}</p>
     </div>
-    <br>
 
     Best regards,
     <p>{{$data->code['name']}}</p>

@@ -189,7 +189,7 @@ class AdminFirebaseController extends Controller
 
         $flag = false;
         $emailFlag = false;
-        
+
         // echo '<pre>';
         foreach($doctor as $key=>$item){
           if(isset($item['phone']) && $item['phone'] == $request->mobile){
@@ -206,7 +206,7 @@ class AdminFirebaseController extends Controller
                 break;
           }
         }
-      
+
         $v = validator::make($request->all(),[
             'name' => 'required|alpha|max:15',
             'lastname' => 'required|alpha|max:10',
@@ -215,7 +215,7 @@ class AdminFirebaseController extends Controller
             'mobile' =>  'required|digits:11',
         ]);
 
-        
+
         if($v->fails()){
             return redirect()->back()->withErrors($v->errors());
         }
@@ -246,7 +246,7 @@ class AdminFirebaseController extends Controller
             "hospitalized" => false,
             "online" => false
         ]);
-        
+
         //$doctorRef->set($validateData);
 
         return redirect('login/doctor');
@@ -410,7 +410,7 @@ class AdminFirebaseController extends Controller
 
         }
 
-       
+
         $v = validator::make($request->all(),[
             'password' => 'required|min:8|alpha_num',
             'common' =>  'required|max:14',
@@ -533,7 +533,7 @@ class AdminFirebaseController extends Controller
         $database = $firestore->database();
 
         $v = validator::make($request->all(),[
-            'name'     => 'required|regex:/^[\pL\s\-]+$/u',
+            'name'     => 'required|regex:/^[a-zA-Z\s]+$/',
             'hospitalName' => 'required|max:25|regex:/^[\pL\s\-]+$/u',
             'hospitalAddress' => 'required|max:100',
             'phone' =>  'required|max:14',
@@ -590,12 +590,12 @@ class AdminFirebaseController extends Controller
       $firestore = app('firebase.firestore');
       $database = $firestore->database();
       $disRef = $database->collection('districts');
-        
+
       if(isset($r->submit)){
         //dd($r->all());
         $id = $r->disId;
         $district = $disRef->document($id);
-        
+
         $district->update([
             ['path' => 'active' , 'value' => true]
         ]);
@@ -617,7 +617,7 @@ class AdminFirebaseController extends Controller
     }
 
     public function sendTempOtp(Request $request){
-    
+
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
@@ -650,7 +650,7 @@ class AdminFirebaseController extends Controller
                 $uid = $item['uid'];
             }
           }
-          
+
           $MailSend = new MailSendController();
           $temp_pass = 'telocure'.''.mt_rand(1000000,99999999);
           $val = $MailSend->sendResetPassword($temp_pass,$reqData);

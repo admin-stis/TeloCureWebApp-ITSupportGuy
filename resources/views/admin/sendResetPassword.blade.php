@@ -11,7 +11,7 @@
 
     Hello {{$data->receiver}}
 
-    <p>Thank you for your interest as a Doctor with our TeleCure App from the organization [Sristy].
+    <p>Thank you for your interest as a Doctor with our TeloCure App from the organization [Sristy].
     Your login credential is below:</p>
 
     <?php

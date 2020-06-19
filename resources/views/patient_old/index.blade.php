@@ -106,7 +106,7 @@
                 </h3>
               </div>
               <!-- /.card-header -->
-              
+
               <div class="card-body">
                 <ul class="row todo-list" data-widget="todo-list">
                     @foreach($pres as $key => $val)
@@ -163,10 +163,10 @@
                                 echo '<td>'.$visit['callStartTime']->get()->format('d-m-Y').'</td>';
                                 echo '<td>'.$visit['doctor']['name'].'</td>';
                                 if($totalRating != 0 && $totalCount != 0){
-                                    $rating = $totalRating/$totalCount;
+                                    $rating = round(($totalRating/$totalCount),1);
                                     echo '<td>'.$rating.'</td>';
                                 }else{
-                                    echo '<td>0</td>';
+                                    echo '<td>5</td>';
                                 }
                                 echo '<td>'.$interval->format("%H:%I:%S").'</td>';
                                 if(isset($visit['transactionHistory']['subTotalRounded'])){
