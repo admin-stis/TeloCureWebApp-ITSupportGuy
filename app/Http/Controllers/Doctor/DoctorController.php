@@ -36,8 +36,15 @@ class DoctorController extends Controller
 
             $data['doctorInfo'] = $db->collection('doctors')->document($uid)->snapshot();
             $data['bank_info'] = $db->collection('doctors')->document($uid)->collection('bank_info')->document($uid)->snapshot();
+            $data['others'] = $db->collection('doctors')->document($uid)->collection('others')->document($uid)->snapshot();
             $data['regNoInfo'] = $db->collection('doctors')->document($uid)->snapshot();
 
+            $data['nid'] = $db->collection('doctors')->document($uid)->collection('others')->document($uid)->snapshot()->data();
+            // if(empty($data['nid']))dd($data['nid']);
+            // else dd(1);
+            if($data['nid'] == null){
+                return $this->completeProfile();
+            }
             //new
             $visits = $db->collection('visits');
             $query = $visits->where('doctorUid','=',$uid);
@@ -195,6 +202,13 @@ class DoctorController extends Controller
             $data['documents'] = $docRef->collection('documents')->document($id)->snapshot()->data();
             $data['doctorProfile'] = $docRef->snapshot()->data();
 
+            $data['nid'] = $db->collection('doctors')->document($id)->collection('others')->document($id)->snapshot()->data();
+            // if(empty($data['nid']))dd($data['nid']);
+            // else dd(1);
+            if($data['nid'] == null){
+                return $this->completeProfile();
+            }
+
             //dd($data['others']);
 
             //for hospital doctor
@@ -216,6 +230,8 @@ class DoctorController extends Controller
 
             // print_r("expression");
             // dd($data['bank_info']);
+
+
 
             if(isset($data['doctorProfile']['regNo'])){
                 if($data['doctorProfile']['regNo'] != null){
@@ -303,6 +319,13 @@ class DoctorController extends Controller
         $visits = $database->collection('visits');
 
         $id = $id;
+
+        $data['nid'] = $database->collection('doctors')->document($id)->collection('others')->document($id)->snapshot()->data();
+            // if(empty($data['nid']))dd($data['nid']);
+            // else dd(1);
+            if($data['nid'] == null){
+                return $this->completeProfile();
+            }
 
         $query = $visits->where('doctorUid','=',$id);
         $visitData = $query->documents();

@@ -13,7 +13,7 @@
         //   $doctorInfo = Session::get('user');
         // }
         //$revenue = json_encode($rev) ;
-        
+
         //dd($doctor['hospitalized']);
 
     @endphp
@@ -113,8 +113,8 @@
                                     <td>Phone</td>
                                     <td>Gender</td>
                                     <td>District</td>
-                                    <td>Prescription</td>
-                                    @if(isset($doctor['hospitalized']) && $doctor['hospitalized'] == false) 
+                                    {{-- <td>Prescription</td> --}}
+                                    @if(isset($doctor['hospitalized']) && $doctor['hospitalized'] == false)
                                     <td>Visit Fee</td>
                                     <td>Discount</td>
                                     <td>Total</td>
@@ -131,14 +131,14 @@
                             <td>{{$item['patient']['phone']}}</td>
                             <td>{{$item['patient']['gender']}}</td>
                             <td>{{$item['patient']['district']}}</td>
-                            <td></td>
-                            @if(isset($doctor['hospitalized']) && $doctor['hospitalized'] == false) 
+                            {{-- <td></td> --}}
+                            @if(isset($doctor['hospitalized']) && $doctor['hospitalized'] == false)
                             <td>{{$item['transactionHistory']['visitFee']}} Tk</td>
                             <td>{{$item['transactionHistory']['discountPercentage']}} %</td>
                             <td>{{$item['transactionHistory']['subTotal']}} Tk</td>
                             @endif
-                            <td>{{$item['transactionHistory']['createdDate']->get()->format('Y-m-d')}}</td>
-
+                            {{-- <td>{{$item['transactionHistory']['createdDate']->get()->format('Y-m-d')}}</td> --}}
+                            <td>{{$item['callStartTime']->get()->format('Y-m-d')}}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -157,7 +157,7 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-    
+
     <script type="text/javascript">
       $(document).ready(function(){
         $("#search").on("keyup", function() {

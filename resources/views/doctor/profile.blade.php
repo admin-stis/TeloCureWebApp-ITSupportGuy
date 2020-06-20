@@ -354,12 +354,22 @@
                                 </div>
 
                                 <div class="row col-md-12">
-                                    <label class="col-md-5">
-                                        <h6>Account Number</h6>
-                                    </label>
-                                    <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">
-                                    @if(isset($bank_info['accountNumber'])){{$bank_info['accountNumber']}}@endif
+                                    @php
+                                    if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == false){
+                                        if(isset($bank_info['accountNumber'])){
+                                            echo '<label class="col-md-5">
+                                                <h6>Account Number</h6>
+                                            </label>
+                                            <span class="col-md-1"> : </span>
+                                            <span class="col-md-5">';
+                                            echo $bank_info['accountNumber'];
+                                            echo '</span>
+                                            </div>';
+                                        }
+                                    }else{
+
+                                    }
+                                    @endphp
 
                                     </span>
                                 </div>

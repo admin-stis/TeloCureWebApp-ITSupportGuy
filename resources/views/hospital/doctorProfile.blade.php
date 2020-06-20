@@ -37,7 +37,7 @@
 					@if (isset($doctorProfile['photoUrl']) && $doctorProfile['photoUrl'] != '')
                         <img style="width:100px;height:100px;" src="{{$doctorProfile['photoUrl']}}" alt="{{$doctorProfile['name']}}"/>
                     @else
-                        <span class="userIcon fa fa-user-circle"></span>
+                        <span class="userIcon fa fa-user-circle" style="margin:0 auto;display: table;font-size:8em;"></span>
                     @endif
                 </div>
 				<!-- END SIDEBAR USERPIC -->

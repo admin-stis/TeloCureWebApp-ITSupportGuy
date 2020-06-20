@@ -230,6 +230,14 @@ class PatientController extends Controller
                 ['path' => 'phone' , 'value' => $request->phone],
                 ['path' => 'photoUrl', 'value' => $url]
             ]);
+
+
+        session_unset();
+        $dt[0] = $database->collection('users')->document($uid)->snapshot()->data();
+        Session::put('user',$dt);
+        $data['patientData'] = array();
+        array_push($data['patientData'] , Session::get('user'));
+        
         Session::flash('edit-success','Profile updated Successfully.');
         return redirect('patient');
 

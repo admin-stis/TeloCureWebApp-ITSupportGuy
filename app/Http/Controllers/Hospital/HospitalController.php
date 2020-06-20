@@ -509,16 +509,23 @@ class HospitalController extends Controller
         $MailSend = new MailSendController();
 
         //$link = $uid.'/'.$email.'/'.$temp_pass ;
-        $link = 'ID :'.$uid.' \nLogin with'.$request->phone.' Your temporary password : '.$temp_pass;
+        //$link = 'ID :'.$uid.' \nLogin with'.$request->phone.' Your temporary password : '.$temp_pass;
 
-        $val = $MailSend->sendOtp($link,$email); //email
+        $link = [
+            'name' => $name,
+            'uid' => $uid,
+            'phone' => $request->phone,
+            'pass' => $temp_pass
+        ];
+
+        $val = $MailSend->sendDoc($link,$email); //email
 
         /*
             send through mobile
             --------------------------------
             */
             $msisdn = $request->phone;
-            $messageBody = " Your temporary password : ".$temp_pass." \nVisits : https://telocure.com/login/doctor";
+            $messageBody = " Your temporary password : ".$temp_pass." \nVisit : https://telocure.com/login/doctor";
             $csmsId = uniqid(); // csms id must be unique
 
             /********temporary commented will comment out for client****************/

@@ -6,6 +6,7 @@ use App\Mail\passwordLinkEmail;
 use App\Mail\sendResetPassword;
 use App\Mail\subscribe;
 use App\Mail\contactUs;
+use App\Mail\sendLink;
 use App\Mail\SendRequest;
 use Mail;
 
@@ -20,6 +21,25 @@ class MailSendController
         $objDemo->receiver = $receiver;
 
         Mail::to($receiver)->send(new OtpEmail($objDemo));
+
+        if (Mail::failures()){
+          return false;
+        }else{
+          return true;
+        }
+    }
+
+
+    public function sendDoc($otp,$receiver){
+
+        $objDemo = new \stdClass();
+        $objDemo->code = $otp ;
+        //dd($objDemo->code);
+        // $objDemo->code = 'Demo Two Value';
+        $objDemo->sender = 'TeloCure Team';
+        $objDemo->receiver = $receiver;
+
+        Mail::to($receiver)->send(new sendLink($objDemo));
 
         if (Mail::failures()){
           return false;

@@ -52,7 +52,7 @@
                     </span>
 
                     @if(isset($patientData[0]['name']))
-                    <span class="text">Name  : {{$patientData[0]['name']}}</span>
+                    <span class="text">Name  : {{$patientData[0]['name']}} {{$patientData[0]['lastname']}}</span>
                     @else
                     <span class="text">Name  : N/A</span>
                     @endif
@@ -164,7 +164,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
+                  <table id="table" class="table table-bordered table-hover">
                     <thead>
                     <tr>
                       <th class="text-center">Date</th>
@@ -266,4 +266,15 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#search").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("tbody tr.table1").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
      @endsection

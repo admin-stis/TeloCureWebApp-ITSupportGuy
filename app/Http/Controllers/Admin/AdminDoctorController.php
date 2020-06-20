@@ -28,8 +28,10 @@ class AdminDoctorController extends Controller
       }
 
       $data['pendingDoctor'] = array() ;
-      $pendingDoctor = $doctorRef->where('active','=','')->documents();
+      $data['noOfPendingDoctor'] = 0 ;
+      $pendingDoctor = $doctorRef->where('active','=',false)->where('rejected','=',false)->documents();
       foreach($pendingDoctor as $key=>$doctor){
+        $data['noOfPendingDoctor']++;
         array_push($data['pendingDoctor'],$doctor->data());
       }
 
@@ -40,13 +42,13 @@ class AdminDoctorController extends Controller
        //   $data['noOfPendingDoctor']++;
       }
 
-      $approvedDoctor = $doctorRef->where('active','=',true)->documents();
+      $approvedDoctor = $doctorRef->where('active','=',true)->where('rejected','=',false)->documents();
       $data['approvedDoctor'] = 0 ;
       foreach($approvedDoctor as $key=>$doctor){
         $data['approvedDoctor']++;
       }
 
-      $rejectDoctor = $doctorRef->where('active','=',false)->documents();
+      $rejectDoctor = $doctorRef->where('rejected','=',true)->documents();
       $data['rejectDoctor'] = 0 ;
       foreach($rejectDoctor as $key=>$doctor){
         $data['rejectDoctor']++;
@@ -63,7 +65,7 @@ class AdminDoctorController extends Controller
    		$db = $firestore->database();
    		$doctorRef = $db->collection('doctors');
    		if ($status_name=='approve'){
-   			$query = $doctorRef->where('active','=',true);
+   			$query = $doctorRef->where('active','=',true)->where('rejected','=',false);
    			$approveDOctor = $query->documents();
             $approveDoctor = array();
         foreach ($approveDOctor as $doctor) {
@@ -85,14 +87,14 @@ class AdminDoctorController extends Controller
    			//return all approve doctor
    		}
    		else if($status_name=='reject'){
-   			$query = $doctorRef->where('active','=',false);
+   			$query = $doctorRef->where('rejected','=',true);
    			$rejectDoctors = $query->documents();
 
         $reject_doctor = array();
         foreach ($rejectDoctors as $doctor) {
           if($doctor->exists()){
             $data = $doctor->data();
-            if($data['active']==false){
+            if($data['rejected']==true){
               array_push($reject_doctor, $doctor->data());
             }
           }
@@ -108,15 +110,15 @@ class AdminDoctorController extends Controller
 
    		}
    		else if($status_name == 'pending'){
-   			$pending_doctor = array();
-   			$allDoctor = $doctorRef->documents();
+            $pending_doctor = array();
+            $query = $doctorRef->where('active','=',false)->where('rejected','=',false);
+   			$allDoctor = $query->documents();
 
 	   		foreach ($allDoctor as $doctor) {
 	   			if($doctor->exists()){
 	   				$data = $doctor->data();
-	   				if(!array_key_exists('active',$data)){
-	   					array_push($pending_doctor, $doctor->data());
-	   				}
+	   				array_push($pending_doctor, $doctor->data());
+
 	   			}
 	   		}
         // return $pending_doctor;
@@ -157,7 +159,8 @@ class AdminDoctorController extends Controller
         $snapsot = $docRef->snapshot();
 
    		$docRef->set([
-   			'active'=>false
+            'active'=>false,
+            'rejected'=>true
    		],['merge' => true]);
 
        $data = ['message' => 'This message is from TeloCure','flag'=>true];
@@ -288,7 +291,8 @@ class AdminDoctorController extends Controller
       $docRef = $db->collection('doctors')->document($did);
       $snapsot = $docRef->snapshot();
     	$docRef->set([
-   			'active'=>false
+               'active'=>false,
+               'rejected' => true
    		],['merge' => true]);
 
       $data = ['message' => 'This message is from Telocure','flag'=>false];

@@ -30,7 +30,7 @@
 
                     <!-- Small boxes (Stat box) -->
         <div class="row">
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-3 col-6">
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
@@ -61,9 +61,9 @@
             </div>
             --}}
             <!-- ./col -->
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-3 col-6">
               <!-- small box -->
-              <div class="small-box bg-warning">
+              <div class="small-box bg-success">
                 <div class="inner">
                   <h3>{{$approvedDoctor}}</h3>
 
@@ -76,20 +76,33 @@
               </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-3 col-6">
               <!-- small box -->
-              <div class="small-box bg-danger">
+              <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>{{$rejectDoctor}}</h3>
-
+                  <h3>{{$noOfPendingDoctor}}</h3>
                   <p>Pending</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="{{url('admin/doctor/reject')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{url('admin/doctor/pending')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
+
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                  <div class="inner">
+                    <h3>{{$rejectDoctor}}</h3>
+                    <p>Rejected</p>
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-bag"></i>
+                  </div>
+                  <a href="{{url('admin/doctor/reject')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
             <!-- ./col -->
           </div>
           <!-- /.row -->
@@ -158,7 +171,7 @@
                                                         @if(isset($item['uid']))
                                                             <a class="btn btn-sm btn-primary" href="{{url('admin/dprofile/'.trim($item['uid']))}}">View</a>
                                                             <a @if(isset($item['active']) && $item['active'] == true) class="btn  btn-sm btn-danger disabled" ; @else class="btn  btn-sm btn-success"; @endif  href="{{url('admin/approveDocotr/'.trim($item['uid']))}}">Approve</a>
-                                                            <a @if(isset($item['active']) && $item['active'] == false) class="btn  btn-sm btn-danger disabled"; @else class="btn  btn-sm btn-warning"; @endif href="{{url('admin/rejactDoctor/'.trim($item['uid']))}}">Reject</a>
+                                                            <a @if(isset($item['rejected']) && $item['rejected'] == true) class="btn  btn-sm btn-danger disabled"; @else class="btn  btn-sm btn-warning"; @endif href="{{url('admin/rejactDoctor/'.trim($item['uid']))}}">Reject</a>
                                                         @else
                                                         <a class="btn btn-sm btn-primary disabled" href="#">View </a>
                                                         <a class="btn btn-sm btn-success disabled" href="#">Approve</a>

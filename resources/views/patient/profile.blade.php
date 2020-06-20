@@ -134,7 +134,7 @@
                     {{$userProfile ['regNo']}}</div> --}}
                <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-user"></i> Name :</label>
-                    {{$userProfile ['name']}}
+                    {{$userProfile ['name']}} {{$userProfile ['lastname']}}
                 </div>
                <div class="well well-sm col-sm-12">
                    <label><i  class="fa fa-birthday-cake"></i> Date of Birth :</label>

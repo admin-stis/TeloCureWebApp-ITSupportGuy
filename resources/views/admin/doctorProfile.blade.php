@@ -364,6 +364,7 @@
                                         @endif
                                     </span>
                                 </div>
+                                @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == false )
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
                                         <h6>Account No</h6>
@@ -388,6 +389,8 @@
                                         @endphp
                                     </span>
                                 </div>
+                                @endif
+
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
                                         <h6>Bank Name</h6>

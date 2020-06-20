@@ -18,7 +18,6 @@ use DateTime;
 class AdminFirebaseController extends Controller
 {
 
-
     public function index()
    	{
    		$database = app('firebase.database');
@@ -208,8 +207,8 @@ class AdminFirebaseController extends Controller
         }
 
         $v = validator::make($request->all(),[
-            'name' => 'required|alpha|max:15',
-            'lastname' => 'required|regex:/^[\pL\s]+$/u|max:15',
+            'name' => 'required|regex:/^[\p{L} ]+$/u|max:20',
+            'lastname' => 'required|regex:/^[\p{L} ]+$/u|max:15',
             'email' => 'required',
             'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/|confirmed',
             'mobile' =>  'required|digits:11',
@@ -280,7 +279,7 @@ class AdminFirebaseController extends Controller
           array_push($patient,$item->data());
         }
 
-        echo '<pre>';
+        //echo '<pre>';
 
         foreach($patient as $key=>$item){
           if(isset($item['phone']) && $item['phone'] == $request->mobile){
@@ -301,8 +300,8 @@ class AdminFirebaseController extends Controller
         }
 
         $v = validator::make($request->all(),[
-            'name' => 'required|alpha|max:15',
-            'lastname' => 'required|alpha|max:10',
+            'name' => 'required|regex:/^[\p{L} ]+$/u|max:20',
+            'lastname' => 'required|regex:/^[\p{L} ]+$/u|max:15',
             'email' => 'required',
             'password' => 'required|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/|confirmed',
             'mobile' =>  'required|digits:11',
@@ -480,6 +479,8 @@ class AdminFirebaseController extends Controller
                 }
             }
 
+
+
             if(!empty($userArr)){
                 $request->session()->put('user',$userArr);
                 //Edit from mafiz vai
@@ -580,6 +581,8 @@ class AdminFirebaseController extends Controller
                 array_push($userArr, $user->data());
             }
         }
+
+        //dd($userArr); // test
 
         if(!empty($userArr)){
             if(isset($userArr[0]['email'])) $email = $userArr[0]['email'];
@@ -687,9 +690,7 @@ class AdminFirebaseController extends Controller
         // regex for alpha_spaces : /^[\pL\s]+$/u
         $v = validator::make($request->all(),[
             'name'  => 'required|regex:/^[\p{L} ]+$/u',
-            'hospitalName' => 'required|max:25|regex:/^[\pL\s\-]+$/u',
-            'name' => 'required|alpha',
-            'hospitalName' => 'required|alpha',
+            'hospitalName' => 'required|max:25|regex:/^[a-zA-Z0-9\s]+$/',
             'hospitalAddress' => 'required|max:100',
             'phone' =>  'required|max:14',
             'plan' => 'required',
@@ -870,6 +871,7 @@ class AdminFirebaseController extends Controller
         }
 
         $flag = false;
+        
         foreach($data as $key=>$item){
             if(isset($item['email']) && $item['email'] == $reqData){
                 $flag = true ;

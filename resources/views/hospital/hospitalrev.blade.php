@@ -39,12 +39,23 @@
                         <li>
                           <span class="text  col-md-7 col-sm-12">Total Call</span>
                           <span class="">:</span>
-                          <span class="text  col-md-4 col-sm-12">{{$info[0]['calls']}} </span>
+                          <span class="text  col-md-4 col-sm-12">
+                              @if(isset($info[0]['calls']))
+                                {{$info[0]['calls']}}
+                              @else
+                                0
+                              @endif
+                           </span>
                         </li>
                         <li>
                           <span class="text  col-md-7 col-sm-12">Total Revenue</span>
                           <span class="">:</span>
-                          <span class="text  col-md-4 col-sm-12">{{$info[0]['totalRev']}} Tk</span>
+                          <span class="text  col-md-4 col-sm-12">
+                            @if(isset($info[0]['totalRev']))
+                                {{$info[0]['totalRev']}} Tk
+                            @else 0 Tk
+                            @endif
+                            </span>
                         </li>
 
                       </ul>
