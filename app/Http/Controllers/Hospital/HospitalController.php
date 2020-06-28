@@ -921,6 +921,11 @@ class HospitalController extends Controller
                     if($docKey[$i] == $val['doctorUid']){
                         $call += 1 ;
                         $total = $total + $val['transactionHistory']['subTotalRounded'];
+                        array_push($data['call'],$call);
+                        array_push($data['total'],$total);
+                    }else{
+                        $call = 0;
+                        $total = 0;
                     }
                 }
                 array_push($data['doctorUid'],$val['doctorUid']);
@@ -930,8 +935,9 @@ class HospitalController extends Controller
             }
 
         }
-        array_push($data['call'],$call);
-        array_push($data['total'],$total);
+
+        // array_push($data['call'],$call);
+        // array_push($data['total'],$total);
 
         $docCounter = count(array_count_values($data['doctorUid']));
 

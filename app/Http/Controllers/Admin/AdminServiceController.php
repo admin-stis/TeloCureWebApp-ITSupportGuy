@@ -162,8 +162,8 @@ class AdminServiceController extends Controller
             array_push($arr['phone'],$value['doctor']['phone']);
             array_push($arr['did'],$value['doctorUid']);
 
-            if(isset($value['hospitalName'])){
-                array_push($arr['hosName'],$value['hospitalName']);
+            if(isset($value['doctor']['hospitalName'])){
+                array_push($arr['hosName'],$value['doctor']['hospitalName']);
             }else{
                 $na = 'N/A';
                 array_push($arr['hosName'],$na);

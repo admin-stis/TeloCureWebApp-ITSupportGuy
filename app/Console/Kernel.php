@@ -12,8 +12,14 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [
+    //protected $commands = [
         //
+    //];
+
+    //test purpose
+
+    protected $commands = [
+        Commands\DemoCron::class,
     ];
 
     /**
@@ -26,6 +32,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        //test purpose
+        $schedule->command('demo:cron')
+                 ->everyMinute();
     }
 
     /**

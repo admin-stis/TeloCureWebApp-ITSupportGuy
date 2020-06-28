@@ -862,8 +862,16 @@ class AdminFirebaseController extends Controller
 
         if($title == 'patient') $ref = $database->collection('users');
 
-        $query = $ref->where('email','=',$reqData);
-        $documents = $ref->documents();
+        //new edit
+        if($title == 'hospital'){
+            $query = $ref->where('email','=',$reqData)->where('active','=',true);
+            $documents = $query->documents();
+        }else{
+            $query = $ref->where('email','=',$reqData);
+            $documents = $ref->documents();
+        }
+        //dd($documents);
+        //end
 
         $data = array();
         foreach($documents as $item){
@@ -871,63 +879,74 @@ class AdminFirebaseController extends Controller
         }
 
         $flag = false;
-        
-        foreach($data as $key=>$item){
-            if(isset($item['email']) && $item['email'] == $reqData){
-                $flag = true ;
-                break;
-            }
-        }
 
-        if($flag == false){
-          Session::flash('error-notify-temporary','This email is not exists.');
-          return redirect()->back();
+        //new
+        if(empty($data)){
+            Session::flash('error-notify-temporary','Please contact with support team.');
+            return redirect()->back();
         }else{
-          $uid = '';
-          foreach ($data as $key => $value) {
-            if(isset($item['email']) && $item['email'] == $reqData){
-              if($title == 'hospital'){
-                $uid = $item['hospitalUid'];
-              }else{
-                //dd($item);
-                if($title == 'admin'){
-                  $uid = "super";
-                }else{
-                  $uid = $item['uid'];
-                  $hospitalized = $item['hospitalized'];
-                //   if($hospitalized == false){
-                //     $uid = $uid ;
-                //   }elseif($hospitalized == true){
-                //     $uid = substr($uid, 2);
-                //   }
+
+            foreach($data as $key=>$item){
+
+                if(isset($item['email']) && $item['email'] == $reqData){
+                    $flag = true ;
+                    break;
                 }
-              }
             }
-          }
 
-          $MailSend = new MailSendController();
-          $temp_pass = 'telocure'.''.mt_rand(1000000,99999999);
-          $val = $MailSend->sendResetPassword($temp_pass,$reqData);
-          $userData = $ref->document($uid);
+            if($flag == false){
+                Session::flash('error-notify-temporary','This email is not exists.');
+                return redirect()->back();
+            }else{
+            $uid = '';
+            //foreach ($data as $key => $value) {
+            foreach ($data as $key => $item) {
 
-          //encrypted password...
-          $pass = $temp_pass ;
-          $method = "AES-128-CBC";
-          $key = 'SECRETOFTELOCURE';
-          //$iv = openssl_random_pseudo_bytes(16);
-          $iv = "1234567812345678" ;
-          $password = openssl_encrypt($pass,$method,$key,0,$iv);
-          //end
+                if(isset($item['email']) && $item['email'] == $reqData){
+                if($title == 'hospital'){
+                    $uid = $item['hospitalUid'];
+                }else{
+                    //dd($item);
+                    if($title == 'admin'){
+                    $uid = "super";
+                    }else{
+                    $uid = $item['uid'];
+                    $hospitalized = $item['hospitalized'];
+                    //   if($hospitalized == false){
+                    //     $uid = $uid ;
+                    //   }elseif($hospitalized == true){
+                    //     $uid = substr($uid, 2);
+                    //   }
+                    }
+                }
+                }
+            }
 
-          if($title == "admin") $password = $pass ;
-          else $password = $password;
+            $MailSend = new MailSendController();
+            $temp_pass = 'telocure'.''.mt_rand(1000000,99999999);
+            $val = $MailSend->sendResetPassword($temp_pass,$reqData);
 
-          $userData->update([
-            ['path' => 'password' , 'value' => $password]
-          ]);
+            $userData = $ref->document($uid);
 
-          Session::flash('notify-temporary','Temporary password sent to your mail.');
-          return redirect('login/'.$title);
+            //encrypted password...
+            $pass = $temp_pass ;
+            $method = "AES-128-CBC";
+            $key = 'SECRETOFTELOCURE';
+            //$iv = openssl_random_pseudo_bytes(16);
+            $iv = "1234567812345678" ;
+            $password = openssl_encrypt($pass,$method,$key,0,$iv);
+            //end
+
+            if($title == "admin") $password = $pass ;
+            else $password = $password;
+
+            $userData->update([
+                ['path' => 'password' , 'value' => $password]
+            ]);
+
+            Session::flash('notify-temporary','Temporary password sent to your mail.');
+            return redirect('login/'.$title);
+            }
         }
     }
 

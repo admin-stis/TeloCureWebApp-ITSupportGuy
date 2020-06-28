@@ -142,8 +142,9 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  {{--Total Revenue : {{ $rev['total'] }} Tk--}}
-                  Total Revenue : 0 Tk
+                  @if(isset($rev['total']))Total Revenue : {{ $rev['total'] }} Tk
+                  @else Total Revenue : 0 Tk
+                  @endif
                 </h3>
               </div>
               <!-- /.card-header -->

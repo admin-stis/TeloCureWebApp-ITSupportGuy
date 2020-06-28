@@ -120,13 +120,19 @@
                                     </tr>
                               </thead>
                               <tbody>
+                                @php
+                                    //dd($summary);
+                                @endphp
+                                  @php $i = 0 ; @endphp
                                   @foreach ($summary as $item)
+
                                       <tr class="table">
                                           <td>{{$item['doctor']}}</td>
                                           <td>{{$item['phone']}}</td>
                                           <td>{{$item['calls']}}</td>
                                           <td>{{$item['revenue']}} Tk</td>
                                       </tr>
+                                      @php $i = 1 ; @endphp
                                   @endforeach
                               </tbody>
                           </table>
