@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
 <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -32,7 +34,7 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>{{$totalHospitalUser[0]}}</h3>
+                  <h3>{{$totalHospitalUser}}</h3>
 
                   <p>Hospital User</p>
                 </div>
@@ -47,7 +49,7 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>{{$pendingHospitalUser[0]}}<sup style="font-size: 20px"></sup></h3>
+                  <h3>{{$pendingHospitalUser}}<sup style="font-size: 20px"></sup></h3>
 
                   <p>Pending</p>
                 </div>
@@ -62,7 +64,7 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>{{$approvedHospitalUser[0]}}</h3>
+                  <h3>{{$approvedHospitalUser}}</h3>
 
                   <p>Approved</p>
                 </div>
@@ -77,7 +79,7 @@
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3>{{$rejectHospitalUser[0]}}</h3>
+                  <h3>{{$rejectHospitalUser}}</h3>
 
                   <p>Reject</p>
                 </div>
@@ -90,7 +92,7 @@
             <!-- ./col -->
           </div>
           <!-- /.row -->
-    <div class="card">
+            <div class="card">
                     <div class="card-header">
                         <div class="col-md-12">
                             <span class=""><i class="fas fa-list mr-1"></i> List of Hospital User</span>
@@ -137,7 +139,8 @@
                                                     if(isset($item['hospitalName'])) $hospitalName = $item['hospitalName']; else $hospitalName = 'N/A' ;
                                                     if(isset($item['hospitalAddress'])) $hospitalAddress = $item['hospitalAddress']; else $hospitalAddress = 'N/A' ;
                                                     if(isset($item['plan'])) $plan = ucfirst($item['plan']); else $plan = 'N/A' ;
-                                                    if(isset($item['active'])) $approve = $item['active']; else $approve = 'false';
+                                                    if(isset($item['active'])) $approve = $item['active']; else $approve = false;
+
                                                 @endphp
 
                                                 <tr>
@@ -146,14 +149,27 @@
                                                     <td>{{$phone}}</td>
                                                     <td>{{$email}}</td>
                                                     <td>{{$hospitalName}}</td>
-                                                    <td>{{$hospitalAddress}}</td> 
+                                                    <td>{{$hospitalAddress}}</td>
                                                     <td>{{$plan}}</td>
                                                     <td>
-                                                        {{-- <a style="margin-top:5px;" class="btn btn-primary btn-sm" href="{{url('admin/viewHospitalUser')}}">View</a> --}}
-                                                        @if($approve == true)
+
+
+
+                                                       {{-- <a style="margin-top:5px;" class="btn btn-primary btn-sm" href="{{url('admin/viewHospitalUser')}}">View</a> --}}
+                                                        @if($approve == 'true')
+
                                                             <a  style="margin-top:5px;width:100%;" class="btn btn-info btn-sm" disabled>Approved</a>
+                                                            @if(isset($item['bankInfoUpdateRequest']) && $item['bankInfoUpdateRequest'] == 'true')
+                                                                <a  type="button" style="margin-top:5px;width:100%;" class="btn btn-primary btn-sm" href="{{url('admin/updateBankInfo/'.$id)}}">
+                                                                    Change Bank Information
+                                                                </a>
+                                                            @else
+                                                                <a  style="margin-top:5px;width:100%;" class="btn btn-default btn-sm" disabled>
+                                                                    Change Bank Information
+                                                                </a>
+                                                            @endif
                                                             {{-- <a  style="margin-top:5px;" class="btn btn-danger btn-sm" href="{{url('admin/unapproveHospitalUser')}}">Reject</a> --}}
-                                                        @elseif($approve == false)
+                                                        @elseif($approve == 'false')
                                                             <a  style="margin-top:5px;width:100%;" class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser/'.$id)}}">Approve</a>
                                                             {{-- <br><a  style="margin-top:5px;" class="btn btn-info btn-sm" href="{{url('admin/unapproveHospitalUser')}}"  disabled>Rejected</a> --}}
                                                         {{--@else
@@ -161,6 +177,7 @@
                                                             {{-- <br><a   style="margin-top:5px;"class="btn btn-danger btn-sm" href="{{url('admin/unapproveHospitalUser')}}">Reject</a> --}}
                                                         @endif
                                                         <a  style="margin-top:5px;width:100%;width:100%;" class="btn btn-warning btn-sm" href="{{url('hospital/planchange/'.$id)}}">Change Plan</a>
+
                                                     </td>
                                                 </tr>
 

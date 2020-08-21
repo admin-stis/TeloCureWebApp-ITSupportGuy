@@ -20,13 +20,49 @@ class User extends Authenticatable implements MustVerifyEmail
      */
 
 
-    public function identities() 
+    public function identities()
     {
          return $this->hasMany('App\SocialIdentity');
     }
+    // protected $fillable = [
+    //     'name', 'email', 'password',
+    // ];
+
+    public $table = "users";
+
     protected $fillable = [
-        'name', 'email', 'password',
+        
+        //mridul 9-8-20 corrected from id to uid 
+            'uid',
+            //'approve' => '',
+            'online',
+            'active',
+            'email',
+            'name',
+            //'lastname' => $request->lastname,
+            'phone',
+            'password' ,
+            'gender' ,
+            'weight' ,
+            'height' ,
+            'bloodGroup' ,
+            'totalCount' ,
+            'totalRating',
+            'price',
+            'regNo' ,
+            'medication',
+            'smoke',
+            'hospitalUid',
+            'hospitalized',
+            'doctorType',
+            'district',
+            'districtId',
+            'createdAt',
+            'photoUrl',
     ];
+
+    protected $nullable = ['active'];
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -35,6 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $hidden = [
         'password', 'remember_token',
+        
     ];
 
     /**

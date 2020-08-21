@@ -30,7 +30,7 @@ class sendEmail extends Mailable
      */
     public function build()
     {
-        $address = 'telocure@example.com';
+        $address = 'dev.telocure@gmail.com';
         $subject = 'This mail is from telocure !';
         $name = 'TeloCure';
 

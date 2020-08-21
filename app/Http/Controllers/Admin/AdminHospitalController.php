@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Hospital;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Auth\MailSendController;
@@ -16,9 +17,11 @@ class AdminHospitalController extends Controller
 
     public function index()
     {
+        /*
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
         $hosRefe = $database->collection('hospital_users');
+        */
 
         $data['userList'] = array();
         $data['totalHospitalUser'] = array();
@@ -26,25 +29,36 @@ class AdminHospitalController extends Controller
         $data['pendingHospitalUser'] = array();
         $data['rejectHospitalUser'] = array();
 
-        $totalUser = $hosRefe->documents();
+        // $totalUser = $hosRefe->documents();
+
+        $totalUser = Hospital::get()->toArray();
 
         $total = 0;
         foreach($totalUser as $item)
         {
             $total++;
-            array_push($data['userList'],$item->data());
+            array_push($data['userList'],$item);
         }
-        array_push($data['totalHospitalUser'],$total);
+        //array_push($data['totalHospitalUser'],$total);
 
-        $approve = $hosRefe->where('active','=',true);
-        $approvedUser = $approve->documents();
+        $data['totalHospitalUser'] = Hospital::count();
+
+        //$approve = $hosRefe->where('active','=',true);
+        // $approvedUser = $approve->documents();
+        //$approvedUser = Hospital::where('active','true')->count();
+
+        /*
         $totalApproved = 0;
         foreach($approvedUser as $item)
         {
             $totalApproved++;
         }
         array_push($data['approvedHospitalUser'],$totalApproved);
+        */
 
+        $data['approvedHospitalUser'] = Hospital::where('active','true')->count();
+
+        /*
         $reject = $hosRefe->where('approve','=',true);
         $rejectedUser = $reject->documents();
         $totalRejected = 0;
@@ -53,7 +67,11 @@ class AdminHospitalController extends Controller
             $totalRejected++;
         }
         array_push($data['rejectHospitalUser'],$totalRejected);
+        */
 
+        $data['rejectHospitalUser'] = Hospital::where('approve','true')->count();
+
+        /*
         $pending = $hosRefe->where('active','=',false);
         $pendingUser = $pending->documents();
         $totalPending = 0;
@@ -62,6 +80,8 @@ class AdminHospitalController extends Controller
             $totalPending++;
         }
         array_push($data['pendingHospitalUser'],$totalPending);
+        */
+        $data['pendingHospitalUser'] = Hospital::where('active','false')->count();
 
         return view('admin/adminHospital')->with($data);
 
@@ -71,20 +91,24 @@ class AdminHospitalController extends Controller
     {
       // dd($status_name);
     	//this status_name should be approve or reject or pending
-    	$firestore = app('firebase.firestore');
+    	
+        /*
+        $firestore = app('firebase.firestore');
    		$db = $firestore->database();
    		$doctorRef = $db->collection('hospital_users');
+        */
    		if ($status_name =='approve'){
-   			$query = $doctorRef->where('active','=',true);
-   			$approveDOctor = $query->documents();
+   			//$query = $doctorRef->where('active','=',true);
+   			//$approveDOctor = $query->documents();
+            $approveDOctor = Hospital::where('active','true')->get()->toArray();
             $approveHospital = array();
         foreach ($approveDOctor as $doctor) {
-            if($doctor->exists()){
+            /*if($doctor->exists()){
                 $data = $doctor->data();
-                if($data['active']){
-                    array_push($approveHospital, $doctor->data());
-                }
-            }
+                if($data['active']){*/
+                    array_push($approveHospital, $doctor);
+                /*}
+            }*/
         }
 
         $approveHospital['status'] = 'active' ;
@@ -92,29 +116,31 @@ class AdminHospitalController extends Controller
    		return view('admin.approveHospital')->with('pending_hospital',$approveHospital);
 
    		}
-   		else if($status_name=='reject'){
-   			$query = $doctorRef->where('approve','=',true);
-   			$rejectHospital = $query->documents();
-
+    		else if($status_name=='reject'){
+   			/*$query = $doctorRef->where('approve','=',true);
+   			$rejectHospital = $query->documents();*/
+            $rejectHospital = Hospital::where('approve','true')->get()->toArray();
             $reject_hospital = array();
             foreach ($rejectHospital as $doctor) {
-              
-                  array_push($reject_hospital, $doctor->data());
-                
+
+                  array_push($reject_hospital, $doctor);
+
               }
             $reject_hospital['status'] = 'Rejected' ;
         return view('admin.approveHospital')->with('pending_hospital',$reject_hospital);
-        
-        
+
+
    		}
    		else if($status_name == 'pending'){
    			$pending_hospital = array();
 
-            $query = $doctorRef->where('active','=',false);
-            $allDoctor = $query->documents();
+            // $query = $doctorRef->where('active','=',false);
+            // $allDoctor = $query->documents();
+
+            $allDoctor = Hospital::where('active','false')->get()->toArray();
 
 	   		foreach ($allDoctor as $doctor) {
-                array_push($pending_hospital, $doctor->data());
+                array_push($pending_hospital, $doctor);
 	   		}
             $pending_hospital['status'] = 'pending' ;
 	   		return view('admin.approveHospital')->with('pending_hospital',$pending_hospital);
@@ -130,16 +156,19 @@ class AdminHospitalController extends Controller
         $hospital_user = $info->document($id);
         $userinfo = $hospital_user->snapshot();
 
-        // dd($userinfo['phone']);
         $hospital_user->update([
             ['path' => 'active', 'value' => true]
         ]);
 
+        /******new 26/07/2020*****/
+        $up = Hospital::where('hospitalUid',$id)->update(['active' => 'true']);
+        /****end****/
+
+        $name = $userinfo['name'];
         $phone = $userinfo['phone'];
         $email = $userinfo['email'];
         $temp_pass = 'telocure'.''.mt_rand(1000000,99999999);
 
-        
         //password encryption.....
         $method = "AES-128-CBC";
         $key = 'SECRETOFTELOCURE';
@@ -151,14 +180,17 @@ class AdminHospitalController extends Controller
             ['path' => 'password', 'value' => $password]
         ]);
 
+        /******new 26/07/2020*****/
+        Hospital::where('hospitalUid',$id)->update(['password' => $password]);
+        /****end****/
+
         $MailSend = new MailSendController();
 
         $urllink = 'link' ;
 
-        //$link = $urllink.'/'.$id.'/'.$phone.'/'.$temp_pass ;
-
         $link = [
             'id' => $id,
+            'name' => $name,
             'phone' => $phone,
             'pass' => $temp_pass
         ];
@@ -172,7 +204,7 @@ class AdminHospitalController extends Controller
 
     public function planFrom($id){
         $data['uid'] = $id ;
-        return view('admin/plan')->with($data); 
+        return view('admin/plan')->with($data);
     }
 
     public function changePlan(Request $request)
@@ -189,7 +221,9 @@ class AdminHospitalController extends Controller
         $hospital_user->update([
             ['path' => 'plan', 'value' => $plan]
         ]);
-
+        /******new 26/07/2020*****/
+        Hospital::where('hospitalUid',$id)->update(['plan' => $plan]);
+        /****end****/
         Session::flash('notifyplan','Plan changed successfully.');
         return redirect('admin/hospital') ;
     }

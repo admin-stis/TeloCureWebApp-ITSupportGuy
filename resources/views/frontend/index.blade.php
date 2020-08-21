@@ -160,7 +160,7 @@
 
                         <div class="pt-10  btn-area" style="margin-left:0px;">
                             <a href="{{url('service/hospital')}}" class="more nav-link" style="padding:0px;">More information</a><br>
-                            <a href="{{url('/register/hospital')}}" class="btn drop-btn">JOIN NOW</a>
+                            <a href="{{url('/service/hospital#hospital-add')}}" class="btn drop-btn">JOIN NOW</a>
                             <a href="{{url('/login/hospital')}}" class="btn drop-btn">SIGN IN</a>
                         </div>
                 </div>

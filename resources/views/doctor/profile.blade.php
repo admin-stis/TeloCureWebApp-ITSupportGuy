@@ -1,6 +1,10 @@
 @extends('doctor.layout')
 @section('content')
 
+@php
+    //dd($doctorProfile);
+@endphp
+
 <div class="content-header">
    <div class="container-fluid">
       <div class="row mb-2">
@@ -14,7 +18,7 @@
                @php
                    if(isset($doctorProfile['uid']))
                     $uid = trim($doctorProfile['uid']);
-                   
+
                @endphp
                <li class="breadcrumb-item active">Profile</li>
             </ol>
@@ -39,7 +43,7 @@
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
 					@if (isset($doctorProfile['photoUrl']))
-                        <img src="{{$doctorProfile['photoUrl']}}" alt="{{$doctorProfile['name']}}"/>
+                        <img style="width:100px;height:100px;" class="img-rounded" src="{{$doctorProfile['photoUrl']}}" alt="{{$doctorProfile['name']}}"/>
                     @else
                         <span class="userIcon fa fa-user-circle"></span>
                     @endif
@@ -66,7 +70,7 @@
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
 				<!-- SIDEBAR BUTTONS -->
-				
+
                 <div class="">
                     <p style="margin:0 auto;display:table">Rating<p>
                     <p style="margin:0 auto;display:table">
@@ -75,16 +79,17 @@
                         {
                             $totalRating = $doctorProfile['totalRating'];
                             $totalCount = $doctorProfile['totalCount'];
-                            $rating = floor($totalRating/$totalCount);
-                            for($i = 0;$i < $rating; $i++)
-                            {
-                                echo '<span class="fa fa-star" style="color:red;"></span>';
-                            }
+                            $rating = round(($totalRating/$totalCount),1);
+                            echo $rating;
+                        }
+                        else {
+                            $rating = 5 ;
+                            echo $rating;
                         }
                     @endphp
                     </p>
                 </div>
-                
+
                 <div class="">
                     @if(isset($doctorProfile['price']))
                     <p style="margin:0 auto;display:table">Price : {{$doctorProfile['price']}} Tk</p>
@@ -93,7 +98,7 @@
                     @endif
                 </div>
 
-                <div class="" style="">
+                <div class="" style="margin:0 auto;display:table">
                     <a style="float-right;" class="btn btn-sm btn-primary" href="{{url('doctor/profile/edit/'.$uid)}}">Edit</a>
                 </div>
 				<!-- END SIDEBAR BUTTONS -->
@@ -135,10 +140,12 @@
                             <li class="col-md-2 btn btn-xs btn-default"><a style="border:0px;" class="btn btn-xs btn-default" data-toggle="pill" href="#contact">Contact</a></li>
 
                             <li class="col-md-3 btn btn-xs btn-default"><a class="btn btn-xs btn-default" data-toggle="pill" href="#h">Hospital</a></li>
-                            
+
 
                             <li class="col-md-2 btn btn-xs btn-default"><a style="border:0px;" class="btn btn-xs btn-default" data-toggle="pill" href="#documents">Document</a></li>
+                             @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == 'false')
                             <li class="col-md-3 btn btn-xs btn-default"><a style="border:0px;" class="btn btn-xs btn-default" data-toggle="pill" href="#bankInfo">Bank Information</a></li>
+                            @endif
                         </ul>
                     </div>
 
@@ -159,7 +166,7 @@
                                         <h6>NID</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">@if(isset($others['nid'])) {{$others['nid']}} @else N/A @endif</span>
+                                    <span class="col-md-5">@if(isset($doctorProfile['others']['nid'])) {{$doctorProfile['others']['nid']}} @else N/A @endif</span>
                                 </div>
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
@@ -211,7 +218,7 @@
                                         <h6>Present Address</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">@if(isset($others['presentAddress'])) {{$others['presentAddress']}}@endif</span>
+                                    <span class="col-md-5">@if(isset($doctorProfile['others']['presentAddress'])) {{$doctorProfile['others']['presentAddress']}}@endif</span>
                                 </div>
                                 @endif
                                 <div class="row col-md-12">
@@ -230,10 +237,11 @@
                                 </div>--}}
                             </div>
                         </div>
-                        
+
                                     @php //dd($hinfo); @endphp
                         <div id="h" class="tab-pane fade">
-                            @if(isset($hinfo['hospitalName']))
+                            {{-- @if(isset($hinfo['hospitalName'])) --}}
+                            @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == 'true')
                             <div class="" style="margin-top:10px;">
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
@@ -241,8 +249,8 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($hinfo['hospitalName']))
-                                            {{$hinfo['hospitalName']}}
+                                        @if(isset($doctorProfile['hospitalName']))
+                                            {{$doctorProfile['hospitalName']}}
                                         @else
                                             N/A
                                         @endif
@@ -276,9 +284,15 @@
                                 </div>
                             </div>
                             @else
-                            <div class="" style="margin-top:10px;"><h3>Independent Doctor</h3></div>
+                            <div class="" style="margin-top:10px;"><p class="text-center">Independent Doctor</p></div>
                             @endif
                         </div>
+
+                        @php 
+
+                            //dd($doctorProfile['documents']['acadeimcDegree']);
+
+                        @endphp
 
                         <div id="documents" class="tab-pane fade">
                             <div class="" style="margin-top:10px;">
@@ -288,20 +302,25 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($documents['academicCertificate']))
-                                        <a href="{{$documents['academicCertificate']}}">Click to download</a>
+                                         @if(isset($doctorProfile['documents']['academicCertificate']))
+                                        <a href="{{$doctorProfile['documents']['academicCertificate']}}">Click to download</a>
                                         @else N/A
-                                        @endif
+                                        @endif 
+                                        <!--  @if(isset($doctorProfile['documents']['acadeimcDegree']))
+                                        <a href="{{$doctorProfile['documents']['acadeimcDegree']}}">Click to download</a>
+                                        @else N/A
+                                        @endif -->
                                     </span>
                                 </div>
+                                {{-- mridul commented 20-7-20 --}}
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
                                         <h6>Prescription Form</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($documents['prescriptionForm']))
-                                        <a href="{{$documents['prescriptionForm']}}">Click to download</a></span>
+                                        @if(isset($doctorProfile['documents']['prescriptionForm']))
+                                        <a href="{{$doctorProfile['documents']['prescriptionForm']}}">Click to download</a></span>
                                         @else N/A
                                         @endif
                                 </div>
@@ -311,8 +330,8 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($documents['nidFront']))
-                                            <a href="{{$documents['nidFront']}}">Click to download</a>
+                                        @if(isset($doctorProfile['documents']['nidFront']))
+                                            <a href="{{$doctorProfile['documents']['nidFront']}}">Click to download</a>
                                         @else
                                             N/A
                                         @endif
@@ -324,8 +343,8 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($documents['nidBack']))
-                                            <a href="{{$documents['nidBack']}}">Click to download</a>
+                                        @if(isset($doctorProfile['documents']['nidBack']))
+                                            <a href="{{$doctorProfile['documents']['nidBack']}}">Click to download</a>
                                         @else
                                             N/A
                                         @endif
@@ -333,6 +352,17 @@
                                 </div>
                             </div>
                         </div>
+
+                        @php
+
+                        if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == 'true')
+                            $display = "none";
+                        else $display = "block";
+
+                        @endphp
+                        
+                        {{-- mridul 11-7-20 --}}
+                        @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == 'false')
                         <div id="bankInfo" class="tab-pane fade">
                             <div class="" style="margin-top:10px;">
                                 <div class="row col-md-12">
@@ -340,21 +370,57 @@
                                         <h6>Account Name</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">@if(isset($bank_info['accountName'])){{$bank_info['accountName']}} @endif</span>
+                                    <span class="col-md-5">@if(isset($doctorProfile['bank_info']['accountName']))
+                                    {{-- mridul addition --}}
+                                    @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == 'true')
+                                    N/A 
+                                    @else
+                                    {{$doctorProfile['bank_info']['accountName']}} 
+                                    @endif
+                                    
+                                    @endif</span>
                                 </div>
+
                                 <div class="row col-md-12">
-                                    <label class="col-md-5">
-                                        <h6>Account Number</h6>
-                                    </label>
-                                    <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">@if(isset($bank_info['accountNumber'])){{$bank_info['accountNumber']}} @endif</span>
+                                    @php
+                                    if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == 'false'){
+                                        if(isset($doctorProfile['bank_info']['accountNumber'])){
+                                            echo '<label class="col-md-5">
+                                                <h6>Account Number</h6>
+                                            </label>
+                                            <span class="col-md-1"> : </span>
+                                            <span class="col-md-5">';
+                                            //// mridul addition 11-7-20 
+                                            if(strlen($doctorProfile['bank_info']['accountNumber'])>4) { echo '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path d="M480,208H308L256,48,204,208H32l140,96L118,464,256,364,394,464,340,304Z" style="fill:black;stroke:#000;stroke-linejoin:round;stroke-width:32px"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path d="M480,208H308L256,48,204,208H32l140,96L118,464,256,364,394,464,340,304Z" style="fill:black;stroke:#000;stroke-linejoin:round;stroke-width:32px"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path d="M480,208H308L256,48,204,208H32l140,96L118,464,256,364,394,464,340,304Z" style="fill:black;stroke:#000;stroke-linejoin:round;stroke-width:32px"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path d="M480,208H308L256,48,204,208H32l140,96L118,464,256,364,394,464,340,304Z" style="fill:black;stroke:#000;stroke-linejoin:round;stroke-width:32px"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path d="M480,208H308L256,48,204,208H32l140,96L118,464,256,364,394,464,340,304Z" style="fill:black;stroke:#000;stroke-linejoin:round;stroke-width:32px"></path></svg>'
+                                            .'<span class="align-middle">'.substr($doctorProfile['bank_info']['accountNumber'],-4).'</span>'; }
+                                            else { echo $doctorProfile['bank_info']['accountNumber']; } 
+                                            echo '</span>
+                                            </div>';
+                                        }
+                                    }else{
+
+                                    }
+                                    @endphp
+
+                                    </span>
                                 </div>
+
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
                                         <h6>Bank Name</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">@if(isset($bank_info['bankName'])){{$bank_info['bankName']}}@endif</span>
+                                    <span class="col-md-5">
+                                    @if(isset($doctorProfile['bank_info']['bankName']))
+                                    {{-- mridul addition --}}
+                                    
+                                    @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == 'true')
+                                    N/A 
+                                    @else
+                                    {{$doctorProfile['bank_info']['bankName']}}
+                                    @endif 
+                                    
+                                    @endif</span>
                                 </div>
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
@@ -362,11 +428,19 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                    @if(isset($bank_info['swiftCode'])){{$bank_info['swiftCode']}}@endif
-                                
+                                    @if(isset($doctorProfile['bank_info']['swiftCode']))
+                                    {{-- mridul addition --}}
+                                    @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == 'true')
+                                    N/A 
+                                    @else
+                                    {{$doctorProfile['bank_info']['swiftCode']}}                                   
+                                    @endif 
+                                    
+                                    @endif 
+
                                     </span>
                                 </div>
-                            </div>
+                            </div> @endif
                         </div>
                     </div>
                 </div>

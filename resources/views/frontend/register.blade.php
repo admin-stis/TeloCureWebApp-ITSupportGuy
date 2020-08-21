@@ -8,6 +8,12 @@
             font-size : 10px;
             font-weight : 600;
         }
+        h4 {
+            background-color: #87CEFA;
+            text-align: center;
+            color: white;
+        }
+
     </style>
 
     @if ($title == 'patient')
@@ -110,13 +116,28 @@
 
         <div class="row row justify-content-center">
             <div class="col-md-8" style="padding: 45px;">
+
+
+            <div > 
+
+                        <h4>    @if($title == 'patient')<p class="mb-2"><strong>Become a patient</strong></p>
+                                @elseif($title == 'doctor')<p class="mb-2"><strong>Become a doctor</strong></p>
+                                @endif
+                        </h4>
+                 </div> 
+
+
                 <div class="card">
                     <div class="card-header"><?php echo ucfirst($title);?> Register</div>
                     <div class="card-body">
-                        @if($title == 'patient')<p class="mb-2"><strong>Become a patient</strong></p>
+                       <!--  @if($title == 'patient')<p class="mb-2"><strong>Become a patient</strong></p>
                         @elseif($title == 'doctor')<p class="mb-2"><strong>Become a doctor</strong></p>
-                        @endif
+                        @endif -->
 
+                        @if(Session::has('update_msg'))
+                            <ul class="mt-1 mb-1"><p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('update_msg') }}</p></ul>
+                        @endif
+                        
                         @if ($errors->any())
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -134,8 +155,8 @@
                         @endif
 
                         {{-- <form method="POST" action="{{ route('register') }}"> --}}
-                        @if($title == 'doctor')<form method="POST" action="{{ url('/setdoctor') }}">
-                        @elseif($title == 'patient') <form method="POST" action="{{ url('/setpatient') }}">
+                        @if($title == 'doctor')<form method="POST" action="{{ url('/setdoctor') }}" enctype="multipart/form-data">
+                        @elseif($title == 'patient') <form method="POST" action="{{ url('/setpatient') }}" enctype="multipart/form-data">
                         @elseif($title == 'hospital') <form method="POST" action="{{ url('/sethospitaluser') }}">
                         @else <form method="POST" action="{{ route('register') }}">
                         @endif
@@ -167,7 +188,53 @@
                                         <input class="form-control" type="email" name="email" value="{{old('email')}}">
                                     </div>
                                 </div>
+                               
+                               <div class="form-group col-md-12 ">
+                                <div class="">
+                                        <label>Profile Picture (Only JPG, PNG, BMP and GIF files are allowed) <i class="required icofont-star-alt-2"></i></label>
+                                </div>
+                                <div class="">  
+                                <input name="photoUrl" accept="image/*" type="file" class="form-control" placeholder=""/>
+                                </div>                               
+                                </div>
+                                @if($title == 'doctor')
+                                <div class="form-group col-md-12">
+                                <div class="">
+                                <label>BMDC Registration Number <i class="required icofont-star-alt-2"></i> </label>
+                                </div>
+                                <div class="">
+                                <input  name="regNo" type="text" required="required" class="form-control" placeholder="{{old('regNo')}}"/>
+                                </div>
+                                </div>
+                                
+                                <div class="form-group col-md-12">
+                                <div class="">
+                                <label>Speciality <i class="required icofont-star-alt-2"></i> </label>
+                                </div>
+                                <div class="">
+                                <select name="doctorType" type="text" required="required" class="form-control">
+                                    <option value="">Select Speciality</option>
+                                    <option value="GENERAL">General Practitioner</option>
+                                    <option value="PEDIATRIC">Pediatric</option>
+                                </select>
+                                </div>
+                                </div>
+                                @endif
+                                <div class="form-group col-md-12">
+                                <div class="">
+                                        <label>District <i class="required icofont-star-alt-2"></i></label>
+                                </div>
+                                <div class="">
 
+                                <select name="district" type="text" class="form-control" >
+                                    <option value="">Select District</option>
+                                    @foreach ($district as $key=>$item)
+                                        @php //print_r($item); @endphp
+                                        <option value="{{$item['id'].'_'.$item['name']}}">{{$item['name']}}</option>
+                                    @endforeach
+                                </select> </div>
+                            </div> 
+                            
                                 <div class="form-group col-md-12">
                                     <div class="">
                                         <label>Password <i class="required icofont-star-alt-2"></i></label>
@@ -175,6 +242,9 @@
                                     <div class="">
                                         <input class="form-control" type="password" name="password">
                                     </div>
+                                    <small>
+                                        <p>Password is required with a minimum of 8 characters. Should have letter and number.</p>
+                                    </small>
                                 </div>
 
                                 <div class="form-group col-md-12">

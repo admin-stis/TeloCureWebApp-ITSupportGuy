@@ -15,7 +15,7 @@
       border-radius: 50px;
       margin-bottom: 20px;
   }
- 
+
   .profile-userbuttons{
     margin: 0 auto;
     display: table;
@@ -27,6 +27,10 @@
 
 </style>
 
+@php
+    //dd($userProfile[uid]);
+@endphp
+
 
 <div class="content-header">
     <div class="container-fluid">
@@ -36,11 +40,11 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{url('admin/patient')}}">Patient Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{url('/patient')}}">Home</a></li>
             @php
                 $uid = trim($userProfile[0]['uid']);
             @endphp
-            <li class="breadcrumb-item active"><a href="{{url('admin/patient/'.$uid)}}">Profile</a></li>
+            <li class="breadcrumb-item active">Profile</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -58,10 +62,12 @@
       <div class="profile-sidebar">
         <!-- SIDEBAR USERPIC -->
         <div class="profile-userpic">
-          @if (isset($userProfile[0]['photoUrl']))
-                        <img src="{{$userProfile[0]['photoUrl']}}" alt="{{$userProfile[0]['name']}}"/>
-                    @endif
-                </div>
+            @if (isset($userProfile[0]['photoUrl']))
+                <img src="{{$userProfile[0]['photoUrl']}}" alt="{{$userProfile[0]['name']}}"/>
+            @else
+                <i class="fa fa-user-o"></i>
+            @endif
+        </div>
         <!-- END SIDEBAR USERPIC -->
         <!-- SIDEBAR USER TITLE -->
         <div class="profile-usertitle">
@@ -79,13 +85,13 @@
                         @endif
           </div>
           {{-- <div class="profile-usertitle-job">
-              {{$userProfile[0]['doctorType']}}
+              {{$userProfile ['doctorType']}}
           </div> --}}
         </div>
         <!-- END SIDEBAR USER TITLE -->
         <!-- SIDEBAR BUTTONS -->
         <div class="profile-userbuttons">
-                    @if (isset($userProfile[0]['active']) && $userProfile[0]['active'] == 1)
+                    @if (isset($userProfile[0]['active']) && $userProfile[0]['active'] == 'true')
                         <button type="button" class="btn btn-primary btn-sm">Active</button>
                     @else
                         <button type="button" class="btn btn-primary btn-sm">Deactive</button>
@@ -125,24 +131,27 @@
 
             {{-- <div class="well well-sm col-sm-12">
                     <label><i class="fa fa-bullseye"></i> Registration Number :</label>
-                    {{$userProfile[0]['regNo']}}</div> --}}
+                    {{$userProfile ['regNo']}}</div> --}}
                <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-user"></i> Name :</label>
-                    {{$userProfile[0]['name']}}
+                    {{$userProfile[0]['name']}}                 </div>
+               <div class="well well-sm col-sm-12">
+                   <label><i  class="fa fa-birthday-cake"></i> Date of Birth :</label>
+                   @if(isset($userProfile[0]['dateOfBirth'])){{$userProfile[0]['dateOfBirth']}}@endif</div>
+                <div class="well well-sm col-sm-12">
+                    <label><i  class="fa fa-male"></i> Gender :</label>
+                    @if(isset($userProfile[0]['gender'])){{$userProfile[0]['gender']}}@endif
                 </div>
-               <div class="well well-sm col-sm-6">
-                    <label><i  class="fa fa-birthday-cake"></i> Date of Birth :</label>
-                   {{$userProfile[0]['dateOfBirth']}}</div>
-               <div class="well well-sm col-sm-6">
-                <label><i  class="fa fa-male"></i> Gender :</label>{{$userProfile[0]['gender']}}</div>
-                <div class="well well-sm col-sm-4">
-                 <label><i  class="fa fa-tint"></i> Blood Group :</label>{{$userProfile[0]['bloodGroup']}}</div>
-                 <div class="well well-sm col-sm-4">
-                  <label><i  class="fa fa-balance-scale"></i> Weight :</label>{{$userProfile[0]['weight']}} KG</div>
-                  <div class="well well-sm col-sm-4">
-                   <label><i  class="fa fa-arrow-up"></i> Height :</label>{{$userProfile[0]['height']}}</div>
+                <div class="well well-sm col-sm-12">
+                 <label><i  class="fa fa-tint"></i> Blood Group :</label>
+                 @if(isset($userProfile[0]['bloodGroup'])){{$userProfile[0]['bloodGroup']}}@endif</div>
+                 <div class="well well-sm col-sm-12">
+                  <label><i  class="fa fa-balance-scale"></i> Weight :</label>
+                  @if(isset($userProfile[0]['weight'])){{$userProfile[0]['weight']}} KG @endif</div>
+                  <div class="well well-sm col-sm-12">
+                   <label><i  class="fa fa-arrow-up"></i> Height :</label>@if(isset($userProfile [0]['height'])){{$userProfile[0]['height']}}@endif</div>
 
-                <div class="well well-sm col-sm-6">
+                <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-phone"></i> Phone :</label>
                     @if(isset($userProfile[0]['phone']))
                         {{$userProfile[0]['phone']}}
@@ -150,12 +159,12 @@
                         <span>N/A</span>
                     @endif
                 </div>
-                <div class="well well-sm col-sm-6">
+                <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-envelope"></i> Email :</label>
-                    {{$userProfile[0]['email']}}
+                    @if(isset($userProfile[0]['email'])){{$userProfile[0]['email']}}@endif
                 </div>
                <div class="well well-sm col-sm-12">
-                <label><i  class="fa fa-map-marker"></i> Location :</label>{{$userProfile[0]['district']}}</div>
+                <label><i  class="fa fa-map-marker"></i> Location :</label>@if(isset($userProfile [0]['district'])){{$userProfile[0]['district']}}@endif</div>
                 {{-- <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-clone"></i> Price :</label>
                     {{$userProfile[0]['price']}}
@@ -166,13 +175,13 @@
                 </div>--}}
                 <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-cube"></i> Total Count :</label>
-                    {{$userProfile[0]['totalCount']}}
+                    @if(isset($userProfile[0]['totalCount'])){{$userProfile[0]['totalCount']}}@endif
                 </div>
                 {{-- <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-certificate"></i> Status :</label>
-                    @if(isset($userProfile[0]['approve']) == true) <span class="badge badge-success">Approved</span> @endif
-                    @if(isset($userProfile[0]['pending'])  == true) <span class="badge badge-pending">Pending</span> @endif
-                    @if(isset($userProfile[0]['reject'])  == true) <span class="badge badge-danger">Rejected</span> @endif
+                    @if(isset($userProfile[0]['approve']) == 'true') <span class="badge badge-success">Approved</span> @endif
+                    @if(isset($userProfile[0]['pending'])  == 'true') <span class="badge badge-pending">Pending</span> @endif
+                    @if(isset($userProfile[0]['reject'])  == 'true') <span class="badge badge-danger">Rejected</span> @endif
                 </div> --}}
             </div>
     </div>
@@ -180,6 +189,5 @@
                 </section>
             </div>
     </div>
-
 
 @endsection

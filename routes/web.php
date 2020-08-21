@@ -11,6 +11,12 @@
 |
 */
 
+//localization
+Route::get('lang/{locale}', function ($locale) {
+    session()->put('locale', $locale);
+    return redirect()->back();
+});
+
 // Route for frontend
 
 Route::get('/service/{title}', 'Frontend\FrontendController@services');
@@ -57,7 +63,13 @@ Route::group(['namespace' => 'Admin' ,'middleware' => 'checkuser' ], function ()
     Route::get('admin/activeDoctor/{id}','AdminDoctorController@activeDoctor');
     Route::get('admin/deactiveDoctor/{id}','AdminDoctorController@deactiveDoctor');
     Route::get('admin/dprofile/{id}','AdminDoctorController@doctorProfileById');
+    
+    Route::get('admin/dprofileDelAction/{id}','AdminDoctorController@doctorProfileDeleteId');
 
+    //mridul 22-7-20
+    Route::get('admin/dprofileEdit/{id}','AdminDoctorController@doctorProfileEdit');
+    Route::post('admin/dprofileEditAction','AdminDoctorController@doctorProfileEditAction');
+    Route::any('admin/updateBankInfo/{id}','AdminFirebaseController@updateBankInfo');
     Route::any('admin/district','AdminFirebaseController@manageDistrict');
 
     // Route::get('admin/')
@@ -82,6 +94,8 @@ Route::group(['namespace' => 'Admin' ,'middleware' => 'checkuser' ], function ()
     Route::get('admin/hospitalUser/{status}','AdminHospitalController@hosStatus');
 
     Route::get('admin/servicenav','AdminServiceController@index');
+    Route::get('admin/service','AdminServiceController@serviceInfo');
+    Route::get('admin/finance','AdminServiceController@financialInfo');
 
 });
 
@@ -123,9 +137,21 @@ Route::group(['prefix' => 'doctor','namespace' => 'Doctor'], function () {
 });
 
 Route::get('admin/revenue','Admin\AdminController@revenue');
+
+Route::any('admin/revenue1/{date}','Admin\AdminController@revenueByDate');
+Route::any('admin/revenue2/{month}','Admin\AdminController@revenueByMonth');
+Route::any('admin/revenue3/{year}','Admin\AdminController@revenueByYear');
+Route::any('admin/revenue4/{week}','Admin\AdminController@revenueByWeek');
+
+Route::any('admin/visitors1/{date}','Admin\AdminController@visitorsByDate');
+Route::any('admin/visitors2/{month}','Admin\AdminController@visitorsByMonth');
+Route::any('admin/visitors3/{year}','Admin\AdminController@visitorsByYear');
+Route::any('admin/visitors4/{week}','Admin\AdminController@visitorsByWeek');
+
 Route::get('admin/doctorInfo','Admin\AdminController@doctorInfo');
 Route::get('admin/patientInfo','Admin\AdminController@patientInfo');
 Route::get('admin/regUser','Admin\AdminController@regUser');
+Route::any('admin/regUserDateWise/{date}','Admin\AdminController@regUserDateWise');
 Route::get('admin/visitors','Admin\AdminController@visitors');
 Route::get('admin/transaction/{visited}','Admin\AdminController@transactionHistory');
 Route::get('admin/doctorTransactionData','Admin\AdminDoctorController@doctorTransactionInfo');
@@ -133,11 +159,16 @@ Route::get('admin/districtDoctor','Admin\AdminFirebaseController@districtDoctor'
 //Route::get('admin/servicenav','Admin\AdminServiceController@index');
 
 //end
+//new 20-07-2020 
+Route::get('admin/doctorInfoByDistrict','Admin\AdminController@doctorInfoByDistrict');
+Route::get('admin/visitInfoByDistrict','Admin\AdminController@visitInfoByDistrict');
+
 
 Route::group(['namespace' => 'Doctor','middleware' => 'checkDoctor'], function () {
     Route::get('doctor','DoctorController@index');
     Route::get('doctor/video','DoctorController@video');
     Route::get('doctor/help','DoctorController@portalHelp');
+    Route::get('doctor/prescription/{uid}/{did}/{pid}','DoctorController@prescription');
 });
 
 Route::get('doctor/profile','Doctor\DoctorController@completeProfile');
@@ -178,6 +209,7 @@ Route::group(['namespace'=>'Patient', 'middleware' => 'checkPatient'],function()
     Route::get('patient/edit/{id}','PatientController@edit');
     Route::POST('patient/editAction/{id}','PatientController@editAction');
     Route::get('patient/profile','PatientController@profile');
+    Route::get('patient/help','PatientController@help');
 });
 //end
 
@@ -194,7 +226,16 @@ Route::group(['namespace'=>'Hospital', 'middleware' => 'checkHospital'],function
     Route::get('hospital/help','HospitalController@portalHelp');
     Route::get('hospital/bankinfo','HospitalController@bank_info');
     Route::post('hospital/addBank_infoAction','HospitalController@addBank_infoAction');
+
+
+
+
 });
+
+Route::get('/hospital/revenue','Hospital\HospitalController@revForHospital');
+Route::any('/hospital/revenue/{date}','Hospital\HospitalController@revByDate');
+Route::get('/hospital/revenuebymonth/{month}','Hospital\HospitalController@revByMonth');
+Route::get('/hospital/revenuebyyear/{year}','Hospital\HospitalController@revByYear');
 
 Route::get('admin/gethospital','Admin\AdminController@hospital');
 Route::get('admin/hospital/getBranch/{id}','Admin\AdminController@branch');
@@ -223,3 +264,11 @@ Route::get('NotificationApi/mobidocnotification/{token}/{sender_name}/{sender_ph
 //change password
 Route::get('changepassword/{title}/{id}','Admin\AdminFirebaseController@changePassword');
 Route::post('changepassword','Admin\AdminFirebaseController@changePasswordAction');
+
+Route::get('test2','TestController@test');
+Route::post('testform','TestController@test_form');
+
+
+
+
+

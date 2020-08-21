@@ -40,7 +40,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url('hospital/revenue')}}" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Revenue
@@ -58,7 +58,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url('hospital/help')}}" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
               <p>
                 Help

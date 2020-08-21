@@ -17,15 +17,30 @@
         else $id = "";
 
         if(isset($doctorInfo[0]['doctorType'])) $type = $doctorInfo[0]['doctorType'];
-        else $type = ""; 
+        else $type = "";
+
+        if(isset($doctorInfo[0]['gender'])) $gender = $doctorInfo[0]['gender'];
+        else $gender = "";
 
         if(isset($doctorInfo[0]['district'])) $dis = $doctorInfo[0]['district'];
-        else $dis = ""; 
+        else $dis = "";
 
         //dd($doctorInfo);
         //dd($district);
         //dd($bank_info);
 
+
+
+    @endphp
+
+    @php
+        if(isset($doctorInfo[0]['dateOfBirth'])){
+          $dobirth = $doctorInfo[0]['dateOfBirth'];
+          $dob = date('Y-m-d',strtotime($dobirth));
+        }else{
+          $dob = '';
+        }
+        // dd($dob);
     @endphp
     <div class="content-header">
       <div class="container-fluid">
@@ -53,7 +68,7 @@
                 </div>
             </div>
             <div class="card-body col-md-12 col-sm-12">
-                
+
                 @if ($errors->any())
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -85,15 +100,18 @@
                             <div class="dates form-group  col-lg-4 col-md-4 col-sm-12">
                                 <label class="control-label">Date of Birth <i class="iconFa fa fa-asterisk color-red"></i> </label>
                                 {{-- <input id="datepicker" type="text" required="required" class="form-control" placeholder=""/> --}}
-                                <input name="dateOfBirth" type="date" class="form-control" id="usr1" placeholder="YYYY-MM-DD" autocomplete="off"  value=
+                                {{--
+                                    <input name="dateOfBirth" type="date" class="form-control" id="usr1" placeholder="YYYY-MM-DD" autocomplete="off"  value=
                                 @if(isset($doctorInfo[0]['dateOfBirth'])) {{$doctorInfo[0]['dateOfBirth']}} @else {{old('dateOfBirth')}} @endif>
+                                --}}
+                                <input name="dateOfBirth" type="date" class="form-control" id="usr1" placeholder="YYYY-MM-DD" autocomplete="off"  value="{{$dob}}">
                             </div>
                             <div class="form-group  col-lg-4 col-md-4 col-sm-12">
                                 <label class="control-label">Gender <i class="iconFa fa fa-asterisk color-red"></i> </label>
                                 <select name="gender" type="text" required="required" class="form-control">
                                     <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="Male" @if($gender == 'Male') selected @endif>Male</option>
+                                    <option value="Female" @if($gender == 'Female') selected @endif>Female</option>
                                 </select>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-12">
@@ -106,7 +124,7 @@
                             </div> --}}
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="control-label">BMDC Registration Number <i class="iconFa fa fa-asterisk color-red"></i> </label>
-                                <input  name="regNo" type="number" required="required" class="form-control" placeholder="" value="@if(isset($doctorInfo[0]['regNo'])){{$doctorInfo[0]['regNo']}}@else{{old('regNo')}}@endif"/>
+                                <input  name="regNo" type="text" required="required" class="form-control" placeholder="" value="@if(isset($doctorInfo[0]['regNo'])){{$doctorInfo[0]['regNo']}}@else{{old('regNo')}}@endif"/>
                             </div>
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="">Academic Degree <i class="iconFa fa fa-asterisk color-red"></i> </label>
@@ -134,10 +152,12 @@
 
                                 <select name="district" type="text" required="required" class="form-control" >
                                     <option value="">Select District</option>
+                                    {{-- <option value="{{$dis}}" selected>{{$dis}}</option> --}}
                                     @foreach ($district as $key=>$item)
+                                        @php //print_r($item); @endphp
                                         <option value="{{$item['name']}}"
 
-                                        @if($item['name'] == $district) selected @endif
+                                        @if($item['name'] == $dis) selected @endif
 
                                         >{{$item['name']}}</option>
                                     @endforeach
@@ -166,6 +186,17 @@
 
                             </div>
                         </div>
+                        
+                   {{-- mridul addition 13-7-20 --}}
+                    
+                    @php                     
+                    if(array_key_exists("registrationStat", $doctorInfo[0])) { $regStat = $doctorInfo[0]['registrationStat']; } else { $regStat = 0; } 
+                    @endphp
+                     
+                    <input type="hidden" name="registrationStat" value="@php echo $regStat; @endphp" />
+                    
+                    @php if($regStat < 2) { @endphp                     
+                     
                     <div class="tab">
                         <div class="tab-header">
                             <h5 class="m-0 m-auto d-table">Upload Documents</h5>
@@ -173,20 +204,83 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                                <label class="control-label">Degree/Certificate Documents <i class="iconFa fa fa-asterisk color-red"></i> </label>
+                                <label class="control-label">Degree/Certificate Documents(MBBS) <i class="iconFa fa fa-asterisk color-red"></i> </label>
                                 <input name="degreeCertificate" type="file" required="required" class="form-control" placeholder="" />
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
                             </div>
+
+                            @if(isset($doctorInfo[0]['photoUrl']) && !empty($doctorInfo[0]['photoUrl']))
+                            {{-- mridul 20-8-20 if hospital doc then show it as dummy profile pic was added when hospital added doc: --}}
+                            @if(isset($doctorInfo[0]['hospitalized']) && $doctorInfo[0]['hospitalized'] == true) 
+                            
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="control-label">Profile Picture <i class="iconFa fa fa-asterisk color-red"></i> </label>
-                                <input name="photoUrl" type="file" required="required" class="form-control" placeholder="" />
+                                <input name="photoUrl" type="file" required="required" class="form-control" placeholder=""/>
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
                             </div>
+                            
+                            @else
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                                <label class="control-label">Prescription Form <i class="iconFa fa fa-asterisk color-red"></i> </label>
-                                <input name="prescriptionForm" type="file" required="required" class="form-control" placeholder="" />
+                                <input name="old_photoUrl" type="hidden" required="required" class="form-control" placeholder="" value="{{$doctorInfo[0]['photoUrl']}}"/>
+                            </div>
+                            @endif
+                            
+                            @else 
+
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                <label class="control-label">Profile Picture <i class="iconFa fa fa-asterisk color-red"></i> </label>
+                                <input name="photoUrl" type="file" required="required" class="form-control" placeholder=""/>
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
+                            </div>
+                            
+                            @endif
+                            
+                            {{-- mridul addition 20-7-20 --}}
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                <label class="control-label">NID Front Side</label>
+                                <input name="nidFront" type="file" class="form-control" placeholder="" />
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
+                            </div>
+                            
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                <label class="control-label">NID back side</label>
+                                <input name="nidBack" type="file" class="form-control" placeholder="" />
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
+                            </div>
+                            
+                            {{-- mridul comment 19-7-20 --}}
+                            {{-- <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                <label class="control-label">Prescription Form </label>
+                                <input name="prescriptionForm" type="file" class="form-control" placeholder="" />
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
+                            </div> --}}
+
+                        </div>
+                    </div> @php } @endphp
+                    
+                    {{-- mridul addition 20-7-20 --}}
+                     @php if($regStat ==2) { @endphp                      
+                     <div class="tab">
+                        <div class="tab-header">
+                            <h5 class="m-0 m-auto d-table">Upload Documents</h5>
+                            <hr>
+                        </div>
+                        <div class="row">                                                       
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                <label class="control-label">NID Front Side</label>
+                                <input name="nidFront" type="file" class="form-control" placeholder="" />
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
+                            </div>
+                            
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                <label class="control-label">NID back side</label>
+                                <input name="nidBack" type="file" class="form-control" placeholder="" />
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
                             </div>
 
                         </div>
-                    </div>
+                    </div> @php } @endphp
+                    
                     <div class="tab">
                         <div class="tab-header">
                             <h5 class="m-0 m-auto d-table  tab-header">Bank Information</h5>
@@ -214,16 +308,17 @@
                                 <input name="bankName" type="text" required="required" class="form-control" placeholder="" value="{{old('bankName')}}"/>
                                 @endif
                             </div>
-
+                            @if(isset($bank_info['accountNumber']))
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12" style="display: none;">
+                                <label class="">Bank Account Number <i class="iconFa fa fa-asterisk color-red"></i></label>
+                                <input name="accountNo" type="number" required="required" class="form-control" placeholder="" value="{{$bank_info['accountNumber']}}" readonly />
+                            </div>
+                            @else
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="">Bank Account Number <i class="iconFa fa fa-asterisk color-red"></i></label>
-
-                                @if(isset($bank_info['accountNumber']))
-                                <input name="accountNo" type="number" required="required" class="form-control" placeholder="" value="{{$bank_info['accountNumber']}}" readonly />
-                                @else
                                 <input name="accountNo" type="number" required="required" class="form-control" placeholder="" value="{{old('accountNo')}}"/>
-                                @endif
                             </div>
+                            @endif
 
                             {{--
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
@@ -240,8 +335,8 @@
                                 <input name="swiftCode" type="text" class="form-control" placeholder="" value="{{old('swiftCode')}}"  />
                                 @endif
                             </div>
-                            
-                            
+
+
                         </div>
                     </div>
 

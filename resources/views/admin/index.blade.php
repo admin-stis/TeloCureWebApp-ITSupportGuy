@@ -74,7 +74,7 @@
             <div class="small-box bg-secondary">
               <div class="inner" style="padding:21px;">
                 <h5 class="text-center text-bold text-white">Total Transaction</h5>
-                <h3  class="text-white">{{$totalRevenue[0]}} Tk</h3>
+                <h3  class="text-white">{{$totalRevenue}} Tk</h3>
               </div>
               <div class="icon">
                 <i class="fa fa-hospital"></i>
@@ -92,18 +92,75 @@
 
         <div class="row" style="margin-top: 10px;margin-bottom: 28px;background: #fff;margin-right: 0px;margin-left: 0px;padding: 20px">
             <!-- ./col -->
-            <div class="col-lg-6 col-12 graph">
+
+            <!-- test purpose -->
+            <div class="col-lg-5">
+              <div class="card"  style="min-height: 468px;">
+                  <div class="card-header">Registered Patient</div>
+                  <div class="card-body">
+                      Date : <input id="date" type="date" class="form-control" name="revDate"/>
+                      <!-- <p id="hosId" style="display:none;" value="@if(isset($info[0]['id'])){{$info[0]['id']}}@endif"></p> -->
+                      <canvas id="mycanvasDate"></canvas>
+                  </div>
+                  <div class="card-footer"></div>
+              </div>
+            </div>
+            <!-- end -->
+
+            <!-- test visitor purpose -->
+            <div class="col-lg-7 ">
+              <div class="card">
+                  <div class="card-header">Visited Patient</div>
+                  <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-3">Date : <input id="visitDate" type="date" class="form-control" name="rdate"/></div>
+                        <div class="col-md-3">Week : <input id="visitWeek" type="Week" class="form-control" name="rdate"/>
+                        </div>
+                        <div class="col-md-3">Month : <input id="visitMonth" type="month" class="form-control" name="rmonth"/></div>
+                        <div class="col-md-3">Year : <input id="visitYear" type="text" class="form-control" placeholder="Enter year" name="rYear"/></div>
+                        <canvas id="mycanvasVisitor"></canvas>
+                      </div>
+                  </div>
+                  <div class="card-footer"></div>
+              </div>
+            </div>
+            <!-- end -->
+
+            <!-- test rev purpose -->
+            <div class="col-lg-12 ">
+              <div class="card">
+                  <div class="card-header">Revenue</div>
+                  <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-3">Date : <input id="revDate" type="date" class="form-control" name="rdate"/>
+                        </div>
+                        <div class="col-md-3">Week : <input id="revWeek" type="Week" class="form-control" name="rdate"/>
+                        </div>
+                        <div class="col-md-3">Month : <input id="revMonth" type="month" class="form-control" name="rmonth"/></div>
+                        <div class="col-md-3">Year : <input id="revYear" type="text" class="form-control" name="rYear" placeholder="Enter year"/></div>
+                        <canvas id="mycanvasRev"></canvas>
+                      </div>
+                  </div>
+                  <div class="card-footer"></div>
+              </div>
+            </div>
+            <!-- end -->
+
+
+
+            <div class="col-lg-6 col-12 graph  d-none">
               <!-- small box -->
               <h5>Registered User</h5>
               <canvas id="bar-chart"></canvas>
             </div>
 
-            <div class="col-lg-6 col-12 graph">
+            <div class="col-lg-6 col-12 graph d-none">
               <!-- small box -->
               <h5>Visited User</h5>
               <canvas id="bar-chart2"></canvas>
             </div>
-            <div class="col-lg-12 col-12 graph">
+
+            <div class="col-lg-12 col-12 graph d-none">
               <!-- small box -->
               <h5>Revenue Information</h5>
               <canvas id="mycanvas"></canvas>
@@ -154,7 +211,7 @@
                 <div class="inner">
                   <h4 class="text-center text-bold">Hospital</h4>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{url('admin/hospital')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -165,7 +222,7 @@
                   <div class="inner">
                     <h4 class="text-center text-bold">Service & Revenue</h4>
                   </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{url('admin/servicenav')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
               <!-- ./col -->
@@ -174,7 +231,7 @@
         <!-- Main row -->
 
 
-
+    <input type="hidden" id="today" value="<?php echo date('Y-m-d');?>"/>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -183,6 +240,145 @@
 
     <script>
         $(document).ready(function(){
+
+
+            // test purpose
+            var oldDate = $('#today').val();
+            $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                    url: "/admin/regUserDateWise/"+oldDate,
+                    method: "get",
+                    success: function(data) {
+                        //alert(data);
+                        //console.log(data);
+                        var dates = [];
+                        var amount = [];
+
+                        for(var i in data) {
+                            var val = 0 ;
+                            dateData = new Date((data[i].date));
+                            dates.push(data[i].date);
+                            amount.push(data[i].rev);
+                        }
+
+                        if(dates.length == 0){
+                            dates = [0];
+                        }
+                        if(amount.length == 0){
+                            amount = [0];
+                        }
+
+                        var chartdata = {
+                            labels: dates,
+                            datasets : [
+                            {
+                                label: 'Revenue ',
+                                backgroundColor: '#17a2b8',
+                                borderColor: 'rgba(200, 200, 200, 0.75)',
+                                //hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                                //hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                                data: amount,
+                                options: {
+                                    hover: {mode: null},
+                                    scales: {
+                                        xAxes: [{
+                                            type: 'time',
+                                            distribution: 'series',
+                                            time: {
+                                            displayFormats: {
+                                                quarter: 'MMM YYYY'
+                                            }
+                                    }
+                                        }]
+                                    }
+                                }
+                            }
+                            ]
+                        };
+
+                        var ctx = $("#mycanvasDate");
+
+                        var barGraph = new Chart(ctx, {
+                            type: 'bar',
+                            data: chartdata
+                        });
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+
+               $('#date').on('change',function(){
+                var date = $('#date').val();
+                console.log(date);
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                    url: "/admin/regUserDateWise/"+date,
+                    method: "get",
+                    success: function(data) {
+                        //alert(data);
+                        console.log(data);
+                        var dates = [];
+                        var amount = [];
+
+                        for(var i in data) {
+                            var val = 0 ;
+                            dateData = new Date((data[i].date));
+                            dates.push(data[i].date);
+                            amount.push(data[i].rev);
+                        }
+
+                        if(dates.length == 0){
+                            dates = [0];
+                        }
+                        if(amount.length == 0){
+                            amount = [0];
+                        }
+
+                        var chartdata = {
+                            labels: dates,
+                            datasets : [
+                            {
+                                label: 'Revenue ',
+                                backgroundColor: '#17a2b8',
+                                borderColor: 'rgba(200, 200, 200, 0.75)',
+                                //hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                                //hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                                data: amount,
+                                options: {
+                                    hover: {mode: null},
+                                    scales: {
+                                        xAxes: [{
+                                            type: 'time',
+                                            distribution: 'series',
+                                            time: {
+                                            displayFormats: {
+                                                quarter: 'MMM YYYY'
+                                            }
+                                    }
+                                        }]
+                                    }
+                                }
+                            }
+                            ]
+                        };
+
+                        var ctx = $("#mycanvasDate");
+
+                        var barGraph = new Chart(ctx, {
+                            type: 'bar',
+                            data: chartdata
+                        });
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+
+            // end
+
+
             $.ajax({
                 url: "admin/revenue",
                 method: "GET",
@@ -236,6 +432,298 @@
                 }
             });
 
+
+            // test rev
+            var oldDate = $('#today').val();
+            $.ajax({
+                url: "admin/revenue1/"+oldDate,
+                method: "GET",
+                success: function(data) {
+                var dates = [];
+                var amount = [];
+
+                for(var i in data) {
+                    var val = 0 ;
+                    dateData = new Date((data[i].date));
+                    dates.push(data[i].date);
+                    amount.push(data[i].val);
+                }
+
+                var chartdata = {
+                    labels: dates,
+                    datasets : [
+                    {
+                        label: 'Revenue ',
+                        backgroundColor: '#17a2b8',
+                        borderColor: 'rgba(200, 200, 200, 0.75)',
+                        hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                        hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                        data: amount,
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    type: 'time',
+                                    distribution: 'series',
+                                    time: {
+                                    displayFormats: {
+                                        quarter: 'MMM YYYY'
+                                    }
+                            }
+                                }]
+                            }
+                        }
+                    }
+                    ]
+                };
+
+                var ctx = $("#mycanvasRev");
+
+                var barGraph = new Chart(ctx, {
+                    type: 'line',
+                    data: chartdata
+                });
+                },
+                error: function(data) {
+                console.log(data);
+                }
+            });
+            $('#revDate').on('change',function(){
+                var revdate = $('#revDate').val();
+                $.ajax({
+                  url: "admin/revenue1/"+revdate,
+                  method: "GET",
+                  success: function(data) {
+                  console.log(data);
+                  var dates = [];
+                  var amount = [];
+
+                  for(var i in data) {
+                      var val = 0 ;
+                      dateData = new Date((data[i].date));
+                      dates.push(data[i].date);
+                      amount.push(data[i].rev);
+                  }
+
+                  console.log(amount);
+
+                  var chartdata = {
+                      labels: dates,
+                      datasets : [
+                      {
+                          label: 'Revenue ',
+                          backgroundColor: '#17a2b8',
+                          borderColor: 'rgba(200, 200, 200, 0.75)',
+                          hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                          hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                          data: amount,
+                          options: {
+                              scales: {
+                                  xAxes: [{
+                                      type: 'time',
+                                      distribution: 'series',
+                                      time: {
+                                      displayFormats: {
+                                          quarter: 'MMM YYYY'
+                                      }
+                              }
+                                  }]
+                              }
+                          }
+                      }
+                      ]
+                  };
+
+                  var ctx = $("#mycanvasRev");
+
+                  var barGraph = new Chart(ctx, {
+                      type: 'bar',
+                      data: chartdata
+                  });
+                  },
+                  error: function(data) {
+                  console.log(data);
+                  }
+              });
+            });
+            $('#revWeek').on('change',function(){
+                var revWeek = $('#revWeek').val();
+                
+                $.ajax({
+                  url: "admin/revenue4/"+revWeek,
+                  method: "GET",
+                  success: function(data) {
+                  console.log(data);
+                  var dates = [];
+                  var amount = [];
+
+                  for(var i in data) {
+                      var val = 0 ;
+                      dateData = new Date((data[i].date));
+                      dates.push(data[i].date);
+                      amount.push(data[i].rev);
+                  }
+
+                  console.log(amount);
+
+                  var chartdata = {
+                      labels: dates,
+                      datasets : [
+                      {
+                          label: 'Revenue ',
+                          backgroundColor: '#17a2b8',
+                          borderColor: 'rgba(200, 200, 200, 0.75)',
+                          hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                          hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                          data: amount,
+                          options: {
+                              scales: {
+                                  xAxes: [{
+                                      type: 'time',
+                                      distribution: 'series',
+                                      time: {
+                                      displayFormats: {
+                                          quarter: 'MMM YYYY'
+                                      }
+                              }
+                                  }]
+                              }
+                          }
+                      }
+                      ]
+                  };
+
+                  var ctx = $("#mycanvasRev");
+
+                  var barGraph = new Chart(ctx, {
+                      type: 'bar',
+                      data: chartdata
+                  });
+                  },
+                  error: function(data) {
+                  console.log(data);
+                  }
+              });
+            });
+            $('#revMonth').on('change',function(){
+                var revmonth = $('#revMonth').val();
+                
+                $.ajax({
+                  url: "admin/revenue2/"+revmonth,
+                  method: "GET",
+                  success: function(data) {
+                  console.log(data);
+                  var dates = [];
+                  var amount = [];
+
+                  for(var i in data) {
+                      var val = 0 ;
+                      dateData = new Date((data[i].date));
+                      dates.push(data[i].date);
+                      amount.push(data[i].rev);
+                  }
+
+                  console.log(amount);
+
+                  var chartdata = {
+                      labels: dates,
+                      datasets : [
+                      {
+                          label: 'Revenue ',
+                          backgroundColor: '#17a2b8',
+                          borderColor: 'rgba(200, 200, 200, 0.75)',
+                          hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                          hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                          data: amount,
+                          options: {
+                              scales: {
+                                  xAxes: [{
+                                      type: 'time',
+                                      distribution: 'series',
+                                      time: {
+                                      displayFormats: {
+                                          quarter: 'MMM YYYY'
+                                      }
+                              }
+                                  }]
+                              }
+                          }
+                      }
+                      ]
+                  };
+
+                  var ctx = $("#mycanvasRev");
+
+                  var barGraph = new Chart(ctx, {
+                      type: 'bar',
+                      data: chartdata
+                  });
+                  },
+                  error: function(data) {
+                  console.log(data);
+                  }
+              });
+            });
+            $('#revYear').on('change',function(){
+                var revyear = $('#revYear').val();
+                
+                $.ajax({
+                  url: "admin/revenue3/"+revyear,
+                  method: "GET",
+                  success: function(data) {
+                  console.log(data);
+                  var dates = [];
+                  var amount = [];
+
+                  for(var i in data) {
+                      var val = 0 ;
+                      dateData = new Date((data[i].date));
+                      dates.push(data[i].date);
+                      amount.push(data[i].rev);
+                  }
+
+                  console.log(amount);
+
+                  var chartdata = {
+                      labels: dates,
+                      datasets : [
+                      {
+                          label: 'Revenue ',
+                          backgroundColor: '#17a2b8',
+                          borderColor: 'rgba(200, 200, 200, 0.75)',
+                          hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                          hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                          data: amount,
+                          options: {
+                              scales: {
+                                  xAxes: [{
+                                      type: 'time',
+                                      distribution: 'series',
+                                      time: {
+                                      displayFormats: {
+                                          quarter: 'MMM YYYY'
+                                      }
+                              }
+                                  }]
+                              }
+                          }
+                      }
+                      ]
+                  };
+
+                  var ctx = $("#mycanvasRev");
+
+                  var barGraph = new Chart(ctx, {
+                      type: 'bar',
+                      data: chartdata
+                  });
+                  },
+                  error: function(data) {
+                  console.log(data);
+                  }
+              });
+            });
+            // test
+
             //registered user (patients)
             $.ajax({
                 url: "admin/regUser",
@@ -243,14 +731,14 @@
                 success: function(data) {
 
                     var dates = [];
-	                var amount = [];
+                  var amount = [];
 
-	                for(var i in data) {
-	                    var val = 0 ;
-	                    dateData = new Date((data[i].date));
-	                    dates.push(data[i].date);
-	                    amount.push(data[i].val);
-	                }
+                  for(var i in data) {
+                      var val = 0 ;
+                      dateData = new Date((data[i].date));
+                      dates.push(data[i].date);
+                      amount.push(data[i].val);
+                  }
 
                     var chartdata = {
                         labels: dates,
@@ -278,13 +766,12 @@
                 }
             });
 
-
             $.ajax({
                 url: "admin/visitors",
                 method: "GET",
                 success: function(data) {
 
-                    var dates = [];
+                  var dates = [];
                   var amount = [];
 
                   for(var i in data) {
@@ -319,6 +806,300 @@
                 console.log(data);
                 }
             });
+
+            // test
+            // test rev
+            var oldDate = $('#today').val();
+            $.ajax({
+                url: "admin/visitors1/"+oldDate,
+                method: "GET",
+                success: function(data) {
+                var dates = [];
+                var amount = [];
+
+                for(var i in data) {
+                    var val = 0 ;
+                    dateData = new Date((data[i].date));
+                    dates.push(data[i].date);
+                    amount.push(data[i].val);
+                }
+
+                var chartdata = {
+                    labels: dates,
+                    datasets : [
+                    {
+                        label: 'Revenue ',
+                        backgroundColor: '#17a2b8',
+                        borderColor: 'rgba(200, 200, 200, 0.75)',
+                        hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                        hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                        data: amount,
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    type: 'time',
+                                    distribution: 'series',
+                                    time: {
+                                    displayFormats: {
+                                        quarter: 'MMM YYYY'
+                                    }
+                            }
+                                }]
+                            }
+                        }
+                    }
+                    ]
+                };
+
+                var ctx = $("#mycanvasVisitor");
+
+                var barGraph = new Chart(ctx, {
+                    type: 'line',
+                    data: chartdata
+                });
+                },
+                error: function(data) {
+                console.log(data);
+                }
+            });
+            $('#visitDate').on('change',function(){
+                var visitDate = $('#visitDate').val();
+                console.log(visitDate);
+                $.ajax({
+                  url: "admin/visitors1/"+visitDate,
+                  method: "GET",
+                  success: function(data) {
+                  console.log(data);
+                  var dates = [];
+                  var amount = [];
+
+                  for(var i in data) {
+                      var val = 0 ;
+                      dateData = new Date((data[i].date));
+                      dates.push(data[i].date);
+                      amount.push(data[i].val);
+                  }
+
+                  console.log(amount);
+
+                  var chartdata = {
+                      labels: dates,
+                      datasets : [
+                      {
+                          label: 'Revenue ',
+                          backgroundColor: '#17a2b8',
+                          borderColor: 'rgba(200, 200, 200, 0.75)',
+                          hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                          hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                          data: amount,
+                          options: {
+                              scales: {
+                                  xAxes: [{
+                                      type: 'time',
+                                      distribution: 'series',
+                                      time: {
+                                      displayFormats: {
+                                          quarter: 'MMM YYYY'
+                                      }
+                              }
+                                  }]
+                              }
+                          }
+                      }
+                      ]
+                  };
+
+                  var ctx = $("#mycanvasVisitor");
+
+                  var barGraph = new Chart(ctx, {
+                      type: 'bar',
+                      data: chartdata
+                  });
+                  },
+                  error: function(data) {
+                  console.log(data);
+                  }
+              });
+            });
+            $('#visitWeek').on('change',function(){
+                var visitWeek = $('#visitWeek').val();
+                
+                $.ajax({
+                  url: "admin/visitors4/"+visitWeek,
+                  method: "GET",
+                  success: function(data) {
+                  console.log(data);
+                  var dates = [];
+                  var amount = [];
+
+                  for(var i in data) {
+                      var val = 0 ;
+                      dateData = new Date((data[i].date));
+                      dates.push(data[i].date);
+                      amount.push(data[i].val);
+                  }
+
+                  console.log(amount);
+
+                  var chartdata = {
+                      labels: dates,
+                      datasets : [
+                      {
+                          label: 'Revenue ',
+                          backgroundColor: '#17a2b8',
+                          borderColor: 'rgba(200, 200, 200, 0.75)',
+                          hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                          hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                          data: amount,
+                          options: {
+                              scales: {
+                                  xAxes: [{
+                                      type: 'time',
+                                      distribution: 'series',
+                                      time: {
+                                      displayFormats: {
+                                          quarter: 'MMM YYYY'
+                                      }
+                              }
+                                  }]
+                              }
+                          }
+                      }
+                      ]
+                  };
+
+                  var ctx = $("#mycanvasVisitor");
+
+                  var barGraph = new Chart(ctx, {
+                      type: 'bar',
+                      data: chartdata
+                  });
+                  },
+                  error: function(data) {
+                  console.log(data);
+                  }
+              });
+            });
+            $('#visitMonth').on('change',function(){
+                var visitmonth = $('#visitMonth').val();
+                
+                $.ajax({
+                  url: "admin/visitors2/"+visitmonth,
+                  method: "GET",
+                  success: function(data) {
+                  console.log(data);
+                  var dates = [];
+                  var amount = [];
+
+                  for(var i in data) {
+                      var val = 0 ;
+                      dateData = new Date((data[i].date));
+                      dates.push(data[i].date);
+                      amount.push(data[i].val);
+                  }
+
+                  console.log(amount);
+
+                  var chartdata = {
+                      labels: dates,
+                      datasets : [
+                      {
+                          label: 'Revenue ',
+                          backgroundColor: '#17a2b8',
+                          borderColor: 'rgba(200, 200, 200, 0.75)',
+                          hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                          hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                          data: amount,
+                          options: {
+                              scales: {
+                                  xAxes: [{
+                                      type: 'time',
+                                      distribution: 'series',
+                                      time: {
+                                      displayFormats: {
+                                          quarter: 'MMM YYYY'
+                                      }
+                              }
+                                  }]
+                              }
+                          }
+                      }
+                      ]
+                  };
+
+                  var ctx = $("#mycanvasVisitor");
+
+                  var barGraph = new Chart(ctx, {
+                      type: 'bar',
+                      data: chartdata
+                  });
+                  },
+                  error: function(data) {
+                  console.log(data);
+                  }
+              });
+            });
+            $('#visitYear').on('change',function(){
+                var visitYear = $('#visitYear').val();
+                
+                $.ajax({
+                  url: "admin/visitors3/"+visitYear,
+                  method: "GET",
+                  success: function(data) {
+                  console.log(data);
+                  var dates = [];
+                  var amount = [];
+
+                  for(var i in data) {
+                      var val = 0 ;
+                      dateData = new Date((data[i].date));
+                      dates.push(data[i].date);
+                      amount.push(data[i].val);
+                  }
+
+                  console.log(amount);
+
+                  var chartdata = {
+                      labels: dates,
+                      datasets : [
+                      {
+                          label: 'Visited Patient ',
+                          backgroundColor: '#17a2b8',
+                          borderColor: 'rgba(200, 200, 200, 0.75)',
+                          hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                          hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                          data: amount,
+                          options: {
+                              scales: {
+                                  xAxes: [{
+                                      type: 'time',
+                                      distribution: 'series',
+                                      time: {
+                                      displayFormats: {
+                                          quarter: 'MMM YYYY'
+                                      }
+                              }
+                                  }]
+                              }
+                          }
+                      }
+                      ]
+                  };
+
+                  var ctx = $("#mycanvasVisitor");
+
+                  var barGraph = new Chart(ctx, {
+                      type: 'bar',
+                      data: chartdata
+                  });
+                  },
+                  error: function(data) {
+                  console.log(data);
+                  }
+              });
+            });
+            // test
+            // end 
         });
 
 

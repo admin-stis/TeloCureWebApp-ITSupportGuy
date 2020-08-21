@@ -30,7 +30,7 @@ class sendResetPassword extends Mailable
      */
     public function build()
     {
-        $address = 'support@telocure.com';
+        $address = 'dev.telocure@gmail.com';
         $subject = 'Temporary password !';
         $name = 'TeloCure';
 

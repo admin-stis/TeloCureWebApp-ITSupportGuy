@@ -37,26 +37,42 @@
         <!-- Main row -->
         <div class="row">
           <!-- Left col -->
-          <section class="row col-lg-12 connectedSortable">
+          <section class="row col-lg-12">
             <div class="col-lg-4 col-md-4 col-sm-12" style="background:#fff;padding:15px;">
                 <h5>Patient By Gender</h5><hr>
                 <canvas id="mycanvas"></canvas>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12" style="background:#fff;padding:15px;">
-                <h5>Doctor Type</h5><hr>
-                <canvas id="doctorTypeChart"></canvas>
-            </div>
+            
             <div class="col-lg-4 col-md-4 col-sm-12" style="background:#fff;padding:15px;">
                 <h5>Patient Status</h5><hr>
                 <canvas id="patientActivityChart"></canvas>
             </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-12" style="background:#fff;padding:15px;">
+                <h5>Doctor Type</h5><hr>
+                <canvas id="doctorTypeChart"></canvas>
+            </div>
+
+            <!--  20/07/2020 -->
+            <div class="col-lg-6 col-md-6 col-sm-12" style="background:#fff;padding:15px;">
+                <h5>Doctor By District</h5><hr>
+                <canvas id="doctorDistrictChart"></canvas>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12" style="background:#fff;padding:15px;">
+                <h5>Revenue By District</h5><hr>
+                <canvas id="visitDistrictChart"></canvas>
+            </div>
+            <!--  end -->
+
+
+
             <div class="col-lg-6 col-md-6" style="margin-top:20px;">
                 <!-- small box -->
                 <div class="small-box bg-success">
                   <div class="inner">
                     <h4 class="text-center text-bold">Service Info</h4>
                   </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="{{url('admin/service')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
               <div class="col-lg-6 col-md-6" style="margin-top:20px;">
@@ -65,7 +81,7 @@
                   <div class="inner">
                     <h4 class="text-center text-bold">Financial Info</h4>
                   </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="{{url('admin/finance')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
 
               <!-- ./col -->
@@ -73,6 +89,70 @@
           </section>
 
           <!-- /.Left col -->
+
+          {{-- Patient information with diagnosis --}}
+          <section class="col-lg-12">
+            <div class="card">
+               <div class="card-header">
+                  <div class="col-md-12">
+                     <span class=""><i class="fas fa-list mr-1"></i>Patient</span>
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+               </div>
+               <!-- /.card-header -->
+               <div class="card-body">
+                  <div class="tab-content p-0">
+                     <!-- Morris chart - Sales -->
+                     <div class="chart tab-pane active" id="revenue-chart"
+                        style="position: relative;">
+                        <div class="row">
+                           <input id="search" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sl</th>
+                                    <th>Patient</th>
+                                    <th>Phone</th>
+                                    <th>Gender</th>
+                                    <th>District</th>
+                                    <th>Diagnosis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $i = 0; 
+                                @endphp
+                                @foreach ($arr as $item)
+                                @php 
+                                $i++; 
+                                //dd($item);
+                                @endphp
+                                    <tr>
+                                        <td>{{$i}}</td>
+                                        <td>{{$item['name']}}</td>
+                                        <td>{{$item['phone']}}</td>
+                                        <td>{{$item['gender']}}</td>
+                                        <td>{{$item['district']}}</td>
+                                        <td>
+                                            <span class="col-md-4">Respiration : @if(isset($item['diagnosis']['resp'])){{$item['diagnosis']['resp']}} @else N/A @endif</span>
+                                            <span class="col-md-4">Blood Pressure : @if(isset($item['diagnosis']['bpm']) || isset($item['diagnosis']['bpm'])){{$item['diagnosis']['bpm']}} @else N/A @endif</span>
+                                            <span class="col-md-4">Temparature :@if(isset($item['diagnosis']['temp'])){{$item['diagnosis']['temp']}} @else N/A @endif</span>
+                                        </td>
+                                    </tr>
+                               
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="col-md-6 col-lg-6 jquery-script-clear"></div>
+                     </div>
+                  </div>
+               </div>
+               <!-- /.card-body -->
+            </div>
+
+         </section>
 
 
         </div>
@@ -90,8 +170,8 @@
                 success: function(data) {
                     var male = 0,female = 0;
                     for(var i in data){
-                        if(data[i].gender == 'MALE') male++ ;
-                        else if(data[i].gender == 'FEMALE') female++ ;
+                        if(data[i].gender == 'Male') male++ ;
+                        else if(data[i].gender == 'Female') female++ ;
                     }
 
                 var chartdata = {
@@ -165,8 +245,8 @@
                     //console.log(data[4].online);
                     var online = 0,offline = 0;
                     for(var i in data){
-                        if(data[i].online == 'true') online++ ;
-                        else if(data[i].online == 'false') offline++ ;
+                        if(data[i].online == true) online++ ;
+                        else if(data[i].online == false) offline++ ;
                     }
 
                 var chartdata = {
@@ -194,6 +274,93 @@
                 console.log(data);
                 }
             });
+
+
+            // graph for doctor-count by district
+            $.ajax({
+                url: "doctorInfoByDistrict",
+                method: "GET",
+                success: function(data) {
+                    
+                    var val;var key;
+                    key = Object.keys(data);
+                    val = Object.values(data);
+                    console.log(val);
+                    console.log(key);
+                        
+                    
+                var chartdata = {
+                    labels: key,
+                    datasets : [
+                    {
+                        label: 'Doctor',
+                        backgroundColor:"#4DA660",
+                        borderColor: 'rgba(200, 200, 200, 0.75)',
+                        hoverBackgroundColor:"#152A45",
+                        hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                        data: val,
+                    }
+                    ]
+                };
+
+                var ctx = $("#doctorDistrictChart");
+
+                var barGraph = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartdata
+                });
+                },
+                error: function(data) {
+                console.log(data);
+                }
+            });
+
+
+
+            // graph for visit-count by district
+            $.ajax({
+                url: "visitInfoByDistrict",
+                method: "GET",
+                success: function(data) {
+                    
+                    var district=[] ;var rev=[];
+                    // key = Object.keys(data.date);
+                    // val = Object.values(data.val);
+                    var i;
+                    for(i in data){
+                        district.push(data[i].date);
+                        rev.push(data[i].val);
+                    }
+                    
+
+                    
+                var chartdata = {
+                    labels: district,
+                    datasets : [
+                    {
+                        label: 'District',
+                        backgroundColor:"#4DA660",
+                        borderColor: 'rgba(200, 200, 200, 0.75)',
+                        hoverBackgroundColor:"#152A45",
+                        hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                        data: rev,
+                    }
+                    ]
+                };
+
+                var ctx = $("#visitDistrictChart");
+
+                var barGraph = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartdata
+                });
+                },
+                error: function(data) {
+                console.log(data);
+                }
+            });
+
+            
         });
     </script>
 

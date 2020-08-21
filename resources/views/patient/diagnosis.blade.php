@@ -54,11 +54,17 @@
                 <div class="">Phone : {{$patient[0]['phone']}}</div>
                 <div class="">Email : {{$patient[0]['email']}} </div>
 
-                <div class="">Blood Pressure : @if($pres[0]['vital']['bpm']){{$pres[0]['vital']['bpm']}} @else N/A @endif</div>
-                <div class="">Measure Time : @if($pres[0]['vital']['measureTime']){{$pres[0]['vital']['measureTime']->get()->format('d-m-Y')}}  @else N/A @endif</div>
-                <div class="">Respiration : @if($pres[0]['vital']['resp']){{$pres[0]['vital']['resp']}} @else N/A @endif</div>
-                <div class="">Temparature : @if($pres[0]['vital']['temp']){{$pres[0]['vital']['temp']}} @else N/A @endif</div>
+                @php 
+                  $pres['vital'] = json_decode($pres[0]['vital'],TRUE);
+                @endphp
                 
+                <div class="">Blood Pressure : @if(isset($pres['vital']['bpm'])){{$pres['vital']['bpm']}} @else N/A @endif</div>
+                {{--
+                  <div class="">Measure Time : @if(isset($pres['vital']['measureTime'])){{$pres['vital']['measureTime']}}  @else N/A @endif</div>
+                --}}
+                <div class="">Respiration : @if(isset($pres['vital']['resp'])){{$pres['vital']['resp']}} @else N/A @endif</div>
+                <div class="">Temparature : @if(isset($pres['vital']['temp'])){{$pres['vital']['temp']}} @else N/A @endif</div>
+
             </div>
             <!-- /.card-body -->
 

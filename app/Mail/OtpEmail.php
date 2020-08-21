@@ -32,7 +32,7 @@ class OtpEmail extends Mailable
     public function build()
     {
         
-        return $this->from('support@telocure.com')
+        return $this->from('dev.telocure@gmail.com')
                     ->view('mails.otp')
                     ->text('mails.otp_plain')
                     ->with(

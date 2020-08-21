@@ -42,9 +42,34 @@
                     <div class="col-sm-9 col-lg-10">
                         <div class="header-top-item">
                             <div class="header-top-left">
-                                <marquee class="news" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">Breaking News : There are more than 1.7 million confirmed cases of coronavirus in 185 countries and at least 103,000 people have died .
+                                
+                                
+                              <!--   <marquee class="news" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">Breaking News : There are more than 1.7 million confirmed cases of coronavirus in 185 countries and at least 103,000 people have died .
 <a href="https://www.bbc.com/news/world-51235105">Read more</a>
-                                </marquee>
+                                </marquee> -->
+
+                                <marquee>
+                                                    <img src="https://img.icons8.com/dotty/2x/circled.png"
+                                                    width = "20px" height = "20px"/>
+                                                    আমেরিকায় ৬৬ জনে একজন করোনায় সংক্রমিত<span >&nbsp;</span>
+                                                    <img src="https://img.icons8.com/dotty/2x/circled.png"
+                                                    width = "20px" height = "20px"/>
+                                                    অন্ধ্র প্রদেশে কোভিড চিকিৎসাকেন্দ্রে অগ্নিকাণ্ডে ১১ জনের মৃত্যু<span >&nbsp;</span>
+                                                    <img src="https://img.icons8.com/dotty/2x/circled.png"
+                                                    width = "20px" height = "20px"/>
+                                                    পার্বতীপুরের ইউএনওর করোনা শনাক্ত<span >&nbsp;</span>
+                                                    <img src="https://img.icons8.com/dotty/2x/circled.png"
+                                                    width = "20px" height = "20px"/>
+                                                    সিলেট সিটির নির্বাহী প্রকৌশলী ও স্ত্রীর করোনা শনাক্ত<span >&nbsp;</span>
+                                                    <img src="https://img.icons8.com/dotty/2x/circled.png"
+                                                    width = "20px" height = "20px"/>
+                                                    দেশে করোনায় আরও ৩৪ জনের মৃত্যু।<span >&nbsp;</span>
+                                                    <img src="https://img.icons8.com/dotty/2x/circled.png"
+                                                    width = "20px" height = "20px"/>
+                                                    নিউজিল্যান্ডে ১০০ দিনে স্থানীয়ভাবে কেউ করোনাভাইরাসে সংক্রমিত হননি।<span >&nbsp;</span> 
+                                                    <a href="https://www.prothomalo.com/">Read more</a>
+                                    </marquee>
+
                             </div>
                         </div>
                     </div>

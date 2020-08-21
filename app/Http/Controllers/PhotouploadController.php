@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Log; 
 
 class PhotouploadController extends Controller
 {
     public function upload(Request $request)
     {
+
+        
         $fileName = $request->input('filename');
 
         //dd($request->all());
@@ -29,7 +32,7 @@ class PhotouploadController extends Controller
             $fileName = $uid.'t'.$fileName;
             
             $request['filename']->move(public_path('images/profilepic'), $fileName);
-            $url = "https://telocure.com/api/download/".$fileName;
+            $url = "https://telocuretest.com/api/download/".$fileName;
 
             //return response()->json(['downloadUrl'=>$url],200);
             return response()->json([
@@ -52,6 +55,8 @@ class PhotouploadController extends Controller
 
     public function docterCredential(Request $request)
     {
+
+        
         $uid = $request->input('uid');
         $category = $request->input('category');
         $number = $request->input('number');
@@ -89,12 +94,11 @@ class PhotouploadController extends Controller
 
             // $fileName = $fileName.'.'.$request->file->extension();
 
-
             $fileName = $request['file']->getClientOriginalName();
             
             $request->file->move(public_path('images/profilepic'), $fileName);
 
-            $url = "https://telocure.com/api/download/".$fileName;
+            $url = "https://telocuretest.com/api/download/".$fileName;
 
         // return response()->json(['downloadUrl'=>$url],200);
         

@@ -19,7 +19,7 @@ else $hospitalName  = 'N/A';
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{''}}"> Home</a></li>
+            <li class="breadcrumb-item"><a href="{{'/hospital'}}"> Home</a></li>
             <li class="breadcrumb-item active"> New Hospital</li>
           </ol>
         </div><!-- /.col -->
@@ -74,9 +74,9 @@ else $hospitalName  = 'N/A';
 
                     <div class="form-group row">
                         <label for="branch" class="col-md-4 col-form-label text-md-right">Address <i class="iconFa fa fa-asterisk color-red"></i></label>
-                        <div class="col-md-6"><textarea id="address" type="text" name="address" value="{{old('address')}}" required="required" class="form-control ">Enter address</textarea></div>
+                        <div class="col-md-6"><textarea id="address" type="text" name="address" value="{{old('address')}}" required="required" class="form-control " placeholder="Enter address"></textarea></div>
                     </div>
-                    
+
                     <div class="form-group row  d-none">
                         <label for="branch" class="col-md-4 col-form-label text-md-right">Phone</label>
                         <div class="col-md-6"><input id="phone" type="text" name="phone" placeholder="Enter Contact Number" class="form-control "></div>

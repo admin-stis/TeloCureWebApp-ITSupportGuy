@@ -18,8 +18,9 @@
                <li class="breadcrumb-item active">
                 @php
                     if(isset($pending_doctor['status'])){
+                   
                       $status = ucfirst($pending_doctor['status']);
-                      if($status == 'False') echo 'Pending';
+                      if($status == 'False') echo 'Rejected';
                               else echo $status ;
                           }
                         @endphp
@@ -28,6 +29,11 @@
          </div>
          <!-- /.col -->
       </div>
+            <div class="row mb-2">
+                  @if(Session::has('update_msg'))
+                            <ul><p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('update_msg') }}</p></ul>
+                        @endif
+            </div>
       <!-- /.row -->
    </div>
    <!-- /.container-fluid -->
@@ -44,7 +50,7 @@
                         @php
                           if(isset($pending_doctor['status'])){
                               $status = ucfirst($pending_doctor['status']);
-                              if($status == 'False') echo 'Pending';
+                              if($status == 'False') echo 'Rejected';
                               else echo $status ;
                           }
                         @endphp
@@ -92,6 +98,7 @@
                                  <td>
                                     @if(isset($value['uid']))
                                     <a class="btn btn-sm btn-primary" href="{{url('admin/dprofile/'.trim($value['uid']))}}">View profile</a>
+                                    <a class="btn btn-sm btn-primary" href="{{url('admin/dprofileDelAction/'.trim($value['uid']))}}" onclick="return confirm('Are you sure? it will delete all doctor information  as well as all documents.')">Delete</a>
                                     {{-- <a class="btn  btn-sm btn-success" href="{{url('admin/approveDocotr/'.trim($value['uid']))}}">Approve</a>
                                     <a class="btn  btn-sm btn-danger" href="{{url('admin/rejactDoctor/'.trim($value['uid']))}}">Reject</a> --}}
                                     @else

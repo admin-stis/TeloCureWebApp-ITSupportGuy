@@ -31,7 +31,7 @@
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
 					@if (isset($doctorProfile['photoUrl']))
-                        <img src="{{$doctorProfile['photoUrl']}}" alt="{{$doctorProfile['name']}}"/>
+                        <img style="width:100px;height:100px;" src="{{$doctorProfile['photoUrl']}}" alt="{{$doctorProfile['name']}}"/>
                     @else
                         <span class="userIcon fa fa-user-circle"></span>
                     @endif
@@ -71,20 +71,23 @@
                 </div>
                 --}}
 
-                <div class="">
+                <div class="margin:0 auto;display:table">
                     <p style="margin:0 auto;display:table">Rating <p>
+                    <p style="margin:0 auto;display:table">
                     @php
                         if(isset($doctorProfile['totalRating']) && isset($doctorProfile['totalCount']) && $doctorProfile['totalCount'] > 0)
                         {
                             $totalRating = $doctorProfile['totalRating'];
                             $totalCount = $doctorProfile['totalCount'];
-                            $rating = floor($totalRating/$totalCount);
-                            for($i = 0;$rating < $count; $i++)
-                            {
-                                echo '<span class="fa fa-star"></span>';
-                            }
+                            $rating = round(($totalRating/$totalCount),1);
+                            echo $rating;
+                        }
+                        else {
+                            $rating = 5 ;
+                            echo $rating;
                         }
                     @endphp
+                    </p>
                 </div>
                 <div class="">
                     @if(isset($doctorProfile['price']))
@@ -92,6 +95,8 @@
                     @else
                     <p style="margin:0 auto;display:table">Price : 0 Tk</p>
                     @endif
+                    <p style="margin:0 auto;display:table"><a class="btn btn-sm btn-primary" href="{{url('admin/dprofileEdit/'.$uid)}}">Edit</a>
+                    </p>
                 </div>
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
@@ -132,7 +137,7 @@
                             <li class="col-md-2 btn btn-xs btn-default"><a class="btn btn-xs btn-default" data-toggle="pill" href="#contact">Contact</a></li>
 
                             <li class="col-md-3 btn btn-xs btn-default"><a class="btn btn-xs btn-default" data-toggle="pill" href="#h">Hospital</a></li>
-                            
+
                             <li class="col-md-2 btn btn-xs btn-default"><a class="btn btn-xs btn-default" data-toggle="pill" href="#documents">Document</a></li>
                             <li class="col-md-3 btn btn-xs btn-default"><a class="btn btn-xs btn-default" data-toggle="pill" href="#bankInfo">Bank Information</a></li>
                         </ul>
@@ -236,25 +241,25 @@
                                         <h6>Postal Code</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">@if(isset($doctorProfile['districtId'])){{$doctorProfile['districtId']}} 
+                                    <span class="col-md-5">@if(isset($doctorProfile['districtId'])){{$doctorProfile['districtId']}}
                                     @else N/A
                                     @endif</span>
                                 </div>
                             </div>
                         </div>
-
+@php //dd($hinfo); @endphp
                         <div id="h" class="tab-pane fade">
-                            @if(isset($hinfo['hospitalName']))
+                            @if(isset($hinfo[0]['hospitalName']))
                             <div class="" style="margin-top:10px;">
                                 <div class="row col-md-12">
-                                    @php //dd($hinfo); @endphp
+                                    
                                     <label class="col-md-5">
                                         <h6>Hospital</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($hinfo['hospitalName']))
-                                            {{$hinfo['hospitalName']}}
+                                        @if(isset($hinfo[0]['hospitalName']))
+                                            {{$hinfo[0]['hospitalName']}}
                                         @else
                                             N/A
                                         @endif
@@ -266,8 +271,8 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($hinfo['branch']))
-                                            {{$hinfo['branch']}}
+                                        @if(isset($hinfo[0]['branch']))
+                                            {{$hinfo[0]['branch']}}
                                         @else
                                             Main Branch
                                         @endif
@@ -279,16 +284,16 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($hinfo['address']))
-                                            {{$hinfo['address']}}
-                                        @elseif(isset($hinfo['hospitalAddress']))
-                                            {{$hinfo['hospitalAddress']}}
+                                        @if(isset($hinfo[0]['address']))
+                                            {{$hinfo[0]['address']}}
+                                        @elseif(isset($hinfo[0]['hospitalAddress']))
+                                            {{$hinfo[0]['hospitalAddress']}}
                                         @endif
                                     </span>
                                 </div>
                             </div>
                             @else
-                            <div class="" style="margin-top:10px;"><h3>Independent Doctor</h3></div>
+                            <div class="" style="margin-top:10px;"><p class="text-center">Independent Doctor</p></div>
                             @endif
                         </div>
 
@@ -313,7 +318,9 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($documents['prescriptionForm']))
+                                        @if(isset($documents['prescriptionForm'])  && !empty($documents['prescriptionForm']))
+                                            
+                                        @php // dd($documents['prescriptionForm']); @endphp
                                             <a href="{{$documents['prescriptionForm']}}">Click to download</a>
                                         @else
                                             N/A
@@ -361,6 +368,7 @@
                                         @endif
                                     </span>
                                 </div>
+                                @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == false )
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
                                         <h6>Account No</h6>
@@ -375,7 +383,7 @@
                                                 $star = '';
                                                 $stringLength = $len - strlen($ac) ;
                                                 for($i = 0; $i < $stringLength ; $i++){
-                                                    $star .= '<span class="fa fa-star"></span>'; 
+                                                    $star .= '<span class="fa fa-star"></span>';
                                                 }
                                                 $account = $star.' '.$ac ;
                                                 echo $account ;
@@ -385,6 +393,8 @@
                                         @endphp
                                     </span>
                                 </div>
+                                @endif
+
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
                                         <h6>Bank Name</h6>
