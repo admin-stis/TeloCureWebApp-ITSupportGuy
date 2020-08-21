@@ -150,7 +150,7 @@ via online visits using our app</p>
                     </div>
                     <div class="col-lg-6 col-sm-12">
                        <div class="privacydetails-inner-left">
-                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-02.jpg')}}" alt="Service">
+                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-021.jpg')}}" alt="Service">
                        </div>
                    </div>
 
@@ -186,7 +186,7 @@ via online visits using our app</p>
                     </div>
                    <div class="col-lg-6 col-sm-12">
                        <div class="privacydetails-inner-left">
-                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-03.jpg')}}" alt="Service">
+                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-031.jpg')}}" alt="Service">
                        </div>
                    </div>
                 </div>

@@ -4,7 +4,10 @@
 
 @php
 
-    // dd($doctorProfile);
+    print_r(1);
+    print_r($doctorProfile);
+    dd($doctorProfile);
+    dd(1);
 
     if(isset($doctorProfile[0]['hospitalUserId'])) $hospitalUid = $doctorProfile[0]['hospitalUserId']; else $hospitalUserId = '';
 

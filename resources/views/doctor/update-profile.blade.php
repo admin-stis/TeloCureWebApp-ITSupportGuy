@@ -34,14 +34,22 @@
                     <h4>Update Profile Information</h4>
                 </div>
             </div>
-
+            {{-- mridul addition 11-7-20 --}}
+                @if ($errors->any())
+                    <ul style="margin-top:20px;">
+                        @foreach ($errors->all() as $error)
+                            <p class="alert alert-danger">{{ $error }}</p>
+                        @endforeach
+                    </ul>
+                @endif
+                
             @if(Session::has('update_msg'))
                             <ul><p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('update_msg') }}</p></ul>
                         @endif
 
 
             <div class="card-body col-md-12 col-sm-12">
-                
+
 
                 <form id="regForm" method="post" action="{{url('doctor/profile/editAction')}}" enctype="multipart/form-data">
                     <!-- One "tab" for each step in the form: -->
@@ -59,18 +67,29 @@
                         <div class="row">
                             <div class="form-group col-lg-4 col-md-4 col-sm-12">
                                 <label class="control-label">NID <i class="iconFa fa fa-asterisk color-red"></i> </label>
-                                <input name="nid" type="number" 
+                                <input name="nid" readonly type="number"
                                 value="@if(isset($others['nid'])){{$others['nid']}}@endif" class="form-control" value=""placeholder=""/>
                             </div>
+
+                            @php
+                                if(isset($doctorProfile['dateOfBirth'])){
+                                  $dobirth = $doctorProfile['dateOfBirth'];
+                                  $dob = date('Y-m-d',strtotime($dobirth));
+                                }else{
+                                  $dob = '';
+                                }
+                                // dd($dob);
+                            @endphp
+
                             <div class="dates form-group  col-lg-4 col-md-4 col-sm-12">
                                 <label class="control-label">Date of Birth <i class="iconFa fa fa-asterisk color-red"></i> </label>
-                                {{-- <input id="datepicker" type="text" class="form-control" placeholder=""/> 
-                                <input name="dateOfBirth" type="date" class="form-control" 
-                                value="{{$doctorProfile['dateOfBirth']}}"
+                                {{-- <input id="datepicker" type="text" class="form-control" placeholder=""/>
+                                <input name="dateOfBirth" type="date" class="form-control"
+                                value="{{$dob}}"
                                 id="usr1" name="event_date" placeholder="YYYY-MM-DD" autocomplete="off" >--}}
 
-                                <input type="hidden" name="old_dateOfBirth" value="{{$doctorProfile['dateOfBirth']}}"/>
-                                <input type="date" class="form-control" name="dateOfBirth" value="{{$doctorProfile['dateOfBirth']}}"/>
+                                <input type="hidden" name="old_dateOfBirth" value="{{$dob}}"/>
+                                <input type="date" class="form-control" name="dateOfBirth" value="{{$dob}}"/>
                             </div>
 
                             <div class="form-group  col-lg-4 col-md-4 col-sm-12">
@@ -87,7 +106,7 @@
                             </div>
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="control-label">BMDC Registration Number <i class="iconFa fa fa-asterisk color-red"></i> </label>
-                                <input  name="regNo" type="number" value="{{$doctorProfile['regNo']}}" class="form-control" placeholder=""/>
+                                <input  name="regNo" type="text" readonly value="{{$doctorProfile['regNo']}}" class="form-control" placeholder=""/>
                             </div>
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="">Academic Degree <i class="iconFa fa fa-asterisk color-red"></i> </label>
@@ -110,11 +129,12 @@
 
                             <div class="form-group col-lg-6 col-md-6 col-sm-12">
                                 <label class="">Email</label>
-                                <input name="email" type="email" class="form-control" placeholder="" value="{{$doctorProfile['email']}}"/>
+                                <input name="email" type="email" readonly class="form-control" placeholder="" value="{{$doctorProfile['email']}}"/>
                             </div>
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                 <label class="">Currrent Address <i class="iconFa fa fa-asterisk color-red"></i> </label>
-                                <textarea name="presentAddress" value="@if(isset($others['presentAddress'])){{$others['presentAddress']}}@endif" type="text" class="form-control" placeholder=""></textarea>
+                                <textarea name="presentAddress" value="@if(isset($others['presentAddress'])){{$others['presentAddress']}}@endif" type="text" class="form-control" placeholder="">@if(isset($others['presentAddress'])){{$others['presentAddress']}}@endif
+                                </textarea>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-12">
                                 <label class="">District <i class="iconFa fa fa-asterisk color-red"></i></label>
@@ -124,7 +144,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                                <label class="">District ID <i class="iconFa fa fa-asterisk color-red"></i></label>
+                                <label class="">Postal Code <i class="iconFa fa fa-asterisk color-red"></i></label>
                                 <input name="postalCode" value="@if(isset($doctorProfile['districtId'])){{$doctorProfile['districtId']}}@endif" type="text" class="form-control" placeholder=""/>
                             </div>
                             <div class="form-group  col-lg-4 col-md-4 col-sm-12">
@@ -145,16 +165,26 @@
                             </div>
                         </div>
                     <div class="">
+                    @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == true) {{-- mridul addition --}}
+               
+                    @else {{-- mridul addition --}}
+                    
+                    {{-- mridul addition 13-7-20 --}}
+                    @php                     
+                    if(array_key_exists("registrationStat", $doctorProfile)) { $regStat = $doctorProfile['registrationStat']; } else { $regStat = 0; } 
+                    
+                    if($regStat < 2) { @endphp 
                         <div class="tab-header">
                             <h5 class="m-0 m-auto d-table">Upload Documents</h5>
                             <hr>
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                                <label class="control-label">Degree/Certificate Documents <i class="iconFa fa fa-asterisk color-red"></i> </label>
-
+                                <label class="control-label">Degree/Certificate Documents(MBBS) <i class="iconFa fa fa-asterisk color-red"></i> </label>
+                                
                                 <input name="old_degreeCertificate" type="hidden" class="form-control" value="{{$documents['academicCertificate']}}" />
                                 <input name="degreeCertificate" type="file" class="form-control" placeholder="" />
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
 
                             </div>
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
@@ -164,11 +194,12 @@
 
                                 <input name="old_photoUrl" type="hidden" class="form-control" value="{{$doctorProfile['photoUrl']}}" />
                                 <input name="photoUrl" type="file" class="form-control" placeholder="" value="{{$doctorProfile['photoUrl']}}"/>
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
                                 </div>
 
-                            
+
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                                <label class="control-label">Prescription Form <i class="iconFa fa fa-asterisk color-red"></i> </label>
+                                <label class="control-label">Prescription Form </label>
                                 @if(isset($documents['prescriptionForm']))
                                 <input name="old_prescriptionForm" type="hidden" class="form-control" value="{{$documents['prescriptionForm']}}" />
                                 <input name="prescriptionForm" type="file" class="form-control" placeholder="" value="{{$documents['prescriptionForm']}}"/>
@@ -176,15 +207,16 @@
                                 <input name="old_prescriptionForm" type="hidden" class="form-control" value="" />
                                 <input name="prescriptionForm" type="file" class="form-control" placeholder="" value=""/>
                                 @endif
+                                <p class="text-danger mt-1" style="font-size:12px;">Only JPG, PNG, BMP and GIF files are allowed</p>
                             </div>
 
-                        </div>
+                        </div>  @php } @endphp  @endif {{-- mridul addition --}}
                     </div>
                     <div class="">
-                        
+
 
                         @if(isset($doctorProfile['hospitalized']) && $doctorProfile['hospitalized'] == true)
-                        <div class="tab-header">
+                        <div class="tab-header" style="display: none;">
                             <h5 class="m-0 m-auto d-table  tab-header">Bank Information</h5>
                             <hr>
                         </div>
@@ -209,7 +241,7 @@
                                 <label class="">Swift Code/Routing Number</label>
                                 <input name="swiftCode" type="text" class="form-control" value="{{$bank_info['swiftCode']}}" placeholder=""/>
                             </div>
-                            
+
                         </div>
                         @else
                         <div class="tab-header">
@@ -237,7 +269,7 @@
                                 <label class="">Swift Code/Routing Number</label>
                                 <input name="swiftCode" type="text" class="form-control" value="{{$bank_info['swiftCode']}}" placeholder=""/>
                             </div>
-                            
+
                         </div>
                         @endif
                     </div>
@@ -255,7 +287,7 @@
                       <span class="step"></span>
                     </div>--}}
 
-                        <button class="btn btn-primary" type="submit" id="submit" >Submit</button>   
+                        <button class="btn btn-primary" type="submit" id="submit" >Submit</button>
                                        </form>
                 </div>
         </div>

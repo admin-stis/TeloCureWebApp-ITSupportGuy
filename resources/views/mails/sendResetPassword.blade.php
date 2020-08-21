@@ -4,19 +4,27 @@
     <meta charset="utf-8" />
   </head>
   <body>
-    <h2>Reset password</h2>
+
     <?php
-      //dd($data); 
+      //dd($data);
     ?>
 
-    <?php 
+    Hello {{$data->receiver}}
+
+    <p>Your login credential is below:</p>
+
+    <?php
       //foreach($data as $item){
         echo 'E-mail : '.$data->receiver.'<br>' ;
         echo 'Temporary password : '.$data->code.'<br>' ;
       //}
     ?>
-    <br>
-    You can login with this credentials.
     
+
+    <p>For any questions or query, please feel free to contact us at <strong>support@telocure.com</strong> or call us at <strong>09614501100</strong> </p>
+
+    Best regards,
+    <p>TeloCure Team</p>
+
   </body>
 </html>

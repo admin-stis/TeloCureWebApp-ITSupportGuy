@@ -6,6 +6,13 @@
   <title> TeloCure | Hospital</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--Favicon-->
+  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/img/favicon.png')}}">
+  <!--End-->
+
+
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('backend/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
@@ -48,7 +55,7 @@
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="{{url('table_res/vendor/bootstrap/css/bootstrap.min.css')}}">
   <!--===============================================================================================-->
-      {{-- <link rel="stylesheet" type="text/css" href="{{url('table_res/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}"> --}}
+      <link rel="stylesheet" type="text/css" href="{{url('table_res/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
   <!--===============================================================================================-->
       <link rel="stylesheet" type="text/css" href="{{url('table_res/vendor/animate/animate.css')}}">
   <!--===============================================================================================-->
@@ -58,7 +65,7 @@
   <!--===============================================================================================-->
       <link rel="stylesheet" type="text/css" href="{{url('table_res/css/util.css')}}">
       <link rel="stylesheet" type="text/css" href="{{url('table_res/css/main.css')}}">
-{{-- end --}}
+ {{-- end --}}
 
 {{-- paging --}}
 <link href="{{asset('backend/paginator/jquery.paginate.css')}}" rel="stylesheet" type="text/css">
@@ -82,7 +89,7 @@
         <a class="nav-link" data-widget="pushmenu" href="{{url('hospital')}}"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a href="{{url('hospital')}}" class="nav-link">Home</a>
       </li>
       <!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -301,6 +308,22 @@
             event.preventDefault();
             $('#weeklyEarning').show();
             $('#statements').hide();
+        });
+    });
+
+    $(document).ready(function () {
+        $('table').paginate({
+            'elemsPerPage': 10,
+                'maxButtons': 6
+        });
+    });
+
+    $(document).ready(function(){
+        $('.dp li a').click(function(){
+            let v = $(this).attr('href');
+            $('v').addClasses('btn-success');
+            $('v').removeClass('btn-success');
+
         });
     });
 </script>

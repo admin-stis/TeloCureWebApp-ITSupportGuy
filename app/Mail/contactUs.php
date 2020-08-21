@@ -31,7 +31,7 @@ class contactUs extends Mailable
     public function build()
     {
         //dd($this->data);        
-        $receiver = 'support@telocure.com';
+        $receiver = 'dev.telocure@gmail.com';
         $sender = $this->data->sender;
         $subject = 'User query';
         $name = $this->data->name;

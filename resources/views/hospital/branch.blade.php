@@ -65,7 +65,9 @@
                         <strong>{{ Session::get('success') }}</strong>
                     </div>
                 @endif
-
+                <div class="row">
+                    <input id="search" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
+                 </div>
                   <table id="table" class="table table-bordered table-hover">
                     <thead>
                     <tr>
@@ -171,7 +173,16 @@
 
 </script>
 
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
 
 

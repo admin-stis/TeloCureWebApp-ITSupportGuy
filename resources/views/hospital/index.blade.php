@@ -1,6 +1,15 @@
 @extends('hospital.layout')
 
 @section('content')
+
+<style>
+    #search1 {
+        border: 1px solid !important;
+        padding: 10px;
+        margin-left: 17px;
+    }
+</style>
+
 @php
     if(isset($hospitalUser[0]['hospitalUid'])) $id = $hospitalUser[0]['hospitalUid']; else $id = '';
     if(isset($hospitalUser[0]['uid'])) $uid = $hospitalUser[0]['uid']; else $uid = '';
@@ -11,6 +20,7 @@
     if(isset($hospitalUser[0]['hospitalAddress'])) $hospitalAddress = $hospitalUser[0]['hospitalAddress']; else $hospitalAddress = 'N/A' ;
     if(isset($hospitalUser[0]['plan'])) $plan = ucfirst($hospitalUser[0]['plan']); else $plan = 'N/A' ;
     if(isset($hospitalUser[0]['active'])) $approve = $hospitalUser[0]['active'];
+
 @endphp
 
 <input id="uid" type="hidden" value="{{$id}}"/>
@@ -132,27 +142,39 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  {{--Total Revenue : {{ $rev['total'] }} Tk--}}
-                  Total Revenue : 0 Tk
+                  Total Revenue 
+                  @if(isset($rev['total']))
+                    {{ $rev['total'] }} Tk
+                  @else 0 Tk
+                  @endif
+                  
                 </h3>
               </div>
               <!-- /.card-header -->
              <div class="card-body">
-
-                    <table class="table">
+                <div class="row">
+                    <input id="search1" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
+                </div>
+                    <table class="table revTable">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Date</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{--@foreach ($rev['rev'] as $key=>$item)
-                                <tr>
+                            @php //dd($rev['rev']);
+                            @endphp
+                            @foreach ($rev['rev'] as $key=>$item)
+
+                                <tr class="t1">
+                                    <td><span>{{$item['id']}}</span></td>
                                     <td><span>{{$item['date']}}</span></td>
                                     <td><span>{{$item['amount']}} Tk</span></td>
                                 </tr>
-                            @endforeach--}}
+
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -190,7 +212,14 @@
                         <strong>{{ Session::get('success') }}</strong>
                     </div>
                 @endif
-                  <table id="table" class="table table-bordered table-hover">
+
+                <div class="row">
+                    <input id="search" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
+                </div>
+
+                <div class="col-md-6 col-lg-6 jquery-script-clear"></div>
+
+                  <table id="table" class="table table-bordered table-hover doctorListTable">
                     <thead>
                     <tr>
                       <th class="text-center">Sl</th>
@@ -217,30 +246,25 @@
                                 <td>{{$item['phone']}}</td>
                                 <td>{{$item['email']}}</td>
                                 <td>@if(isset($item['doctorType'])){{$item['doctorType']}} @else N/A @endif</td>
-                                
+
                                 <td>
                                                       @php
                                                         if(isset($item['totalRating']) && isset($item['totalCount']) && $item['totalCount'] > 0)
                                                         {
                                                             $totalRating = $item['totalRating'];
                                                             $totalCount = $item['totalCount'];
-                                                            $rating = floor($totalRating/$totalCount);
-                                                            for($i = 0;$rating < $count; $i++)
-                                                            {
-                                                                echo '<span class="fa fa-star" style="color:green"></span>';
-                                                            }
+                                                            $rating = round(($totalRating/$totalCount),1);
+                                                            echo $rating ;
                                                         }
                                                         else
                                                         {
-                                                          for($i = 0;$i < 5; $i++)
-                                                          {
-                                                            echo '<span class="fa fa-star"></span>';
-                                                          }
+                                                          $rating = 5 ;
+                                                          echo $rating ;
                                                         }
                                                       @endphp
                                                     </td>
                                                     <td>@if(isset($item['price'])){{$item['price']}} Tk @else N/A @endif</td>
-                                                    
+
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="{{url('hospital/viewDoctor/'.$item['uid'])}}">View</a>
                                     <a class="btn btn-sm btn-danger" href="{{url('hospital/deleteDoctor/'.$item['uid'])}}">Delete</a>
@@ -259,7 +283,6 @@
             <!-- /.card -->
           </section>
           <!-- /.Left col -->
-
 
         </div>
         <!-- /.row (main row) -->
@@ -330,11 +353,43 @@
             });
         });
 
-</script>
+    </script>
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $("#search1").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("tbody tr.t1").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 
+    $(document).ready(function () {
+        $('.doctorListTable').paginate({
+            'elemsPerPage': 10,
+                'maxButtons': 6
+        });
+        $('.revTable').paginate({
+            'elemsPerPage': 5,
+                'maxButtons': 4
+        });
+    });
 
+    $(document).ready(function(){
+        $('.dp li a').click(function(){
+            let v = $(this).attr('href');
+            $('v').addClasses('btn-success');
+            $('v').removeClass('btn-success');
 
-
+        });
+    });
+    </script>
 
      @endsection

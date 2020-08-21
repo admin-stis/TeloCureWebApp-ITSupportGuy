@@ -51,8 +51,8 @@
                                  <th scope="col">#</th>
                                  <th scope="col">Doctor Reg No.</th>
                                  <th scope="col">Doctor</th>
-                                 <th scope="col">Patient ID</th>
-                                 <th scope="col">Patient</th>
+                                 <th scope="col">Patient Name</th>
+                                 <th scope="col">Phone</th>
                                  <th scope="col">Total</th>
                                  <th scope="col">Action</th>
                               </tr>
@@ -66,14 +66,17 @@
                                  ?>
 
                                  <?php if(isset($value['transactionHistory']) && !empty($value['transactionHistory'])) {
-                                    ?>
+                                          $doctor = json_decode($value['doctor'],TRUE);
+                                          $patient = json_decode($value['patient'],TRUE);
+                                          $transactionHistory = json_decode($value['transactionHistory'],TRUE);
+                                 ?>
                                     <tr>
                                  <td scope="col"><?php echo $key+1 ; ?></td>
-                                 <td scope="col"><?php echo $value['doctor']['regNo']; ?></td>
-                                 <td scope="col"><?php echo $value['doctor']['name']; ?></td>
-                                 <td scope="col"><?php echo $value['patient']['uid']; ?></td>
-                                 <td scope="col"><?php echo $value['patient']['name']; ?></td>
-                                 <td scope="col"><?php echo $value['transactionHistory']['subTotalRounded'].'Tk'; ?></td>
+                                 <td scope="col"><?php echo $doctor['regNo']; ?></td>
+                                 <td scope="col"><?php echo $doctor['name']; ?></td>
+                                 <td scope="col"><?php echo $patient['name']; ?></td>
+                                 <td scope="col"><?php echo $patient['phone']; ?></td>
+                                 <td scope="col"><?php echo $transactionHistory['subTotalRounded'].'Tk'; ?></td>
                                  <td scope="col"><a class="btn btn-primary btn-sm" href="{{url('admin/transaction/'.$visited[$key]['visitId'].'')}}">View</a></td>
                                 </tr>
                                  <?php } ?>

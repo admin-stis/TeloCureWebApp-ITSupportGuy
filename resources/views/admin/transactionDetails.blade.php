@@ -35,20 +35,25 @@
                         <div class="doctor col-sm-12 col-md-4 col-lg-4" style="background: #363748;color: #fff;padding: 10px;">
                             <h4 class="text-center">Doctor</h4><hr>
                             <div class="col-sm-12">
+
+                                @php
+                                    $doctor = json_decode($transaction[0]['doctor'],TRUE);
+                                @endphp
+
                                 <div><label>Registration No. :</label>
-                                <span>{{$transaction[0]['doctor']['uid']}}</span></div>
+                                <span>{{$doctor['regNo']}}</span></div>
                                 <div><label>Name :</label>
-                                <span>{{$transaction[0]['doctor']['name']}}</span></div>
+                                <span>{{$doctor['name']}}</span></div>
                                 <div><label>Doctor Type :</label>
-                                <span>{{$transaction[0]['doctor']['doctorType']}}</span></div>
+                                <span>{{$doctor['doctorType']}}</span></div>
                                 <div><label>Phone :</label>
-                                @if(isset($transaction['phone']))
-                                    <span>{{$transaction[0]['doctor']['phone']}}</span></div>
+                                @if(isset($doctor['phone']))
+                                    <span>{{$doctor['phone']}}</span></div>
                                 @else
                                     <span>N/A</span></div>
                                 @endif
                                 <div><label>Email :</label>
-                                <span>{{$transaction[0]['doctor']['email']}}</span></span></div>
+                                <span>{{$doctor['email']}}</span></span></div>
 
                             </div>
                         </div>
@@ -56,38 +61,46 @@
                         padding: 10px;
                         color: #fff;">
                             <h4 class="text-center">Patient</h4><hr>
+
+                            @php
+
+                                $patient = json_decode($transaction[0]['patient'],TRUE);
+
+                            @endphp
+
+
                             <div class="col-sm-12">
                                 <div><label>Patient ID :</label>
-                                <span class="col-sm-7">{{$transaction[0]['patient']['uid']}}</span>
+                                <span class="col-sm-7">{{$patient['uid']}}</span>
 
                                 <div><label>Name :</label>
-                                <span>{{$transaction[0]['patient']['name']}}</span>
+                                <span>{{$patient['name']}}</span>
 
                                 @if(isset($transaction['phone']))
                                 <div>
                                     <label><i  class="fa fa-phone"></i> Phone :</label>
-                                    <span>{{$transaction[0]['patient']['phone']}}</span></div>
+                                    <span>{{$patient['phone']}}</span></div>
                                 @else
                                     <span>N/A</span></div>
                                 @endif
 
-                                @if(isset($transaction[0]['patient']['email']))
+                                @if(isset($patient['email']))
                                 <div><label>Email :</label>
-                                <span>{{$transaction[0]['patient']['email']}}</span></div>
+                                <span>{{$patient['email']}}</span></div>
                                 @endif
 
-                                @if(isset($transaction[0]['patient']['district']))
+                                @if(isset($patient['district']))
                                 <div><label>District :</label>
-                                <span>{{$transaction[0]['patient']['district']}}</span></div>
+                                <span>{{$patient['district']}}</span></div>
                                 @endif
 
-                                @if(isset($transaction[0]['patient']['totalRating']))
+                                @if(isset($patient['totalRating']))
                                 <div><label>Rating :</label>
-                                <span>{{$transaction[0]['patient']['totalRating']}}</span></div>
+                                <span>{{$patient['totalRating']}}</span></div>
                                 @endif
-                                @if(isset($transaction[0]['patient']['totalCount']))
+                                @if(isset($patient['totalCount']))
                                 <div><label>Total Count :</label>
-                                <span>{{$transaction[0]['patient']['totalCount']}}</span></div>
+                                <span>{{$patient['totalCount']}}</span></div>
 
                             @endif
                             </div>
@@ -97,28 +110,34 @@
                         color: #fff;
                         padding: 10px;">
                             <h4 class="text-center">Transaction</h4><hr>
+
+                            @php
+                                $transactionHistory = json_decode($transaction[0]['transactionHistory'],TRUE);
+                            @endphp
+
+
                             <div class="col-md-12">
                                 <div>
                                     <label>Visit Fee :</label>
-                                          <span>{{$transaction[0]['transactionHistory']['visitFee']}}</span> Tk</div>
+                                          <span>{{$transactionHistory['visitFee']}}</span> Tk</div>
                                 <div>
                                     <label>Service Fee :</label>
-                                          <span>{{$transaction[0]['transactionHistory']['serviceFee']}}</span> Tk</div>
+                                          <span>{{$transactionHistory['serviceFee']}}</span> Tk</div>
                                 <div>
                                     <label>Discount Fee :</label>
-                                          <span>{{$transaction[0]['transactionHistory']['discountedValue']}}</span> Tk</div>
+                                          <span>{{$transactionHistory['discountedValue']}}</span> Tk</div>
                                 <div>
                                     <label>Discount Percentage :</label>
-                                          <span>{{$transaction[0]['transactionHistory']['discountPercentage']}}</span>%</div>
+                                          <span>{{$transactionHistory['discountPercentage']}}</span>%</div>
                                 <div>
                                     <label>Total Time in Second :</label>
-                                          <span>{{$transaction[0]['transactionHistory']['totalTimeInSeconds']}}</span> s</div>
+                                          <span>{{$transactionHistory['totalTimeInSeconds']}}</span> s</div>
                                 <div>
                                     <label> Time Cost :</label>
-                                          <span>{{$transaction[0]['transactionHistory']['timeCost']}}</span> Tk</div>
+                                          <span>{{$transactionHistory['timeCost']}}</span> Tk</div>
                                 <div>
                                     <label>Total  :</label>
-                                          <span>{{$transaction[0]['transactionHistory']['subTotalRounded']}}</span> Tk</div>
+                                          <span>{{$transactionHistory['subTotalRounded']}}</span> Tk</div>
 
                             </div>
                     </div>

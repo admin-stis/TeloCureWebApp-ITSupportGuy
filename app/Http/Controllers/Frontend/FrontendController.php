@@ -80,8 +80,35 @@ class FrontendController extends Controller
     public function registerUser($title = ''){
         $this->data['title'] = $title;
         if($title=='doctor'){
+            //for district dropdown
+            $firestore = app('firebase.firestore');
+            $database = $firestore->database();
+            
+            $districtRef = $database->collection('districts');
+            
+            $db_districts = $districtRef->where('active','=',true)->documents();
+            $districtList = array();
+            
+            foreach($db_districts as $key=>$item){
+                array_push($districtList,$item->data());
+            }
+            $this->data['district'] = $districtList;
+            
             $this->data['role'] = 2;
         }elseif($title=='patient'){
+            //for district dropdown
+            $firestore = app('firebase.firestore');
+            $database = $firestore->database();
+            
+            $districtRef = $database->collection('districts');
+            
+            $db_districts = $districtRef->where('active','=',true)->documents();
+            $districtList = array();
+            
+            foreach($db_districts as $key=>$item){
+                array_push($districtList,$item->data());
+            }
+            $this->data['district'] = $districtList;
             $this->data['role'] = 3;
         }elseif($title=='hospital'){
             $this->data['role'] = 4;

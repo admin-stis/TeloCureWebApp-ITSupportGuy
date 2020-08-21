@@ -6,7 +6,10 @@ use App\Mail\passwordLinkEmail;
 use App\Mail\sendResetPassword;
 use App\Mail\subscribe;
 use App\Mail\contactUs;
+use App\Mail\sendLink;
+use App\Mail\SendRequest;
 use Mail;
+use Log;
 
 class MailSendController
 {
@@ -18,10 +21,45 @@ class MailSendController
         $objDemo->sender = 'TeloCure';
         $objDemo->receiver = $receiver;
 
-        Mail::to($receiver)->send(new OtpEmail($objDemo));
+        //Mail::to($receiver)->send(new OtpEmail($objDemo));
+        
+        //mridul 21-7-20
+        //email failure tests
+        try {
+            Mail::to($receiver)->send(new OtpEmail($objDemo));
+            
+        } catch(\Exception $e){
+            Log::error("mail exception - ".$e->getMessage());
+            if (count(Mail::failures()) > 0) {
+                Log::error("mail failure log through exception");
+            }
+        }
+        
+        if(count(Mail::failures()) > 0){
+            Log::error("mail failure general log");
+        }
 
         if (Mail::failures()){
-          return flase;
+          return false;
+        }else{
+          return true;
+        }
+    }
+
+
+    public function sendDoc($otp,$receiver){
+
+        $objDemo = new \stdClass();
+        $objDemo->code = $otp ;
+        //dd($objDemo->code);
+        // $objDemo->code = 'Demo Two Value';
+        $objDemo->sender = 'TeloCure Team';
+        $objDemo->receiver = $receiver;
+
+        Mail::to($receiver)->send(new sendLink($objDemo));
+
+        if (Mail::failures()){
+          return false;
         }else{
           return true;
         }
@@ -31,16 +69,32 @@ class MailSendController
 
         $objDemo = new \stdClass();
         $objDemo->code = $otp ;
+        //dd($objDemo->code);
         // $objDemo->code = 'Demo Two Value';
-        $objDemo->sender = 'TeloCure';
+        $objDemo->sender = 'TeloCure Team';
         $objDemo->receiver = $receiver;
 
         Mail::to($receiver)->send(new passwordLinkEmail($objDemo));
 
         if (Mail::failures()){
-          return flase;
+          return false;
         }else{
           return true;
+        }
+    }
+
+    public function sendRequest($data,$sender,$receiver){
+        $obj = new \stdClass();
+        $obj->code = $data;
+        $obj->sender = $sender;
+        $obj->receiver = $receiver;
+
+        Mail::to($receiver)->send(new SendRequest($obj));
+
+        if (Mail::failures()){
+            return false;
+        }else{
+            return true;
         }
     }
 

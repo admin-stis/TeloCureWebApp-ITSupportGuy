@@ -199,7 +199,7 @@ care of patients across the entire country making medical aid available anywhere
 
         <!-- Privacy Blog -->
         <section class="subscriptionform-area">
-            <div class="container">
+            <div class="container" style="background-color: aliceblue;  padding-top: 25px;   ">
                 <div class="subscriptionform-title">
                     <h2>SUBSCRIPTION FORM</h2>
                 </div>
@@ -241,9 +241,9 @@ care of patients across the entire country making medical aid available anywhere
                     </div> --}}
                     <div class="form-group col-md-6 row">
                         <label for="phone" class="col-sm-12" style="
-        padding: 0;
-    ">Phone <i class="icofont-star-alt-2" style="color:red;font-size: :10px;font-weight: 600"></i></label>
-        <input type="text" class="form-control" id="phone" value="+88" style="width:10%;" placeholder="" readonly="">
+              padding: 0;
+                 ">Phone <i class="icofont-star-alt-2" style="color:red;font-size: :10px;font-weight: 600"></i></label>
+               <input type="text" class="form-control" id="phone" value="+88" style="width:10%;" placeholder="" readonly="">
                             <input type="text" class="form-control" id="phone" style="width:87%;" value="{{old('phone')}}" name="phone" placeholder="" >
                     </div>
                     <div class="form-group col-md-6">
@@ -282,7 +282,7 @@ care of patients across the entire country making medical aid available anywhere
                   <div class="form-row">
 
                     <div class="form-group col-md-12">
-                      <label for="comment">Comment <i class="icofont-star-alt-2" style="color:red;font-size: :10px;font-weight: 600"></i></label>
+                      <label for="comment">Comment Please  <i class="icofont-star-alt-2" style="color:red;font-size: :10px;font-weight: 600"></i></label>
                       <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
                     </div>
                   </div>

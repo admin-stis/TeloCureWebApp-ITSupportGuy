@@ -2,6 +2,11 @@
 
 @section('content')
 
+@php
+
+//dd($userProfile);
+
+@endphp
 
 <div class="content-header">
     <div class="container-fluid">
@@ -11,11 +16,11 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{url('admin/patient')}}">Patient Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{url('admin')}}">Home</a></li>
             @php
-                $uid = trim($userProfile['uid']);
+                $uid = trim($userProfile[0]['uid']);
             @endphp
-            <li class="breadcrumb-item active"><a href="{{url('admin/patient/'.$uid)}}">Profile</a></li>
+            <li class="breadcrumb-item active"><a href="">Profile</a></li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -33,37 +38,37 @@
 			<div class="profile-sidebar">
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
-					@if (isset($userProfile['photoUrl']))
-                        <img src="{{$userProfile['photoUrl']}}" alt="{{$userProfile['name']}}"/>
+					@if (isset($userProfile[0]['photoUrl']))
+                        <img src="{{$userProfile[0]['photoUrl']}}" alt="{{$userProfile[0]['name']}}"/>
                     @endif
                 </div>
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-                        @if($userProfile['online'] == 1)
+                        @if($userProfile[0]['online'] == 1)
                             <div class="alert alert-success alert-sm">
-                                {{$userProfile['name']}}
+                                {{$userProfile[0]['name']}}
                                 <div><small>Online</small></div>
                             </div>
                         @else
                             <div class="alert alert-danger alert-sm">
-                                {{$userProfile['name']}}
+                                {{$userProfile[0]['name']}}
                                 <div><small>Offline</small></div>
                             </div>
                         @endif
 					</div>
 					{{-- <div class="profile-usertitle-job">
-					    {{$userProfile['doctorType']}}
+					    {{$userProfile[0]['doctorType']}}
 					</div> --}}
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
 				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
-                    @if (isset($userProfile['active']) && $userProfile['active'] == 1)
-                        <a type="button" class="btn btn-success btn-sm" href="{{url('admin/activeUser/'.$userProfile['uid'])}}">Active</a>
+                    @if (isset($userProfile[0]['active']) && $userProfile[0]['active'] == 'true')
+                    <a type="button" class="btn btn-success btn-sm" href="{{url('admin/activeUser/'.$userProfile[0]['uid'])}}">Active</a>
                     @else
-                        <a href="{{url('admin/activeUser/'.$userProfile['uid'])}}" type="button" class="btn btn-primary btn-sm">Deactive</a>
+                        <a href="{{url('admin/activeUser/'.$userProfile[0]['uid'])}}" type="button" class="btn btn-primary btn-sm">Deactive</a>
                     @endif
 					{{-- <button type="button" class="btn btn-danger btn-sm">Message</button> --}}
 				</div>
@@ -103,15 +108,15 @@
                @endphp
                {{-- <div class="well well-sm col-sm-12">
                     <label><i class="fa fa-bullseye"></i> Registration Number :</label>
-                    {{$userProfile['regNo']}}</div> --}}
+                    {{$userProfile[0]['regNo']}}</div> --}}
                <div class="well well-sm col-sm-6">
                     <label class="col-md-6"><i class="fa fa-user"></i> Name :</label>
-                    <span class="col-md-6">{{$userProfile['name']}}</span>
+                    <span class="col-md-6">{{$userProfile[0]['name']}}</span>
                 </div>
                 <div class="well well-sm col-sm-6">
                     <label class="col-md-6"><i class="fa fa-male"></i> Gender :</label>
                     <span class="col-md-6">
-                        @if(isset($userProfile['gender'])){{$userProfile['gender']}}
+                        @if(isset($userProfile[0]['gender'])){{$userProfile[0]['gender']}}
                         @else N/A
                         @endif
                     </span>
@@ -120,7 +125,7 @@
                <div class="well well-sm col-sm-6">
                     <label class="col-md-6"><i  class="fa fa-birthday-cake"></i> Date of Birth :</label>
                     <span class="col-md-6">
-                        @if(isset($userProfile['dateOfBirth'])) {{$userProfile['dateOfBirth']}}
+                        @if(isset($userProfile[0]['dateOfBirth'])) {{$userProfile[0]['dateOfBirth']}}
                         @else N/A
                         @endif
                     </span>
@@ -128,28 +133,28 @@
                 <div class="well well-sm col-sm-6">
                 <label class="col-md-6"><i  class="fa fa-tint"></i> Blood Group :</label>
                  <span class="col-md-6">
-                     @if(isset($userProfile['bloodGroup'])) {{$userProfile['bloodGroup']}}  @else N/A @endif
+                     @if(isset($userProfile[0]['bloodGroup'])) {{$userProfile[0]['bloodGroup']}}  @else N/A @endif
                  </span>
                     </div>
                     <hr>
                  <div class="well well-sm col-sm-6 ">
                     <label class="col-md-6"><i  class="fa fa-balance-scale"></i> Weight :</label>
                   <span class="col-md-6">
-                      @if(isset($userProfile['weight'])) {{$userProfile['weight']}} KG  @else N/A @endif
+                      @if(isset($userProfile[0]['weight'])) {{$userProfile[0]['weight']}} KG  @else N/A @endif
                     </span>
                 </div>
                   <div class="well well-sm col-sm-6 ">
                     <label class="col-md-6"><i  class="fa fa-arrow-up"></i> Height :</label>
                    <span class="col-md-6">
-                       @if(isset($userProfile['height'])) {{$userProfile['height']}}  @else N/A @endif
+                       @if(isset($userProfile[0]['height'])) {{$userProfile[0]['height']}}  @else N/A @endif
                    </span>
                 </div>
                 <hr>
                 <div class="well well-sm col-sm-6 ">
                     <label class="col-md-6"><i  class="fa fa-phone"></i> Phone :</label>
                     <span class="col-md-6">
-                    @if(isset($userProfile['phone']))
-                        {{$userProfile['phone']}}
+                    @if(isset($userProfile[0]['phone']))
+                        {{$userProfile[0]['phone']}}
                     @else
                         <span>N/A</span>
                     @endif
@@ -158,14 +163,14 @@
                 <div class="well well-sm col-sm-6 ">
                     <label class="col-md-6"><i  class="fa fa-envelope"></i> Email :</label>
                     <span class="col-md-6">
-                    @if(isset($userProfile['email'])) {{$userProfile['email']}}  @else N/A @endif
+                    @if(isset($userProfile[0]['email'])) {{$userProfile[0]['email']}}  @else N/A @endif
                     </span>
                 </div>
                 <hr>
                <div class="well well-sm col-sm-12 ">
                 <label class="col-md-3"><i  class="fa fa-map-marker"></i> Location :</label>
                 <span class="col-md-3">
-                @if(isset($userProfile['district'])) {{$userProfile['district']}}  @else N/A @endif
+                @if(isset($userProfile[0]['district'])) {{$userProfile[0]['district']}}  @else N/A @endif
                 </span>
                 </div>
                 {{-- <div class="well well-sm col-sm-12">
@@ -182,9 +187,9 @@
                 </div> --}}
                 {{-- <div class="well well-sm col-sm-12">
                     <label><i  class="fa fa-certificate"></i> Status :</label>
-                    @if(isset($userProfile['approve']) == true) <span class="badge badge-success">Approved</span> @endif
-                    @if(isset($userProfile['pending'])  == true) <span class="badge badge-pending">Pending</span> @endif
-                    @if(isset($userProfile['reject'])  == true) <span class="badge badge-danger">Rejected</span> @endif
+                    @if(isset($userProfile['approve']) == 'true') <span class="badge badge-success">Approved</span> @endif
+                    @if(isset($userProfile['pending'])  == 'true') <span class="badge badge-pending">Pending</span> @endif
+                    @if(isset($userProfile['reject'])  == 'true') <span class="badge badge-danger">Rejected</span> @endif
                 </div> --}}
             </div>
 		</div>

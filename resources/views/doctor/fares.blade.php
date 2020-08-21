@@ -4,7 +4,7 @@
 <!-- Content Header (Page header) -->
     @php
         //dd($doctorInfo['phone']);
-        // $doctorInfo = Session::get('user');
+        //$doctorInfo = Session::get('user');
 
         // if(!isset($doctorInfo[0]['accountName'])){
         //   $doctorInfo = Session::get('doctor');
@@ -13,8 +13,9 @@
         //   $doctorInfo = Session::get('user');
         // }
         //$revenue = json_encode($rev) ;
-        
+
         //dd($doctor['hospitalized']);
+       
 
     @endphp
 
@@ -109,12 +110,13 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <td>Sl</td>
                             <td>Patient Name</td>
                                     <td>Phone</td>
                                     <td>Gender</td>
                                     <td>District</td>
                                     <td>Prescription</td>
-                                    @if(isset($doctor['hospitalized']) && $doctor['hospitalized'] == false) 
+                                    @if(isset($doctorInfo['hospitalized']) && $doctorInfo['hospitalized'] == 'false')
                                     <td>Visit Fee</td>
                                     <td>Discount</td>
                                     <td>Total</td>
@@ -125,20 +127,41 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php $i = 0; @endphp
                         @foreach ($fares as $item)
-                        <tr>
-                            <td>{{$item['patient']['name']}}</td>
-                            <td>{{$item['patient']['phone']}}</td>
-                            <td>{{$item['patient']['gender']}}</td>
-                            <td>{{$item['patient']['district']}}</td>
-                            <td></td>
-                            @if(isset($doctor['hospitalized']) && $doctor['hospitalized'] == false) 
-                            <td>{{$item['transactionHistory']['visitFee']}} Tk</td>
-                            <td>{{$item['transactionHistory']['discountPercentage']}} %</td>
-                            <td>{{$item['transactionHistory']['subTotal']}} Tk</td>
-                            @endif
-                            <td>{{$item['transactionHistory']['createdDate']->get()->format('Y-m-d')}}</td>
 
+                        @php
+                            $i++;
+                            //dd($item);
+                            $patient = json_decode($item['patient'],TRUE);
+                            //$doctor = json_decode($item['doctor'],TRUE);
+                            $patient = json_decode($item['patient'],TRUE);
+                            if(isset($item['transactionHistory'])){
+                              $transactionHistory = json_decode($item['transactionHistory'],TRUE);
+                            }
+                            //dd($doctor['hospitalized']);
+                            $date = date('d-m-Y',strtotime($item['created_at']));
+                        @endphp
+                        <tr>
+                            <td>{{$i}}</td>
+                            <td>{{$patient['name']}}</td>
+                            <td>{{$patient['phone']}}</td>
+                            <td>{{$patient['gender']}}</td>
+                            <td>{{$patient['district']}}</td>
+                            <td>
+                              @if(isset($item['prescriptionId']))
+                              <a href="{{url('doctor/prescription/'.$item['patientUid'].'/'.$item['doctorUid'].'/'.$item['prescriptionId'])}}">View</a>
+                              @else N/A
+                              @endif
+                            </td>
+                            @if(isset($doctorInfo['hospitalized']) && $doctorInfo['hospitalized'] == 'false')
+                            <td>@if($transactionHistory['visitFee']) {{$transactionHistory['visitFee']}} Tk @else 0Tk @endif</td>
+                            <td>@if($transactionHistory['discountPercentage']){{$transactionHistory['discountPercentage']}} % @else 0% @endif </td>
+                            <td>@if($transactionHistory['subTotal']){{$transactionHistory['subTotal']}} Tk @else 0Tk @endif</td>
+                            @endif
+                            {{-- <td>{{$item['transactionHistory']['createdDate']->get()->format('Y-m-d')}}</td> 
+                            <td>{{$item['callStartTime']->get()->format('Y-m-d')}}</td> --}}
+                            <td>{{$date}}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -157,7 +180,7 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-    
+
     <script type="text/javascript">
       $(document).ready(function(){
         $("#search").on("keyup", function() {

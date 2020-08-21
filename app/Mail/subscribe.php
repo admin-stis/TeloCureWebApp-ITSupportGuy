@@ -35,7 +35,7 @@ class subscribe extends Mailable
         //dd($sender);
       
         //$address = 'support@telocure.com';
-        $to = 'support@telocure.com';
+        $to = 'dev.telocure@gmail.com';
         $subject = 'Subscribe telocure';
         $name = 'TeloCure';
 
@@ -43,7 +43,7 @@ class subscribe extends Mailable
                     ->from($sender)
                     // ->cc($address, $name)
                     // ->bcc($address, $name)
-                    ->to('support@telocure.com', $name)
+                    ->to('dev.telocure@gmail.com', $name)
                     ->subject($subject)
                     ->with([ 'data' => $this->data]);
     }

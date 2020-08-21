@@ -45,7 +45,7 @@
                     <form method="POST" action="{{url('loggedin')}}">
                     {{-- @else  <form method="POST" action="{{url('login')}}"> --}}
                     {{-- @endif --}}
-                        @csrf
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 
                     @if($title == 'admin' || $title == 'hospital')

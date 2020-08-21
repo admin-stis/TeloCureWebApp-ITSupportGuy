@@ -20,4 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('newpatients','Api\SetAllUserController@setPatient');
+Route::post('newdoctors','Api\SetAllUserController@setDoctor');
+
+Route::post('visits','Api\TransactionController@transaction');
+
+Route::post('vitals','Api\MainController@vitals');
+Route::post('refunds','Api\MainController@refund');
+Route::post('prescriptions','Api\MainController@prescription');
+Route::post('treatmentRequest','Api\MainController@treatmentRequest');
+
 

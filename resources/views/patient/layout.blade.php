@@ -3,10 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> HeloDoc | Patient</title>
+  <title> TeloCure | Patient</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Favicon-->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/img/favicon.png')}}">
+    <!--End-->
   <!-- Font Awesome -->
+  <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
   <link rel="stylesheet" href="{{ asset('backend/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -27,11 +31,37 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
+  <!-- jQuery -->
+<script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script>
+
+
 
   {{-- Custom CSS --}}
   <!-- <link rel="stylesheet" href="{{asset('css/custom.css')}}"/> -->
   {{-- Custom Registration Steps CSS --}}
   <!-- <link rel="stylesheet" href="{{asset('backend/dist/css/steps.css')}}"/> -->
+  {{-- New css --}}
+    {{-- table css design --}}
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{{url('table_res/vendor/bootstrap/css/bootstrap.min.css')}}">
+  <!--===============================================================================================-->
+      {{-- <link rel="stylesheet" type="text/css" href="{{url('table_res/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}"> --}}
+  <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="{{url('table_res/vendor/animate/animate.css')}}">
+  <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="{{url('table_res/vendor/select2/select2.min.css')}}">
+  <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="{{url('table_res/vendor/perfect-scrollbar/perfect-scrollbar.css')}}">
+  <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="{{url('table_res/css/util.css')}}">
+      <link rel="stylesheet" type="text/css" href="{{url('table_res/css/main.css')}}">
+{{-- end --}}
+
+{{-- paging --}}
+<link href="{{asset('backend/paginator/jquery.paginate.css')}}" rel="stylesheet" type="text/css">
+
+  {{-- end --}}
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -172,7 +202,7 @@
     <a href="index3.html" class="brand-link">
       <img src="{{ asset('backend/dist/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">HeloDoc</span>
+      <span class="brand-text font-weight-light">TeloCure</span>
     </a>
 
     <!-- Sidebar -->
@@ -216,10 +246,20 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script>
+
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset('backend/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+{{-- DataTables --}}
+<script src="{{ asset('backend/plugins/datatables/jquery.dataTables.js') }}"></script>
+{{-- End --}}
+
+  {{-- custom js --}}
+  <script src="{{asset('backend/dist/js/custom.js')}}"></script>
+
+
+
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -235,7 +275,7 @@
 <!-- jQuery Knob Chart -->
 <script src="{{ asset('backend/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
 <!-- daterangepicker -->
-<script src="{{ asset('backend/plugins/moment/moment.min.js') }}"></script>
+<!-- <script src="{{ asset('backend/plugins/moment/moment.min.js') }}"></script> -->
 <script src="{{ asset('backend/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{ asset('backend/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
@@ -249,5 +289,11 @@
 <script src="{{ asset('backend/dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('backend/dist/js/demo.js') }}"></script>
+
+<script src="{{ asset('backend/dist/js/custom.js') }}"></script>
+
+
+{{-- Paginator --}}
+<script src="{{asset('backend/paginator/jquery.paginate.js')}}"></script>
 </body>
 </html>

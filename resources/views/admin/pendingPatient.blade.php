@@ -10,7 +10,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{url('admin')}}">Home</a></li>
               <li class="breadcrumb-item active">Patient</li>
             </ol>
           </div><!-- /.col -->
@@ -52,7 +52,6 @@
                     <th scope="col">District</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -71,7 +70,6 @@
                     <td>@if(isset($value['district'])) {{$value['district']}} @else N/A  @endif</td>
                     <td>@if(isset($value['phone'])) {{$value['phone']}} @else N/A  @endif</td>
                     <td>@if(isset($value['email'])) {{$value['email']}} @else N/A  @endif</td>
-                    <td>@if(isset($value['active'])) {{$value['active']}} @else N/A  @endif</td>
                     <td>
                         @if(isset($value['uid']))
                             <a class="btn btn-sm btn-primary" href="{{url('admin/pprofile/'.trim($value['uid']))}}">View profile</a>
