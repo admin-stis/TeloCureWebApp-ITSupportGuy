@@ -46,7 +46,7 @@ for($i = 0; $i < count($rev); $i++) { $income=intval(substr($rev[$i]['title'],0,
     //------------------------------------------------------------------------
 
     <!-- 
-        Hello  -->
+        This is new Hello  -->
 
     @endphp
 
