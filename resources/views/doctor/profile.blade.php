@@ -54,12 +54,12 @@
 					<div class="profile-usertitle-name">
                         @if(isset($doctorProfile['online']) && $doctorProfile['online'] == 1)
                             <div class="alert alert-success alert-sm">
-                                {{$doctorProfile['name']}}
+                                Dr. {{$doctorProfile['name']}}
                                 <div><small>Online</small></div>
                             </div>
                         @else
                             <div class="alert alert-danger alert-sm">
-                                {{$doctorProfile['name']}}
+                                Dr. {{$doctorProfile['name']}}
                                 <div><small>Offline</small></div>
                             </div>
                         @endif
@@ -173,7 +173,7 @@
                                         <h6>Name</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">{{$doctorProfile['name']}}</span>
+                                    <span class="col-md-5">Dr. {{$doctorProfile['name']}}</span>
                                 </div>
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
