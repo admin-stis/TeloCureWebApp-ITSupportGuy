@@ -1,5 +1,5 @@
 {{-- Hello <i>{{ $otp->receiver }}</i>,
-<p>This is a demo email for testing purposes! Also, it's the HTML version.</p>
+<!-- <p>This is a demo email for testing purposes! Also, it's the HTML version.</p>
 
 <p><u>Click here to login :</u></p>
 
@@ -10,35 +10,40 @@
 Thank You,
 <br/>
 <i>{{ $otp->sender }}</i> --}}
-
+ -->
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
+
+<head>
     <meta charset="utf-8" />
-  </head>
-  <body>
+</head>
+
+<body>
 
     <?php
       //dd($otp);
     ?>
 
-    Hello {{$otp->code['name']}},
+    Hello Dr. {{$otp->code['name']}}. You are welcome to open your Telocure doctor account. <br>
+    You are added under the {{$otp->['hospital']}} hospital.
 
     <p>Thank you for your interest. Your login credential is below:</p>
 
     <div>
-        <p class="alert alert-info"><strong>Phone :</strong>{{$otp->code['phone']}}</p>
-        <p class="alert alert-info"><strong>Password : </strong>{{$otp->code['pass']}}</p>
+        <p class="alert alert-info"><strong>User Phone :</strong> {{$otp->code['phone']}}</p>
+        <p class="alert alert-info"><strong>User Password : </strong> {{$otp->code['pass']}}</p>
     </div>
 
     <p>Please visit the following URL and login to the account.
-    <a href="http://telocure.com/login/doctor" target="_blank">Login Doctor</a></p>
+        <a href="http://telocure.com/login/doctor" target="_blank">Login Doctor</a></p>
 
-    <p>For any questions or query, please feel free to contact us at <strong>support@telocure.com</strong> or call us at <strong>09614501100</strong> </p>
+    <p>For any questions or query, please feel free to contact us at <strong>support@telocure.com</strong> or call us at
+        <strong>09614501100</strong> for any information. </p>
 
     Best regards,
     <p>TeloCure Team</p>
 
-  </body>
-</html>
 
+</body>
+
+</html>
