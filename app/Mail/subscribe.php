@@ -29,22 +29,41 @@ class subscribe extends Mailable
      * @return $this
      */
     public function build()
-    {
+    /* {
         $sender = $this->data->receiver;
 
         //dd($sender);
-      
+
         //$address = 'support@telocure.com';
-        $to = 'dev.telocure@gmail.com';
+        // $to = 'dev.telocure@gmail.com';
+        $to = 'shefat.stis@gmail.com';
         $subject = 'Subscribe telocure';
         $name = 'TeloCure';
 
         return $this->view('mails.subscribe')
-                    ->from($sender)
-                    // ->cc($address, $name)
-                    // ->bcc($address, $name)
-                    ->to('dev.telocure@gmail.com', $name)
+            ->from($sender)
+            // ->cc($address, $name)
+            // ->bcc($address, $name)
+            ->to('shefat.stis@gmail.com', $name)
+            ->subject($subject)
+            ->with(['data' => $this->data]);
+    } */
+
+
+    {
+        //dd($this->data);        
+        // $receiver = 'dev.telocure@gmail.com'; 
+        // $sender = $this->data->receiver;
+        $to = 'shefat.stis@gmail.com';
+        $subject ='Subscribe telocure';
+        $name = 'TeloCure';
+
+        return $this->view('mails.subscribe')
+                    ->from("mailer@telocuretest.com" )  
+                    ->to('shefat.stis@gmail.com', $name)
                     ->subject($subject)
                     ->with([ 'data' => $this->data]);
+        
+                  
     }
 }

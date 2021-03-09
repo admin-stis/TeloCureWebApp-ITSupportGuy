@@ -52,7 +52,38 @@ class PhotouploadController extends Controller
         return \Response::download($filepath);
     }
    
-
+    public function downloadprc($name)
+    {
+        try{
+            
+            $filepath = public_path('prescription/').$name;
+            //dd($filepath);
+            
+            $datepart = explode("-pr-", $name, 2);
+            $frb_tz = new \DateTimeZone('Asia/Dhaka');
+            $date_prs_create = date_create(trim($datepart[0]),$frb_tz);
+            //$print = $date_prs_create->format('d-m-Y');
+            //return $print;
+            
+            $date_today = new \DateTime("now", $frb_tz);
+            $diff = $date_prs_create->diff($date_today);
+            $days = $diff->days; //get days diff betwn two dates
+            if($days<=30) { return \Response::download($filepath); }
+            else { 
+                //if(trim($datepart[1])=="8mG2Z2d9sAFjPTDaBFip.pdf")
+                //{
+                 //   return \Response::download($filepath);
+                //} else { 
+                return "Your prescription is 30 days period expired";
+                //}
+            
+            }
+        } catch(\Exception $e){
+            Log::error("Errors when downloading prescription via api: ".$e);
+            return "Errors found when downloading prescription file";
+        }
+    }
+    
     public function docterCredential(Request $request)
     {
 

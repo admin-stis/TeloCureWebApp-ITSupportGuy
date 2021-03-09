@@ -34,7 +34,9 @@ class sendLink extends Mailable
         $subject = 'Login Information';
         $name = 'TeloCure';
         //$receiver = $this->otp->name ;
-
+        // echo 'hello ';
+        // dd($this->otp);
+        
         return $this->view('mails.docLink')
                     ->from($address, $name)
                     // ->cc($address, $name)

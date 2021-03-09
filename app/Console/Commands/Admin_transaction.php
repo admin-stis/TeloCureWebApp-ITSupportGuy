@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\AdminUserTransactions;
 use App\AdminUserTransactionsAdvancedPaid;
 use Illuminate\Console\Command;
+use Log;
 
 class Admin_transaction extends Command
 {
@@ -39,7 +40,9 @@ class Admin_transaction extends Command
      */
     public function handle()
     {
-        $firestore = app('firebase.firestore');
+        Log::info("cron job admin trans command handle ");
+        
+        /* $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
         $adminRef = $database->collection('admin');
@@ -123,7 +126,7 @@ class Admin_transaction extends Command
             );
 
 
-        }
+        } */
 
     }
 }

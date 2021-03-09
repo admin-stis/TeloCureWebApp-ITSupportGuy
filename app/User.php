@@ -54,11 +54,13 @@ class User extends Authenticatable implements MustVerifyEmail
             'smoke',
             'hospitalUid',
             'hospitalized',
+            'hospitalName',
             'doctorType',
             'district',
             'districtId',
             'createdAt',
             'photoUrl',
+            'dateOfBirth'
     ];
 
     protected $nullable = ['active'];

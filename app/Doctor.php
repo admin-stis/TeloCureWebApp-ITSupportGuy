@@ -12,7 +12,7 @@ class Doctor extends Model
         'uid', 'name', 'email', 'phone', 'gender', 'doctorType', 'dateOfBirth', 'regNo',
         'hospitalized', 'hospitalName', 'hospitalUid', 'password', 'photoUrl', 'districtId',
         'active', 'rejected', 'totalCount', 'totalRating', 'price', 'createdAt', 'online',
-        'balance', 'bank_info', 'documents', 'others', 'district'
+        'balance', 'bank_info', 'documents', 'others', 'yearsOfExprience', 'district'
     ];
 
     public $timestamp = false;

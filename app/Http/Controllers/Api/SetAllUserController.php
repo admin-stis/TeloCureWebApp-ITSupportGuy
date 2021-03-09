@@ -47,12 +47,30 @@ class SetAllUserController extends Controller
 
         $date = date('Y-m-d h:i:s');
 
-        //dd($request->all());
+        if($request->online == true && $request->online == 'true'){
+            $online = 1;
+        }else{
+            $online = 0;
+        }
+
+        if($request->active == true && $request->active == 'true'){
+            $active = 1;
+        }else{
+            $active = 0;
+        }
+
+        if($request->hospitalized == true && $request->hospitalized == 'true'){
+            $hospitalized = 1;
+        }else{
+            $hospitalized = 0;
+        }
+
+        // dd($request->all());
         $data = [
             'uid'=> $request->uid,
             //'approve' => '',
-            'online' => $request->online,
-            'active'=> $request->active,
+            'online' => $online,
+            'active'=> $active,
             'email'=> $request->email,
             'name'=> $request->name.' '.$request->lastname,
             //'lastname' => $request->lastname,
@@ -61,7 +79,7 @@ class SetAllUserController extends Controller
             'gender' => $request->gender,
             'weight' => $request->weight,
             'height' => $request->height,
-            'bloodGroup' => $request->bloodGroup,
+            'bloodGroup' => $request->bloodgroup,
             'totalCount' => $request->totalCount,
             'totalRating' => $request->totalRating,
             'price' => $request->price,
@@ -70,13 +88,14 @@ class SetAllUserController extends Controller
             'smoke' => $request->smoke,
             'photoUrl' => $request->photoUrl,
             'hospitalUid' => $request->hospitalUid,
-            'hospitalized' => $request->hospitalized,
+            'hospitalized' => $hospitalized,
+            'hospitalName' => $request->hospitalName,
             'doctorType' => $request->doctorType,
             'district' => $request->district,
             'districtId' => $request->districtId,
-            'createdAt' => $date ,
+            'createdAt' => $date,
+            'dateOfBirth' => $request->dateOfBirth
         ];
-
 
         if(User::create($data)){
         	return response()->json([
@@ -186,12 +205,42 @@ class SetAllUserController extends Controller
 
         $date = date('Y-m-d h:i:s');
 
+        if($request->hospitalized == true && $request->hospitalized == 'true'){
+            $hospitalized = 1;
+        }else{
+            $hospitalized = 0;
+        }
+
+        if($request->active == true && $request->active == 'true'){
+            $active = 1;
+        }else{
+            $active = 0;
+        }
+
+        if($request->online == true && $request->online == 'true'){
+            $online = 1;
+        }else{
+            $online = 0;
+        }
+
+        if($request->welcomed == true && $request->welcomed == 'true'){
+            $welcomed = 1;
+        }else{
+            $welcomed = 0;
+        }
+
+        if($request->rejected == true && $request->rejected == 'true'){
+            $rejected = 1;
+        }else{
+            $rejected = 0;
+        }
+
         $data = [
             'uid' => $request->uid,
             'dateOfBirth' => $request->dateOfBirth,
             'district' => $request->district,
             'districtId' => $request->districtId,
-            'active'=> $request->active,
+            'active'=> $active,
             'doctorType' => $request->doctorType,
             'email'=> $request->email,
             'gender' => $request->gender,
@@ -202,9 +251,9 @@ class SetAllUserController extends Controller
             "price" => $request->price,
             "totalCount" => $request->totalCount,
             "hospitalUid" => $request->hospitalUid,
-            "hospitalized" => $request->hospitalized,
-            "online" => $request->online,
-            "rejected" => $request->rejected,
+            "hospitalized" => $hospitalized,
+            "online" => $online,
+            "rejected" => $rejected,
             "createdAt" => $date,
             "hospitalName"=> $request->hospitalName,
             "photoUrl"=>$request->photoUrl,
@@ -213,7 +262,7 @@ class SetAllUserController extends Controller
             "balance" => json_encode($balance),
             "documents" => json_encode($documents),
             "bank_info" => json_encode($bankAccount),
-            "welcomed" => $request->welcomed
+            "welcomed" => $welcomed
         ];
 
         //dd($data);

@@ -48,16 +48,20 @@ class MailSendController
 
 
     public function sendDoc($otp,$receiver){
-
+        
         $objDemo = new \stdClass();
         $objDemo->code = $otp ;
-        //dd($objDemo->code);
+        
         // $objDemo->code = 'Demo Two Value';
+        
         $objDemo->sender = 'TeloCure Team';
         $objDemo->receiver = $receiver;
+        
+        // echo $receiver;
+        // dd($objDemo);
 
         Mail::to($receiver)->send(new sendLink($objDemo));
-
+        
         if (Mail::failures()){
           return false;
         }else{
@@ -69,8 +73,10 @@ class MailSendController
 
         $objDemo = new \stdClass();
         $objDemo->code = $otp ;
+        
         //dd($objDemo->code);
         // $objDemo->code = 'Demo Two Value';
+        
         $objDemo->sender = 'TeloCure Team';
         $objDemo->receiver = $receiver;
 
@@ -142,8 +148,10 @@ class MailSendController
         $objDemo->receiver = $email;
         $objDemo->phone = $phone;
         $objDemo->message = $message;
-
-        Mail::to($userEmail)->send(new contactUs($objDemo));
+        
+        //28-01-21 set only receiver here and test cc 
+        //Mail::to($userEmail)->send(new contactUs($objDemo)); //previous
+        Mail::to("mridul.stis@gmail.com")->cc($userEmail)->send(new contactUs($objDemo)); //new //cc kept for testing will be removed
 
         if (Mail::failures()){
           return false;

@@ -19,11 +19,11 @@ class PatientController extends Controller
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
         $patientData = $database->collection('users');
-
     }
 
     public function index()
     {
+
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
@@ -34,29 +34,31 @@ class PatientController extends Controller
         // $query = $patientVisit->where('patientUid','=',$data['patientData'][0]['uid']) ;
         // $patient = $query->documents();
 
-        $patient = Visits::where('patientUid',$data['patientData'][0]['uid'])->get()->toArray();
+        $patient = Visits::where('patientUid', $data['patientData'][0]['uid'])->get()->toArray();
+
+        //dd($data['patientData']);
 
         // $prescription = $database->collection('prescription')
         //         ->document($data['patientData'][0]['uid']);
 
-        $prescription = Prescription::where('patientId',$data['patientData'][0]['uid'])->get()->toArray();
+        $prescription = Prescription::where('patientId', $data['patientData'][0]['uid'])->get()->toArray();
 
         $data['visits'] = array();
-        foreach ($patient as $value){
-            array_push($data['visits'],$value);
+        foreach ($patient as $value) {
+            array_push($data['visits'], $value);
         }
 
-        ///dd($data['visits']);
-        
+        // dd($data['visits']);
+
         $presInfo = array();
         $data['pres'] = array();
 
-        foreach($data['visits'] as $visitInfo){
+        foreach ($data['visits'] as $visitInfo) {
             // $docId = $prescription->collection($visitInfo['doctorUid'])
             // ->orderBy('createdDate', 'ASC')->limit(5);
             // $presId = $docId->documents();
 
-            $presId = Prescription::where('doctorId',$visitInfo['doctorUid'])
+            $presId = Prescription::where('doctorId', $visitInfo['doctorUid'])
                 ->orderBy('createdDate', 'ASC')
                 ->limit(5)
                 ->get()->toArray();
@@ -65,23 +67,20 @@ class PatientController extends Controller
             // foreach ($presId as $key => $value) {
             // array_push($prescriptionDetail, $value->data());
             // }
-            if(isset($presId)){
-	            foreach ($presId as $key => $value) {
-	                array_push($data['pres'],$value);
-	            }
-	        }else{
-	           //$data['pres'] = array();
-	        }
+            if (isset($presId)) {
+                foreach ($presId as $key => $value) {
+                    array_push($data['pres'], $value);
+                }
+            } else {
+                //$data['pres'] = array();
+            }
         }
 
-        
-        if(empty($data['patientData'][0]['gender']) || empty($data['patientData'][0]['district']) || empty($data['patientData'][0]['height']) || empty($data['patientData'][0]['weight']) || empty($data['patientData'][0]['bloodGroup']) || empty($data['patientData'][0]['dateOfBirth']))
-        {
-            return redirect('patient/edit/'.$data['patientData'][0]['uid']);
-        }
-        else
-        {
-            return view('patient.index')->with($data);          
+
+        if (empty($data['patientData'][0]['gender']) || empty($data['patientData'][0]['district']) || empty($data['patientData'][0]['height']) || empty($data['patientData'][0]['weight']) || empty($data['patientData'][0]['bloodGroup']) || empty($data['patientData'][0]['dateOfBirth'])) {
+            return redirect('patient/edit/' . $data['patientData'][0]['uid']);
+        } else {
+            return view('patient.index')->with($data);
         }
     }
 
@@ -94,22 +93,18 @@ class PatientController extends Controller
 
         $docRef = $database->collection('users');
 
-        if(isset($data['userProfileData']) && $data['userProfileData'] != null){
+        if (isset($data['userProfileData']) && $data['userProfileData'] != null) {
             $uid = $data['userProfileData'][0]['uid'];
         }
 
         //$data['userProfile'] = $docRef->document($uid)->snapshot()->data();
-        $data['userProfile'] = User::where('uid',$uid)->get()->toArray();
+        $data['userProfile'] = User::where('uid', $uid)->get()->toArray();
         //dd($data);
 
-        if(empty($data['userProfileData'][0]['gender']) || empty($data['userProfileData'][0]['district']) || empty($data['userProfileData'][0]['height']) || empty($data['userProfileData'][0]['weight']) || empty($data['userProfileData'][0]['bloodGroup'])|| empty($data['userProfileData'][0]['dateOfBirth']))
-            
-        {
-            return redirect('patient/edit/'.$data['userProfileData'][0]['uid']);
-        }
-        else
-        {
-        return view('patient/profile')->with($data);
+        if (empty($data['userProfileData'][0]['gender']) || empty($data['userProfileData'][0]['district']) || empty($data['userProfileData'][0]['height']) || empty($data['userProfileData'][0]['weight']) || empty($data['userProfileData'][0]['bloodGroup']) || empty($data['userProfileData'][0]['dateOfBirth'])) {
+            return redirect('patient/edit/' . $data['userProfileData'][0]['uid']);
+        } else {
+            return view('patient/profile')->with($data);
         }
     }
 
@@ -145,7 +140,7 @@ class PatientController extends Controller
     {
         $data['userProfileData'] = session::get('user');
 
-        
+
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
@@ -157,15 +152,15 @@ class PatientController extends Controller
         $patient = $queryPatient->documents();
         */
 
-        $patient = User::where('uid',$uid)->get()->toArray();
+        $patient = User::where('uid', $uid)->get()->toArray();
 
 
-        
+
         $data['patient'] = array();
 
-        foreach($patient as $key=>$value){
+        foreach ($patient as $key => $value) {
             //array_push($data['patient'],$value->data());
-            array_push($data['patient'],$value);
+            array_push($data['patient'], $value);
         }
 
         // new
@@ -176,27 +171,27 @@ class PatientController extends Controller
         $patient = $query->documents();
         */
 
-        $patient = Visits::where('patientUid',$uid)->get()->toArray();
+        $patient = Visits::where('patientUid', $uid)->get()->toArray();
 
         /*
         $prescription = $database->collection('prescription')
                 ->document($uid);
         */
 
-        $prescription = Prescription::where('patientId',$uid)->get()->toArray();
+        $prescription = Prescription::where('patientId', $uid)->get()->toArray();
 
         $data['visits'] = array();
-        foreach ($patient as $value){
+        foreach ($patient as $value) {
             // array_push($data['visits'],$value->data());
-            array_push($data['visits'],$value);
+            array_push($data['visits'], $value);
         }
 
         $presInfo = array();
         $pres = array();
         $data['pres'] = array();
         $data['doc'] = array();
-        
-        foreach($data['visits'] as $visitInfo){
+
+        foreach ($data['visits'] as $visitInfo) {
             /*
             $docId = $prescription->collection($visitInfo['doctorUid']);
             $presId = $docId->documents();
@@ -204,40 +199,39 @@ class PatientController extends Controller
             $doctor = $queryDoctor->documents();
             */
 
-            $presId = Prescription::where('patientId',$uid)->
-                        where('doctorId',$visitInfo['doctorUid'])->get()->toArray(); 
+            $presId = Prescription::where('patientId', $uid)->where('doctorId', $visitInfo['doctorUid'])->get()->toArray();
 
-            $doctor = Doctor::where('uid','=',$visitInfo['doctorUid'])->get()->toArray();
+            $doctor = Doctor::where('uid', '=', $visitInfo['doctorUid'])->get()->toArray();
 
-            if(isset($doctor)){
-	            $data['doctor'] = array();
-	            foreach($doctor as $key=>$value){
-	                array_push($data['doctor'],$value);
-	            }
-	        }else{
-	            //$data['doctor'] = array();
-	        }
+            if (isset($doctor)) {
+                $data['doctor'] = array();
+                foreach ($doctor as $key => $value) {
+                    array_push($data['doctor'], $value);
+                }
+            } else {
+                //$data['doctor'] = array();
+            }
 
-	        // $pres = array();
+            // $pres = array();
 
-	        if(isset($presId)){
-	            //new code
-	            foreach ($presId as $key => $value) {
-	                array_push($pres,$value);
-	            }
-	            //dd($pres[0]['doctorId']);
-	            foreach ($pres as $key1 => $value) {
-	                array_push($data['pres'],$value);
-	                foreach($data['doctor'] as $key1=>$value1){
-	                    array_push($data['doc'],$value1);
-	                } 
-	            }
-	            //end
+            if (isset($presId)) {
+                //new code
+                foreach ($presId as $key => $value) {
+                    array_push($pres, $value);
+                }
+                //dd($pres[0]['doctorId']);
+                foreach ($pres as $key1 => $value) {
+                    array_push($data['pres'], $value);
+                    foreach ($data['doctor'] as $key1 => $value1) {
+                        array_push($data['doc'], $value1);
+                    }
+                }
+                //end
 
-	        }else{
-	            //$data['pres'] = array();
-	        }
-	        // end
+            } else {
+                //$data['pres'] = array();
+            }
+            // end
         }
 
         // if(isset($doctor)){
@@ -275,100 +269,97 @@ class PatientController extends Controller
 
         //new code
         $data['output'] = array();
-        for($i = 0; $i < count($pres); $i++){
+        for ($i = 0; $i < count($pres); $i++) {
             $arr = array(
                 'pres' => $data['pres'][$i],
                 'doc' => $data['doc'][$i]
             );
 
-            array_push($data['output'],$arr);
+            array_push($data['output'], $arr);
         }
         //end
 
         //dd($data['output']);
 
 
-        if(empty($data['userProfileData'][0]['gender']) || empty($data['userProfileData'][0]['district']) || empty($data['userProfileData'][0]['height']) || empty($data['userProfileData'][0]['weight']) || empty($data['userProfileData'][0]['bloodGroup']) || empty($data['userProfileData'][0]['dateOfBirth']))
-        {
-            return redirect('patient/edit/'.$data['userProfileData'][0]['uid']);
-        }
-        else
-        {
+        if (empty($data['userProfileData'][0]['gender']) || empty($data['userProfileData'][0]['district']) || empty($data['userProfileData'][0]['height']) || empty($data['userProfileData'][0]['weight']) || empty($data['userProfileData'][0]['bloodGroup']) || empty($data['userProfileData'][0]['dateOfBirth'])) {
+            return redirect('patient/edit/' . $data['userProfileData'][0]['uid']);
+        } else {
             return view('patient.e-prescription_list')->with($data);
         }
-
     }
 
-    function edit($uid){
+    function edit($uid)
+    {
+
         $firestore = app('firebase.firestore');
+
         $database = $firestore->database();
-
         $patientData = $database->collection('users');
-
         $district = $database->collection('districts');
-
         // $queryPatient = $patientData->where('uid','=',$uid);
         // $patient = $queryPatient->documents();
-        $patient = User::where('uid',$uid)->get()->toArray();
+        $patient = User::where('uid', $uid)->get()->toArray();
         $data['patient'] = array();
 
-        foreach($patient as $key=>$value){
-            array_push($data['patient'],$value);
+        foreach ($patient as $key => $value) {
+            array_push($data['patient'], $value);
         }
 
         // $querydistrict = $district->where('active','=',true);
         // $districtData = $querydistrict->documents();
 
-        $districtData = District::where('active','true')->get()->toArray();
+        $districtData = District::where('active', '1')->get()->toArray();
 
         $data['district'] = array();
 
-        foreach($districtData as $key=>$value){
-            array_push($data['district'],$value);
+        foreach ($districtData as $key => $value) {
+            array_push($data['district'], $value);
         }
         //dd($data);
         return view('patient/edit')->with($data);
     }
 
-    function editAction(Request $request){
+    function editAction(Request $request)
+    {
 
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
-        $uid =  $request->uid ;
+        $uid =  $request->uid;
         $docRef = $database->collection('users')->document($uid);
 
-        if(isset($request['photoUrl'])){
-            $v = validator::make($request->all(),[
-            'photoUrl' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        if (isset($request['photoUrl'])) {
+            $v = validator::make($request->all(), [
+                'photoUrl' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
-            if($v->fails()){
+            if ($v->fails()) {
                 return redirect()->back()->withInput()->withErrors($v->errors());
             }
 
             $fileName = $request['photoUrl']->getClientOriginalName();
 
-            $fileName = $uid.''.$fileName;
+            $fileName = $uid . '' . $fileName;
             $request['photoUrl']->move(public_path('images/profilepic'), $fileName);
-            $url = "https://telocuretest.com/api/download/".$fileName;
-        }else{
+            $url = "https://telocuretest.com/api/download/" . $fileName;
+        } else {
             $url = $request->old_photoUrl;
         }
 
         $docRef->update([
-                ['path' => 'uid' , 'value' => $uid],
-                ['path' => 'name' , 'value' => $request->name],
-                ['path' => 'dateOfBirth' , 'value' => $request->dateOfBirth],
-                ['path' => 'gender' , 'value' => $request->gender],
-                ['path' => 'bloodGroup' , 'value' => $request->bloodGroup],
-                ['path' => 'weight' , 'value' => $request->weight],
-                ['path' => 'height' , 'value' => $request->height],
-                ['path' => 'district' , 'value' => $request->district],
-                ['path' => 'email' , 'value' => $request->email],
-                ['path' => 'phone' , 'value' => $request->phone],
-                ['path' => 'photoUrl', 'value' => $url]
-            ]);
+            ['path' => 'uid', 'value' => $uid],
+            ['path' => 'name', 'value' => $request->name],
+            ['path' => 'dateOfBirth', 'value' => $request->dateOfBirth],
+            ['path' => 'gender', 'value' => $request->gender],
+            ['path' => 'bloodGroup', 'value' => $request->bloodGroup],
+            ['path' => 'weight', 'value' => $request->weight],
+            ['path' => 'height', 'value' => $request->height],
+            ['path' => 'district', 'value' => $request->district],
+            ['path' => 'email', 'value' => $request->email],
+            ['path' => 'phone', 'value' => $request->phone],
+            ['path' => 'photoUrl', 'value' => $url]
+        ]);
 
         $inputs = [
             'uid' => $uid,
@@ -384,22 +375,22 @@ class PatientController extends Controller
             'photoUrl' => $url
         ];
 
-        User::where('uid',$uid)->update($inputs);
+        User::where('uid', $uid)->update($inputs);
 
 
         session_unset();
         //$dt[0] = $database->collection('users')->document($uid)->snapshot()->data();
-        $dt = User::where('uid',$uid)->get()->toArray();
-        Session::put('user',$dt);
+        $dt = User::where('uid', $uid)->get()->toArray();
+        Session::put('user', $dt);
         $data['patientData'] = array();
-        array_push($data['patientData'] , Session::get('user'));
+        array_push($data['patientData'], Session::get('user'));
         //dd($data['patientData']);
-        Session::flash('edit-success','Profile updated Successfully.');
+        Session::flash('edit-success', 'Profile updated Successfully.');
         return redirect('patient');
-
     }
 
-    public function ePrescriptionDetails($uId,$dId,$pId){
+    public function ePrescriptionDetails($uId, $dId, $pId)
+    {
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
@@ -411,12 +402,12 @@ class PatientController extends Controller
         $patient = $queryPatient->documents();
         */
 
-        $patient = User::where('uid',$uId)->get()->toArray();
+        $patient = User::where('uid', $uId)->get()->toArray();
 
         $data['patient'] = array();
 
-        foreach($patient as $key=>$value){
-            array_push($data['patient'],$value);
+        foreach ($patient as $key => $value) {
+            array_push($data['patient'], $value);
         }
 
         // new
@@ -425,48 +416,46 @@ class PatientController extends Controller
         /*$query = $patientVisit->where('patientUid','=',$uId) ;
         $patient = $query->documents();*/
 
-        $patient = Visits::where('patientUid',$uId)->get()->toArray();
+        $patient = Visits::where('patientUid', $uId)->get()->toArray();
 
         $prescription = $database->collection('prescription')
-                ->document($uId);
+            ->document($uId);
 
         $data['visits'] = array();
-        foreach ($patient as $value){
-            array_push($data['visits'],$value);
+        foreach ($patient as $value) {
+            array_push($data['visits'], $value);
         }
 
         $presInfo = array();
-        foreach($data['visits'] as $visitInfo){
+        foreach ($data['visits'] as $visitInfo) {
             /*$docId = $prescription->collection($dId);
             $presId = $docId->documents();
 
             $queryDoctor = $doctorData->where('uid','=',$dId);
             $doctor = $queryDoctor->documents();*/
 
-            $presId = Prescription::where('patientId',$uId)->
-                        where('doctorId',$visitInfo['doctorUid'])->get()->toArray(); 
+            $presId = Prescription::where('patientId', $uId)->where('doctorId', $visitInfo['doctorUid'])->get()->toArray();
 
-            $doctor = Doctor::where('uid',$visitInfo['doctorUid'])->get()->toArray();
-
+            $doctor = Doctor::where('uid', $visitInfo['doctorUid'])->get()->toArray();
         }
 
         $data['doctor'] = array();
-        foreach($doctor as $key=>$value){
-            array_push($data['doctor'],$value);
+        foreach ($doctor as $key => $value) {
+            array_push($data['doctor'], $value);
         }
 
         $data['prescriptionData'] = array();
         foreach ($presId as $key => $value) {
-            array_push($data['prescriptionData'],$value);
+            array_push($data['prescriptionData'], $value);
         }
         // end
 
         // echo '<pre>';
         $data['pres'] = array();
         // dd($data['prescriptionData'][0]['prescriptionId']);
-        foreach($data['prescriptionData'] as $key => $val){
-            if($data['prescriptionData'][$key]['prescriptionId'] == $pId){
-                array_push($data['pres'],$val);
+        foreach ($data['prescriptionData'] as $key => $val) {
+            if ($data['prescriptionData'][$key]['prescriptionId'] == $pId) {
+                array_push($data['pres'], $val);
             }
         }
 
@@ -474,81 +463,82 @@ class PatientController extends Controller
         return view('patient/prescription')->with($data);
     }
 
-    public function diagnosis($uId,$dId,$pId){
+    public function diagnosis($uId, $dId, $pId)
+    {
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 
         $patientData = $database->collection('users');
         $doctorData = $database->collection('doctors');
 
-        $queryPatient = $patientData->where('uid','=',$uId);
+        $queryPatient = $patientData->where('uid', '=', $uId);
         // $patient = $queryPatient->documents();
 
-        $patient1 = User::where('uid',$uId)->get()->toArray();
+        $patient1 = User::where('uid', $uId)->get()->toArray();
 
         $data['patient'] = array();
 
-        foreach($patient1 as $key=>$value){
-            array_push($data['patient'],$value);
+        foreach ($patient1 as $key => $value) {
+            array_push($data['patient'], $value);
         }
 
         // new
         $patientVisit = $database->collection('visits');
 
-        $query = $patientVisit->where('patientUid','=',$uId) ;
+        $query = $patientVisit->where('patientUid', '=', $uId);
         //$patient = $query->documents();
 
-        $patient = Visits::where('patientUid',$uId)->get()->toArray();
+        $patient = Visits::where('patientUid', $uId)->get()->toArray();
 
         // $prescription = $database->collection('prescription')
         //         ->document($uId);
 
-        $prescription = Prescription::where('patientId',$uId)->get()->toArray() ;   
+        $prescription = Prescription::where('patientId', $uId)->get()->toArray();
 
         $data['visits'] = array();
-        foreach ($patient as $value){
-            array_push($data['visits'],$value);
+        foreach ($patient as $value) {
+            array_push($data['visits'], $value);
         }
 
         $presInfo = array();
-        foreach($data['visits'] as $visitInfo){
+        foreach ($data['visits'] as $visitInfo) {
             // $docId = $prescription->collection($dId);
             // $presId = $docId->documents();
 
-            $presId = Prescription::where('patientId',$uId)->where('doctorId',$dId)->get()->toArray();
+            $presId = Prescription::where('patientId', $uId)->where('doctorId', $dId)->get()->toArray();
 
             // $queryDoctor = $doctorData->where('uid','=',$dId);
             // $doctor = $queryDoctor->documents();
 
-            $doctor = Doctor::where('uid',$dId)->get()->toArray();
-
+            $doctor = Doctor::where('uid', $dId)->get()->toArray();
         }
 
         $data['doctor'] = array();
-        foreach($doctor as $key=>$value){
-            array_push($data['doctor'],$value);
+        foreach ($doctor as $key => $value) {
+            array_push($data['doctor'], $value);
         }
 
         $data['prescriptionData'] = array();
         foreach ($presId as $key => $value) {
-            array_push($data['prescriptionData'],$value);
+            array_push($data['prescriptionData'], $value);
         }
         // end
 
         // echo '<pre>';
         $data['pres'] = array();
         // dd($data['prescriptionData'][0]['prescriptionId']);
-        foreach($data['prescriptionData'] as $key => $val){
+        foreach ($data['prescriptionData'] as $key => $val) {
             // dd($val);
-            if($data['prescriptionData'][$key]['prescriptionId'] == $pId){
-                array_push($data['pres'],$val);
+            if ($data['prescriptionData'][$key]['prescriptionId'] == $pId) {
+                array_push($data['pres'], $val);
             }
         }
 
         return view('patient/diagnosis')->with($data);
     }
 
-    public function help(){
+    public function help()
+    {
         return view('patient/help');
     }
 }

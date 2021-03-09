@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Disease;
 use App\District;
 use Illuminate\Console\Command;
+use Log;
 
 class Districts extends Command
 {
@@ -39,6 +40,8 @@ class Districts extends Command
      */
     public function handle()
     {
+        Log::info("cron job - district:sync handle method entered: ");
+        
         $firestore = app('firebase.firestore');
         $database = $firestore->database();
 

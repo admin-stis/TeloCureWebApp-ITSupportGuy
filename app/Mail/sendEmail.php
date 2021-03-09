@@ -38,7 +38,7 @@ class sendEmail extends Mailable
                     ->from($address, $name)
                     // ->cc($address, $name)
                     // ->bcc($address, $name)
-                    ->replyTo($address, $name)
+                    //->replyTo($address, $name)
                     ->subject($subject)
                     ->with([ 'data' => $this->data]);
     }
