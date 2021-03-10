@@ -1,11 +1,27 @@
 @extends('admin.layout')
 @section('content')
 
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp 
+
+
 @php
-  //dd($pending_doctor);
+  //dd($perm_role["perms"]);
 @endphp
 
-<div class="content-header">
+<div class="content-header"> 
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
@@ -54,7 +70,7 @@
                               else echo $status ;
                           }
                         @endphp
-                        Doctor</span>
+                        Doctor @php if($status == "Online"){ @endphp(<b style="color:red;">Note: To match with production site, this page only shows data from firebase not from mysql, make offline button updates only firebase not mysql, view profile button only works if record also exists in mysql</b>) @php } @endphp</span>
                     </div>
                     <div class="col-md-6">
 
@@ -78,37 +94,98 @@
                                  <th scope="col">District</th>
                                  <th scope="col">Phone</th>
                                  <th scope="col">Email</th>
+                                 <th scope="col">Rating</th>
+                                 <th scope="col">Hospital</th>
+                                 @if($status=="Online")
+                                 <th scope="col">Online time</th>
+                                 @else 
+                                 <th scope="col">Date</th>
+                                 @endif 
                                  <th scope="col">Action</th>
                               </tr>
                            </thead>
                            <tbody>
+                           @php $frb_tz = new \DateTimeZone('Asia/Dhaka'); @endphp
                               <?php
-                                 foreach ($pending_doctor as $key => $value)
-
-                                 {
-
-                                 ?>
-                              <tr>
-                                 <td>{{++$key}}</td>
-                                 <td>@if(isset($value['regNo'])) {{$value['regNo']}} @else N/A @endif</td>
-                                 <td>@if(isset($value['name'])) {{$value['name']}} @else N/A  @endif</td>
-                                 <td>@if(isset($value['district'])) {{$value['district']}} @else N/A  @endif</td>
-                                 <td>@if(isset($value['phone'])) {{$value['phone']}} @else N/A  @endif</td>
-                                 <td>@if(isset($value['email'])) {{$value['email']}} @else N/A  @endif</td>
+                                 foreach ($pending_doctor as $key => $value){
+                                    if(!empty($value['regNo'])){
+                              ?>
+                                   <tr>
+                                     <td>{{++$key}}</td>
+                                     <td>@if(isset($value['regNo'])) {{$value['regNo']}} @else N/A @endif</td>
+                                     <td>@if(isset($value['name'])) {{$value['name']}} @else N/A  @endif</td>
+                                     <td>@if(isset($value['district'])) {{$value['district']}} @else N/A  @endif</td>
+                                     <td>@if(isset($value['phone'])) {{$value['phone']}} @else N/A  @endif</td>
+                                     <td>@if(isset($value['email'])) {{$value['email']}} @else N/A  @endif</td>
+                                     <td>
+                                                      {{-- mridul 26-7-20 --}}
+                                                      @php
+                                                        if(isset($value['totalRating']) && isset($value['totalCount']) && $value['totalCount'] > 0)
+                                                        {
+                                                            $totalRating = $value['totalRating'];
+                                                            $totalCount = $value['totalCount'];
+                                                            $rating = round(($totalRating/$totalCount),1);
+                                                            echo $rating ;
+                                                        }
+                                                        else
+                                                        {
+                                                          $rating = 5 ;
+                                                          echo $rating ;
+                                                        }
+                                                      @endphp
+                                 </td>
+                                 <td>@if(isset($value['hospitalName']) && $value['hospitalName'] !=null){{$value['hospitalName']}} @else N/A @endif</td>
+                                 <td> 
+                                 @if($status=="Online") 
+                                 @if(isset($value['onlineTime']) && $value['onlineTime'] != null)
+                                @php                                                         
+                                $frb_date = new \DateTime($value['onlineTime']);
+                                $frb_date->setTimezone($frb_tz);
+                                echo $frb_date->format('d-m-y h:i:s A'); 
+                                @endphp
+                                 @else
+                                 N/A 
+                                 @endif
+                                 
+                                 @else
+                                @if(isset($value['createdAt'])) {{-- required else for some doc without date throws error --}}                           
+                                @php                                                         
+                                $frb_date = new \DateTime($value['createdAt']);
+                                $frb_date->setTimezone($frb_tz);
+                                echo $frb_date->format('d-m-y h:i:s A'); 
+                                @endphp @endif @endif</td>
+                                
                                  <td>
                                     @if(isset($value['uid']))
-                                    <a class="btn btn-sm btn-primary" href="{{url('admin/dprofile/'.trim($value['uid']))}}">View profile</a>
-                                    <a class="btn btn-sm btn-primary" href="{{url('admin/dprofileDelAction/'.trim($value['uid']))}}" onclick="return confirm('Are you sure? it will delete all doctor information  as well as all documents.')">Delete</a>
-                                    {{-- <a class="btn  btn-sm btn-success" href="{{url('admin/approveDocotr/'.trim($value['uid']))}}">Approve</a>
-                                    <a class="btn  btn-sm btn-danger" href="{{url('admin/rejactDoctor/'.trim($value['uid']))}}">Reject</a> --}}
-                                    @else
-                                    <a class="btn btn-sm btn-primary" href="#">View profile</a>
-                                    {{-- <a class="btn btn-sm btn-success btn-disabled" href="#">Approve</a>
-                                    <a class="btn btn-sm btn-danger btn-disabled" href="#">Reject</a> --}}
+                                    <a class="btn btn-sm btn-primary" href="{{url('admin/dprofile/'.trim($value['uid']))}}">View profile</a> 
+                                    
+                                    
+                                    @php if($status == 'False'){ /* First letter was made capital at first, it's ok */@endphp  
+                                       @if($approvePermission)   
+                                          <a class="btn btn-sm btn-success" href="{{url('admin/approveDocotr/'.trim($value['uid']))}}">Approve</a>
+                                       @endif
+                                       @if($deletePermission)                                      
+                                          <a class="btn btn-sm btn-danger" href="{{url('admin/dprofileDelAction/'.trim($value['uid']))}}" onclick="return confirm('ARE YOU SURE ?')">Delete</a> 
+                                       @endif
+                                    @php } @endphp
+                                    
+                                    @php if($status == "Online"){ @endphp   
+                                    @if($editPermission)                                   
+                                    <a class="btn btn-sm btn-danger" href="{{url('admin/makedocoffline/'.trim($value['uid']))}}" onclick="return confirm('ARE YOU SURE TO MAKE THE DOCTOR OFFLINE ?')">Make offline</a> 
                                     @endif
+                                     @php } @endphp
+                                     
+                                     
+                                    @else
+                                    <a class="btn btn-sm btn-primary" href="#">View profile</a>                                                
+                                 @endif
+
                                  </td>
-                              </tr>
-                              <?php } ?>
+                                   </tr>
+                                <?php  }else{
+
+                               }
+                              } ?>
                            </tbody>
                         </table>
                         <div class="col-md-6 col-lg-6 jquery-script-clear"></div>

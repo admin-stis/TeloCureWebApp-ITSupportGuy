@@ -8,7 +8,7 @@
     Hi TeloCure,
     <?php echo '<p>'.$data->message.'.</p>'; ?>
     Thank you,<br>
-    <?php echo '<p>'.$data->name.'</p>'.'<p>'.$data->phone.'</p>'; ?>
+    <?php echo '<p>'.$data->name.'</p>'.'<p>'.$data->sender.'</p>'.'<p>'.$data->phone.'</p>'; ?>
     <br>
     
   </body>

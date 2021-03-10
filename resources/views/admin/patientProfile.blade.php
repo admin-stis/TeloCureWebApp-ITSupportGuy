@@ -2,6 +2,24 @@
 
 @section('content')
 
+
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp 
+
+
+
 @php
 
 //dd($userProfile);
@@ -62,17 +80,40 @@
 					    {{$userProfile[0]['doctorType']}}
 					</div> --}}
 				</div>
-				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS -->
-				<div class="profile-userbuttons">
-                    @if (isset($userProfile[0]['active']) && $userProfile[0]['active'] == 'true')
-                    <a type="button" class="btn btn-success btn-sm" href="{{url('admin/activeUser/'.$userProfile[0]['uid'])}}">Active</a>
-                    @else
-                        <a href="{{url('admin/activeUser/'.$userProfile[0]['uid'])}}" type="button" class="btn btn-primary btn-sm">Deactive</a>
-                    @endif
-					{{-- <button type="button" class="btn btn-danger btn-sm">Message</button> --}}
-				</div>
-				<!-- END SIDEBAR BUTTONS -->
+                <!-- END SIDEBAR USER TITLE -->
+                
+               
+                            <!-- SIDEBAR BUTTONS -->
+                            <div class="profile-userbuttons">
+                                @if (isset($userProfile[0]['active']) && $userProfile[0]['active'] == 'true')
+                                    
+                                    @if($approvePermission)
+                                        <a type="button" class="btn btn-success btn-sm" href="{{url('admin/activeUser/'.$userProfile[0]['uid'])}}">Active</a>
+                                    @endif    
+                                @else
+                                     @if($approvePermission) 
+                                        <a href="{{url('admin/activeUser/'.$userProfile[0]['uid'])}}" type="button" class="btn btn-primary btn-sm">Deactive</a>
+                                    @endif
+                                @endif
+                                {{-- <button type="button" class="btn btn-danger btn-sm">Message</button> --}}
+                            </div>
+                            <div class="profile-userbuttons">
+                            {{--  @if (isset($userProfile[0]['active']) && $userProfile[0]['active'] == 'true')--}}
+                                @if($approvePermission) 
+                                    <a type="button" class="btn btn-danger btn-sm" href="{{url('admin/patientProfileDeleteId/'.$userProfile[0]['uid'])}}">Delete</a>
+                                @endif
+                            
+                            
+                            
+                            {{-- @else
+                                    <a href="{{url('admin/activeUser/'.$userProfile[0]['uid'])}}" type="button" class="btn btn-primary btn-sm">Deactive</a>
+                                @endif--}}
+                                {{-- <button type="button" class="btn btn-danger btn-sm">Message</button> --}}
+                            </div>
+                            <!-- END SIDEBAR BUTTONS -->
+                 
+
+
 				<!-- SIDEBAR MENU -->
 				{{-- <div class="profile-usermenu">
 					<ul class="nav">

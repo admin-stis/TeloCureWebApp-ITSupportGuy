@@ -11,7 +11,7 @@
 </style>
 
 
-<div class="content-header">
+{{-- <div class="content-header">
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
@@ -30,7 +30,36 @@
       <!-- /.row -->
    </div>
    <!-- /.container-fluid -->
-</div>
+</div> --}}
+
+      <div class="container-fluid">
+           {{-- @include('service.smallBox') --}}
+                   <div class="row">
+                        <div class="col-lg-6 col-md-6" style="margin-top:20px;">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h4 class="text-center text-bold">{{$completeCalls}} Complete calls </h4>
+                                </div>
+                                <a href="{{url('admin/completecalls')}}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6" style="margin-top:20px;">
+                            <!-- small box -->
+                            <div class="small-box bg-primary">
+                                <div class="inner">
+                                    <h4 class="text-center text-bold">{{$inCompleteCalls}} Incomplete calls </h4>
+                                </div>
+                                <a href="{{url('admin/incompletecalls')}}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    <!-- ./col -->
+        </div>
+      </div>
+
 <section class="content">
    <div class="container-fluid">
       <div class="row">
@@ -49,7 +78,9 @@
                   <div class="tab-content p-0">
                      <!-- Morris chart - Sales -->
                      <div class="chart tab-pane active" id="revenue-chart"
-                        style="position: relative;min-height:550px;">
+                        style="position: relative;
+                        min-height:500px;"
+                        >
                         <div class="row">
                            <input id="search1" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
                         </div>
@@ -103,7 +134,7 @@
                   <div class="tab-content p-0">
                      <!-- Morris chart - Sales -->
                      <div class="chart tab-pane active" id="revenue-chart"
-                        style="position: relative;min-height:550px;">
+                        style="position: relative;min-height:500px;">
                         <div class="row">
                            <input id="search2" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
                         </div>

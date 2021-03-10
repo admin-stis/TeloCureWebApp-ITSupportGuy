@@ -19,7 +19,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item breadcrumb-hospitalUser"><a href="{{url('/hospital')}}"> Home</a></li>
-              <li class="breadcrumb-item breadcrumb-hospitalUser active">Branch</li>
+              <li class="breadcrumb-item breadcrumb-hospitalUser active">Branch </li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -51,7 +51,7 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  Branch
+                  Branch </i>
                   <a class="btn btn-sm btn-info" style="float:right;" href="{{url('admin/hospital/addhospital/'.$id)}}">New</a>
                 </h3>
               </div>

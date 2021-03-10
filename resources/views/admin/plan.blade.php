@@ -2,6 +2,22 @@
 
 @section('content')
 
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp 
+
+
 <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -40,7 +56,9 @@
                       <option value="platinum">Platinum</option>
                     </select>
                   </div>
+                  @if($approvePermission)
                   <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                  @endif
                 </form>
               </div>
         </div>

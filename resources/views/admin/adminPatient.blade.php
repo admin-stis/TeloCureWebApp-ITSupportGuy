@@ -2,8 +2,30 @@
 
 @section('content')
 
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp 
+
+
 <div class="content-header">
       <div class="container-fluid">
+                  <div class="row mb-2">
+                  @if(Session::has('update_msg'))
+                            <ul><p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('update_msg') }}</p></ul>
+                        @endif
+            </div>
+            
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">Patient</h1>
@@ -74,6 +96,37 @@
                 <a href="{{url('admin/patient/deactive')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
+            
+            <div class="col-lg-4 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{$online}}</h3>
+
+                  <p>Online</p>
+                </div>
+                <div class="icon">
+                  <i class="ion"></i>
+                </div>
+                <a href="{{url('admin/patient/online')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            
+            <div class="col-lg-4 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  {{-- <h3>{{$online}}</h3> --}}
+
+                  <p>Wallet</p>
+                </div>
+                <div class="icon">
+                  <i class="ion"></i> 
+                </div>
+                <a href="{{url('admin/patientwallet')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            
             <!-- ./col -->
             {{-- <div class="col-lg-3 col-6">
 
@@ -111,6 +164,8 @@
                                     style="position: relative;">
                                     <div class="row">
                                         <input id="search" type="text" class="col-md-4 col-lg-4 form-control"  placeholder="Search..."/>
+                                        <div id="reportrange" class="col-md-4 col-lg-4 form-control" style="background: #fff; cursor: pointer; padding: 5px 10px; margin:0 5px 0 5px; border: 1px solid #ccc; text-align:center;" ><i class="fa fa-calendar"></i>&nbsp;
+                                        <span>Select Date Range</span> <i class="fa fa-caret-down"></i></div>
                                     </div>
                                     <table class="table table-bordered">
                                         <thead>
@@ -121,11 +176,12 @@
                                                 <th scope="col">District</th>
                                                 <th scope="col">Phone</th>
                                                 <th scope="col">Email</th>
+                                                <th scope="col">Date</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            @php $frb_tz = new \DateTimeZone('Asia/Dhaka'); @endphp 
                                             @foreach ($usersList as $key=>$item)
                                             @if(isset($item['uid']))
                                             {{-- @if(isset($item['uid'])) <br>{{$item['uid']}} @endif --}}
@@ -137,14 +193,27 @@
                                                     <td>@if(isset($item['district'])) {{$item['district']}} @else N/A  @endif</td>
                                                     <td>@if(isset($item['phone'])) {{$item['phone']}} @else N/A  @endif</td>
                                                     <td>@if(isset($item['email'])) {{$item['email']}} @else N/A  @endif</td>
+                                                                                                        <td>
+                                                    {{-- mridul 12-9-20 --}}
+                                                     @if(isset($item['createdAt'])) 
+                                                     
+                                                     @php                            
+                                                      $frb_date = new \DateTime($item['createdAt']);
+                                                      $frb_date->setTimezone($frb_tz);
+                                                      echo $frb_date->format('d-m-Y  h:i:s A'); 
+                                                     @endphp
+                                                     <input type="hidden" class="date_val" value="{{ $frb_date->format('d/m/Y') }}"/>
+                                                     @endif
+                                                    </td> 
                                                     <td>
                                                         @if(isset($item['uid']))
-
                                                             <a class="btn btn-primary btn-sm" href="{{url('admin/pprofile/'.trim($item['uid']))}}">View</a>
-                                                            {{--<a @if(isset($item['active']) && $item['active'] == true ) class="btn  btn-sm btn-danger disabled" ; @else class="btn  btn-sm btn-success"; @endif   href="{{url('admin/activeUser/'.trim($item['uid']))}}">Active</a>
-                                                            --}}
-                                                            <a @if(isset($item['active']) && $item['active'] == false ) class="btn  btn-sm btn-danger" ; @else class="btn  btn-sm btn-warning"; @endif   href="{{url('admin/deactiveUser/'.trim($item['uid']))}}">Deactive</a>
 
+                                                             @if($approvePermission)
+                                                                <a @if(isset($item['active']) && $item['active'] == false ) class="btn  btn-sm btn-danger" ; 
+                                                                      @else class="btn  btn-sm btn-warning"; 
+                                                                    @endif   href="{{url('admin/deactiveUser/'.trim($item['uid']))}}">Deactive</a>
+                                                              @endif
                                                         @endif
                                                     </td>
                                                 </tr>

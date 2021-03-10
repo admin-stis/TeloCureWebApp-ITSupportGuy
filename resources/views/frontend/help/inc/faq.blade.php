@@ -17,7 +17,7 @@
                     <li>
                         <i class="icofont-simple-right"></i>
                     </li>
-                    <li>Faq</li>
+                    <li>FAQ</li>
                 </ul>
             </div>
         </div>
@@ -95,8 +95,7 @@ once a doctor is available you can proceed to make a video call.</p>
                         </li>
                         <li class="wow fadeInUp" data-wow-delay=".7s">
                             <a>What type of services are given by this platform?</a>
-                            <p>TeloCure is an online Healthcare System. You can see a doctor and get medical help by
-talking o a doctor online.</p>
+                            <p>TeloCure is an online Healthcare System. You can see a doctor and get medical help by talking to a doctor online.</p>
                         </li>
                         <li class="wow fadeInUp" data-wow-delay=".7s">
                             <a>How do I get the prescription from the Doctors?</a>
@@ -104,7 +103,7 @@ talking o a doctor online.</p>
                         </li>
                         <li class="wow fadeInUp" data-wow-delay=".7s">
                             <a>Do you keep record of any prescriptions and how long are prescriptions available?</a>
-                            <p>Yes, prescriptions are kept in our records up until 30 days</p>
+                            <p>Yes, prescriptions are kept in our records up to 30 days</p>
                         </li>
                         <li class="wow fadeInUp" data-wow-delay=".7s">
                             <a>How many past prescriptions can I view?</a>
@@ -146,7 +145,7 @@ some time until it auto-connects.</p>
                         </li>
                         <li class="wow fadeInUp" data-wow-delay=".7s">
                             <a>What is the Privacy Policy for patients?</a>
-                            <p>Learn more about our privacy but clicking on the Privacy tab</p>
+                            <p>Learn more about our privacy by clicking on the Privacy tab</p>
                         </li>
                     </ul>
                 </div>
@@ -210,19 +209,19 @@ some time until it auto-connects.</p>
                             <p>Yes. After full filling, the registration you will need to wait for admin approval to get permission as a doctor. In this time admin will verify all the credentials you provided.</p>
                         </li>
                         <li class="wow fadeInUp" data-wow-delay=".7s">
-                            <a>8.How do I get paid?</a>
+                            <a>How do I get paid?</a>
                             <p>You get your payment weekly or Bi-weekly basis through your Bank account.</p>
                         </li>
                         <li class="wow fadeInUp" data-wow-delay=".7s">
-                            <a>9.What are the privacy policies?</a>
-                            <p>Learn more about our privacy bu clicking on the 'Privacy' tab</p>
+                            <a>What are the privacy policies?</a>
+                            <p>Learn more about our privacy by clicking on the 'Privacy' tab</p>
                         </li>
                         <li class="wow fadeInUp" data-wow-delay=".7s">
-                            <a>10.Do I need to accept the Terms & Conditions to see the patient?</a>
+                            <a>Do I need to accept the Terms & Conditions to see the patient?</a>
                             <p>Yes, you need to accept the Terms & Conditions to use our TeloCure app as a doctor.</p>
                         </li>
                         <li class="wow fadeInUp" data-wow-delay=".7s">
-                            <a>11.Do you allow specialized doctors for registration?</a>
+                            <a>Do you allow specialized doctors for registration?</a>
                             <p>Currently we have two options for doctor registration. These are :
 <br>● General
 <br>● Pediatric

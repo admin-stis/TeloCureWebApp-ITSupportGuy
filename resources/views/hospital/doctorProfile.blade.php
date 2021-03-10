@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+    //dd($doctorProfile);
+@endphp
+
 <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -127,6 +131,7 @@
 				<!-- END MENU -->
 			</div>
 		</div>
+
         <div class="col-md-9">
             <div class="card" style="min-height: 460px;">
                 <div class="card-body">
@@ -152,7 +157,7 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                        @if(isset($doctorProfile[0]['regNo'])) {{$doctorProfile['regNo']}} @else N/A @endif
+                                        @if(isset($doctorProfile[0]['regNo'])) {{$doctorProfile[0]['regNo']}} @else N/A @endif
                                     </span>
                                 </div>
                                 <div class="row col-md-12">
@@ -161,7 +166,8 @@
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
-                                    @if(isset($others[0]['nid']))
+                                    
+                                    @if(isset($others['nid']))
                                         {{$others['nid']}}
                                     @else N/A
                                     @endif</span>
@@ -231,13 +237,13 @@
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">{{$doctorProfile[0]['phone']}}</span>
                                 </div>
-                                @if(isset($others[0]['presentAddress']))
+                                @if(isset($others['presentAddress']))
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
                                         <h6>Present Address</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">@if(isset($others[0]['presentAddress'])) {{$others[0]['presentAddress']}}@endif</span>
+                                    <span class="col-md-5">@if(isset($others['presentAddress'])) {{$others['presentAddress']}}@endif</span>
                                 </div>
                                 @endif
                                 <div class="row col-md-12">

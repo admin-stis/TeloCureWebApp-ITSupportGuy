@@ -1,5 +1,23 @@
 @extends('admin.layout')
 @section('content')
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp 
+
+
+
+
 <div class="content-header">
    <div class="container-fluid">
       <div class="row mb-2">
@@ -74,17 +92,19 @@
                                 <td>{{$hospitalName}}</td>
                                 <td>{{$hospitalAddress}}</td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm" href="{{url('admin/viewHospitalUser')}}">View</a>
-                                    @if($approve == true && $approve != '')
-                                        <a class="btn btn-info btn-sm" href="{{url('admin/approveHospitalUser')}}" disabled>Approved</a>
-                                        <a class="btn btn-danger btn-sm" href="{{url('admin/unapproveHospitalUser')}}">Reject</a>
-                                    @elseif($approve == false && $approve != '')
-                                        <a class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser')}}">Approve</a>
-                                        <a class="btn btn-info btn-sm" href="{{url('admin/unapproveHospitalUser')}}"  disabled>Rejected</a>
-                                    @else
-                                        <a class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser')}}">Approve</a>
-                                        <a class="btn btn-danger btn-sm" href="{{url('admin/unapproveHospitalUser')}}">Reject</a>
-                                    @endif
+                                   
+                                       <a class="btn btn-primary btn-sm" href="{{url('admin/viewHospitalUser')}}">View</a>
+                                       @if($approve == true && $approve != '')
+                                          @if($approvePermission)<a class="btn btn-info btn-sm" href="{{url('admin/approveHospitalUser')}}" disabled>Approved</a>
+                                          <a class="btn btn-danger btn-sm" href="{{url('admin/unapproveHospitalUser')}}">Reject</a>@endif
+                                       @elseif($approve == false && $approve != '')
+                                          @if($approvePermission)<a class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser')}}">Approve</a>
+                                          <a class="btn btn-info btn-sm" href="{{url('admin/unapproveHospitalUser')}}"  disabled>Rejected</a>@endif
+                                       @else
+                                          @if($approvePermission)<a class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser')}}">Approve</a>
+                                          <a class="btn btn-danger btn-sm" href="{{url('admin/unapproveHospitalUser')}}">Reject</a>@endif
+                                       @endif
+                                    
                                 </td>
                               </tr>
                               <?php } ?>

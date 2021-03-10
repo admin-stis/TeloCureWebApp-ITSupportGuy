@@ -10,7 +10,7 @@
                 <h2>Contact Us</h2>
                 <ul>
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="{{url('/')}}">Home</a>
                     </li>
                     <li>
                         <i class="icofont-simple-right"></i>
@@ -71,8 +71,8 @@
                         @if(Session::has('notify-contactus'))
                             <ul><p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('notify-contactus') }}</p></ul>
                         @endif
-
-                        <form id="" method="post" action="{{url('contact')}}" >
+                        <script src='https://www.google.com/recaptcha/api.js' async defer ></script>
+                         <form id="" method="post" action="{{url('contact')}}" >
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6 col-lg-6">
@@ -109,26 +109,35 @@
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 col-lg-12">
+                                   <div class="g-recaptcha" data-sitekey="6Lc82kMaAAAAAPjnIJ1iI2KcOBvGQVu2_BKN66A1"></div>
+                                </div>                                
+                                
+                                <div class="col-sm-6 col-lg-6 mt-3">
+                                    <div class="form-group">
+                                        @php $add_num = mt_rand(1,9); $sum = 2+$add_num; @endphp 
+                                        <span>Enter the sum of 2+@php echo $add_num; @endphp = ?</span>
+                                        <input type="hidden" name="msg_number_chk" id="msg_number_chk" class="form-control" value="@php echo $sum; @endphp">
+                                        <input type="text" name="msg_number" id="msg_number" class="form-control" required data-error="enter the number" placeholder="Enter 2+@php echo $add_num; @endphp =">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-12 col-lg-12">
-                                    {{--<button type="submit" class="drop-btn">
-                                        Send
-                                    </button>
-                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                    <div class="clearfix"></div>--}}
+
                                     <button type="submit" class="btn btn-info">
                                         Send
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </form> 
                     </div>
                 </div>
             </div>
             <div class="col-lg-5 p-0">
                 <div class="speciality-item speciality-right speciality-right-two speciality-right-three">
                     <img src="{{asset('assets/img/contact/c2.jpg')}}" alt="Contact">
-                    <div class="speciality-emergency">
+                    <div class="speciality-emergency" style="margin: 5%">
                         <div class="speciality-icon">
                             <i class="icofont-ui-call"></i>
                         </div>

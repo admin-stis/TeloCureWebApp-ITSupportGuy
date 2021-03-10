@@ -24,7 +24,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{url('doctor')}}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{url('patient')}}">Home</a></li>
               <li class="breadcrumb-item active">Prescription</li>
             </ol>
           </div><!-- /.col -->
@@ -47,7 +47,7 @@
         <!-- Main row -->
         <div class="row" style="">
 
-         
+
 
           <section class="col-lg-12 " style="margin-top: 10px;">
             <!-- TO DO List -->
@@ -66,7 +66,7 @@
 
                 <h5>Diagnosis Information</h5>
                 <hr>
-                @php 
+                @php
                   $pres['vital'] = json_decode($pres[0]['vital'],TRUE);
                   $pres['medicineMap'] = json_decode($pres[0]['medicineMap'],TRUE);
                 @endphp
@@ -100,7 +100,7 @@
                   </ul>
                   <hr> --}}
                   {{-- mridul addition --}}
-                  
+
                   <table class="table table-bordered" style="margin-top:20px;">
                       <thead class="thead-light">
                           <tr class="">
@@ -127,7 +127,7 @@
                               <td>{{$val['noon']}}</td>
                               <td>{{$val['night']}}</td>
                             </tr>
-                     @endforeach    
+                     @endforeach
                       </tbody>
                 </table>
               </div>
@@ -146,7 +146,7 @@
     </section>
     <!-- /.content -->
 
-   
+
 
 
      @endsection

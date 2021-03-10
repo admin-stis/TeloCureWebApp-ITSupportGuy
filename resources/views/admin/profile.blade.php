@@ -1,6 +1,23 @@
 @extends('doctor.layout')
 @section('content')
 
+
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp 
+
+
 <div class="content-header">
    <div class="container-fluid">
       <div class="row mb-2">
@@ -92,10 +109,14 @@
                     <p style="margin:0 auto;display:table">Price : 0 Tk</p>
                     @endif
                 </div>
+ 
+                @if($editPermission)
+                    <div class="" style="margin:0 auto;display:table">
+                        <a style="float-right;" class="btn btn-sm btn-primary" href="{{url('doctor/profile/edit/'.$uid)}}">Edit</a>
+                    </div>
+                @endif 
 
-                <div class="" style="margin:0 auto;display:table">
-                    <a style="float-right;" class="btn btn-sm btn-primary" href="{{url('doctor/profile/edit/'.$uid)}}">Edit</a>
-                </div>
+
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
 				{{-- <div class="profile-usermenu">

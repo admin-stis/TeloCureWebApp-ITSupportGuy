@@ -2,6 +2,24 @@
 
 @section('content')
 
+
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp
+
+
+
 <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -107,12 +125,18 @@
                                 <label class="">Email <i class="iconFa fa fa-asterisk color-red"></i> </label>
                                 <input name="email" type="email" class="form-control" placeholder="" value="@if(isset($doctorProfile['email'])){{$doctorProfile['email']}}@endif"/>
                             </div>
-                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                                <label class="">Currrent Address <i class="iconFa fa fa-asterisk color-red"></i> </label>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                <label class="">Present Address <i class="iconFa fa fa-asterisk color-red"></i> </label>
                                 <textarea name="presentAddress" value="@if(isset($others['presentAddress'])){{$others['presentAddress']}}@endif" type="text" class="form-control" placeholder="">
                                     @if(isset($others['presentAddress'])){{$others['presentAddress']}}@endif
                                 </textarea>
                             </div>
+
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                <label class="">Years of Experiences <i class="iconFa fa fa-asterisk color-red"></i> </label>
+                                <input name="yearsOfExprience" type="number" class="form-control" placeholder="" value="@if(isset($doctorProfile['yearsOfExprience'])){{$doctorProfile['yearsOfExprience']}}@endif"/>
+                                </div>
+
                             <div class="form-group col-lg-6 col-md-6 col-sm-12">
                                 <label class="">District <i class="iconFa fa fa-asterisk color-red"></i></label>
 
@@ -152,9 +176,13 @@
                                 <input name="nidBack" type="file" class="form-control" placeholder="" value="@if(isset($documents['nidBack'])){{$documents['nidBack']}}@endif"/>
                                 
                             </div>
+                            
+                            @if($editPermission)
                             <div class="form-group col-lg-12 col-md-12 col-sm-12">
                             <button class="btn btn-primary" type="submit" id="submit" >Submit</button>
                             </div>
+                            @endif
+
                             </div> 
                             </form>
                     

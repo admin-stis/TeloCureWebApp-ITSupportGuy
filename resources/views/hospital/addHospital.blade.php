@@ -15,7 +15,7 @@ else $hospitalName  = 'N/A';
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark" style="float:left;">New Hospital</h1>
+          {{-- <h1 class="m-0 text-dark" style="float:left;">New Hospital Branch</h1> --}}
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -68,7 +68,7 @@ else $hospitalName  = 'N/A';
                     </div>
 
                     <div class="form-group row">
-                        <label for="branch" class="col-md-4 col-form-label text-md-right">Branch</label>
+                        <label for="branch" class="col-md-4 col-form-label text-md-right">Branch <i class="iconFa fa fa-asterisk color-red"></i></label>
                         <div class="col-md-6"><input id="branch" type="text" name="branchName" required="required" placeholder="Enter Branch Name" class="form-control " value="{{old('branchName')}}"></div>
                     </div>
 
@@ -78,7 +78,7 @@ else $hospitalName  = 'N/A';
                     </div>
 
                     <div class="form-group row  d-none">
-                        <label for="branch" class="col-md-4 col-form-label text-md-right">Phone</label>
+                        <label for="branch" class="col-md-4 col-form-label text-md-right">Phone <i class="iconFa fa fa-asterisk color-red"></i></label>
                         <div class="col-md-6"><input id="phone" type="text" name="phone" placeholder="Enter Contact Number" class="form-control "></div>
                     </div>
 

@@ -28,7 +28,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark" style="float:left;">Hospital</h1>
+          <h1 class="m-0 text-dark" style="float:left;">Hospital Information</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -50,10 +50,10 @@
 
                     <div class="tab-content">
                         <div id="basic" class="tab-pane fade show active">
-                            <div class="" style="margin-top:10px;">
+                            <div class="" style="margin-top:20px; margin-bottom:30px;">
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
-                                        <h6>User ID.</h6>
+                                        <h6>Hospital User ID</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">
@@ -62,21 +62,21 @@
                                 </div>
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
-                                        <h6>Name</h6>
+                                        <h6>Representative Name</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">{{$firstName}}</span>
                                 </div>
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
-                                        <h6>Email</h6>
+                                        <h6>Hospital Email</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">{{$email}}</span>
                                 </div>
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
-                                        <h6>Phone</h6>
+                                        <h6>Hospital Phone</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">{{$phone}}</span>
@@ -97,13 +97,25 @@
                                 </div>
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
-                                        <h6>Plan</h6>
+                                        <h6>Hospital Subscription Plan</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
                                     <span class="col-md-5">{{$plan}}</span>
                                 </div>
                             </div>
+                            <div>
+                        {{-- <a target="_blank" href="#"> --}}
+                        <a href="#">
+                            <img src=
+                            "
+                           https://images.unsplash.com/photo-1538108149393-fbbd81895907?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80
+                           
+                           " 
+                            alt="Lamp" style="width:50%; height=50%; margin-left: auto; margin-right: auto; display: block;" >
+                        </a>
+                    </div>
                         </div>
+                    
                     </div>
                 </div>
             </div>

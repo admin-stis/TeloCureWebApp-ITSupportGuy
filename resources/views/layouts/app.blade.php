@@ -244,7 +244,7 @@
                 {{-- <div class="row text-center text-xs-center text-sm-left text-md-left"> --}}
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 col-md-4">
-                        <h5>HeloDoc Product & Services </h5>
+                        <h5>Telocure Product & Services </h5>
                         <ul class="list-unstyled quick-links">
                             <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Patient</a></li>
                             <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Doctor</a></li>

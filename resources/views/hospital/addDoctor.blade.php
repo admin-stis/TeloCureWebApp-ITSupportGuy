@@ -38,12 +38,16 @@
                 <div class="card" style="min-height: 460px;">
                     <div class="card-header">New Doctor</div>
                     <div class="card-body">
-                        @if ($errors->any())
+                         @if ($errors->any())
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     <p class="alert alert-danger">{{ $error }}</p>
                                 @endforeach
                             </ul>
+                        @endif
+                        {{-- mridul 8-9-20  --}} 
+                        @if(Session::has('plan-limit'))
+                            <ul><p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('plan-limit') }}</p></ul>
                         @endif
 
                         @if(Session::has('phonemsg'))
@@ -54,11 +58,15 @@
                             <ul><p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('emailmsg') }}</p></ul>
                         @endif
 
+                        @if(Session::has('hospitalmsg'))
+                            <ul><p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('hospitalmsg') }}</p></ul>
+                        @endif
+
                         @if(Session::has('bank_info-check'))
                             <ul><p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
                             {{ Session::get('bank_info-check') }}</p></ul>
-                        @endif
-
+                        @endif 
+ 
                         <form method="post" action="{{url('admin/hospital/addDoctorAction')}}" enctype="multipart/form-data">
                             @csrf
 
@@ -90,7 +98,7 @@
                                 @endphp
 
                                 <div class="form-group col-md-12">
-                                    <label>Hospital Branch</label>
+                                    <label>Hospital Branch <i class="iconFa fa fa-asterisk color-red"></i></label>
                                     <select id="hospital" class="form-control" name="branchuid">
                                         <option value="">Select Branch</option>
                                         <option value="{{$hospitalInfo['hospitalUid']}}">

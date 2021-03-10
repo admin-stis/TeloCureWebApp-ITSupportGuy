@@ -1,6 +1,21 @@
 @extends('admin.layout')
 
 @section('content')
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp 
+
 
     <div class="content-header">
       <div class="container-fluid">
@@ -84,12 +99,12 @@
                                             @if(isset($attr)) {{$attr}} @endif
                                             >Submit</button>
                                         </div> --}}
-
+                                        @if($editPermission)
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                                 <button type="submit" name="update" value="update" class="btn btn-sm btn-primary"
                                                 >Submit</button>
                                             </div>
-
+                                        @endif 
                                     </form>
 
                         </div>

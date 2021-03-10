@@ -2,6 +2,21 @@
 
 @section('content')
 
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp
+
 
 <div class="content-header">
     <div class="container-fluid">
@@ -58,15 +73,21 @@
 					</div>
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS -->
+                <!-- SIDEBAR BUTTONS -->
+               
 				<div class="profile-userbuttons">
                     @if (isset($doctorProfile['active']) && $doctorProfile['active'] == 1)
-                        <button type="button" class="btn btn-primary btn-sm">Active</button>
+                        @if($approvePermission)
+                            <button type="button" class="btn btn-primary btn-sm">Active</button>
+                        @endif
                     @else
-                        <button type="button" class="btn btn-primary btn-sm">Deactive</button>
+                         @if($approvePermission)
+                            <button type="button" class="btn btn-primary btn-sm">Deactive</button>
+                        @endif
                     @endif
 					<button type="button" class="btn btn-danger btn-sm">Message</button>
-				</div>
+                </div>
+                
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
 				{{-- <div class="profile-usermenu">

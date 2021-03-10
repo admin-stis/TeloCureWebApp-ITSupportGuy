@@ -56,7 +56,8 @@
                   </li>
 
                 </ul>
-	            </div>
+                </div>
+                
 	        </div>
 	    </div>
         <div class="col-md-6 m-0 m-auto d-table" >
@@ -106,7 +107,7 @@
 	                            </div>
 
 	                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
-	                                <label class="">Swift Code/Routing Number</label>
+	                                <label class="">Swift Code/Routing Number <i class="iconFa fa fa-asterisk color-red"></i></label>
                                     <input name="swiftCode" type="text" class="form-control" placeholder=""
                                     value="@if(isset($info['swiftCode'])) {{$info['swiftCode']}} @else {{old('swiftCode')}} @endif"/>
 	                            </div>

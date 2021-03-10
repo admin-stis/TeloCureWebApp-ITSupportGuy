@@ -37,8 +37,11 @@ through a primary background check.</p>
                     </div> 
                     <div class="col-lg-6">
                         <div class="privacydetails-inner-left">
-                            <!-- <img src="assets/img/privacy/UberIM_010182_3x2.jpg" alt="Service"> -->
-                            <img src="{{asset('assets/img/service-patient/patient1.jpg')}}" width="100%;" style="padding-top:20px;" alt="Service">
+                            <!-- <img src="assets/img/privacy/UberIM_010182_3x2.jpg" alt="Service"> srcset="{{asset('assets/img/service-patient/patient1_540w.jpg')}} 450w, {{asset('assets/img/service-patient/patient1_690w.jpg')}} 692w" 
+                            sizes="(max-width: 992px) 692px,
+            450px" -->
+                            <img srcset="{{asset('assets/img/service-patient/patient1_540w.jpg')}} 450w, {{asset('assets/img/service-patient/patient1_690w.jpg')}} 692w" sizes="(max-width: 992px) 692px, 
+                            450px" src="{{asset('assets/img/service-patient/patient1.jpg')}}" width="100%;" style="padding-top:20px;" alt="Service">
                         </div>
                     </div>                 
                 </div>
@@ -169,8 +172,11 @@ through a primary background check.</p>
                             <div class="servicepatient-details-category">
                                 <h3>We treat 50+ medical conditions</h3>
                                 <ul>
-                                    <li>
+                                    {{-- <li>
                                         <a href="#">CORONA- COVID - 19</a>
+                                    </li> --}}
+                                    <li>
+                                        <a href="#">Common Fever</a>
                                     </li>
                                     <li>
                                         <a href="#">Common cold</a>

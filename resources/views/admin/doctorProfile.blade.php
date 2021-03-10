@@ -2,6 +2,25 @@
 
 @section('content')
 
+
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp
+
+
+
+
 <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -42,12 +61,12 @@
 					<div class="profile-usertitle-name">
                         @if($doctorProfile['online'] == 1)
                             <div class="alert alert-success alert-sm">
-                                {{$doctorProfile['name']}}
+                                Dr. {{$doctorProfile['name']}}
                                 <div><small>Online</small></div>
                             </div>
                         @else
                             <div class="alert alert-danger alert-sm">
-                                {{$doctorProfile['name']}}
+                                Dr. {{$doctorProfile['name']}}
                                 <div><small>Offline</small></div>
                             </div>
                         @endif
@@ -95,7 +114,10 @@
                     @else
                     <p style="margin:0 auto;display:table">Price : 0 Tk</p>
                     @endif
-                    <p style="margin:0 auto;display:table"><a class="btn btn-sm btn-primary" href="{{url('admin/dprofileEdit/'.$uid)}}">Edit</a>
+                    <p style="margin:0 auto;display:table">
+                        @if(($editPermission) || ($approvePermission))
+                        <a class="btn btn-sm btn-primary" href="{{url('admin/dprofileEdit/'.$uid)}}">Edit</a>
+                        @endif
                     </p>
                 </div>
 				<!-- END SIDEBAR BUTTONS -->
@@ -171,7 +193,7 @@
                                         <h6>Name</h6>
                                     </label>
                                     <span class="col-md-1"> : </span>
-                                    <span class="col-md-5">{{$doctorProfile['name']}}</span>
+                                    <span class="col-md-5">Dr. {{$doctorProfile['name']}}</span>
                                 </div>
                                 <div class="row col-md-12">
                                     <label class="col-md-5">
@@ -193,6 +215,19 @@
                                     <span class="col-md-5">
                                         @if(isset($doctorProfile['gender']))
                                             {{$doctorProfile['gender']}}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </span>
+                                </div>
+                                <div class="row col-md-12">
+                                    <label class="col-md-5">
+                                        <h6>Years of Experiences</h6>
+                                    </label>
+                                    <span class="col-md-1"> : </span>
+                                    <span class="col-md-5">
+                                        @if(isset($doctorProfile['yearsOfExprience']))
+                                            {{$doctorProfile['yearsOfExprience'].' Years'}}
                                         @else
                                             N/A
                                         @endif
@@ -247,7 +282,9 @@
                                 </div>
                             </div>
                         </div>
-@php //dd($hinfo); @endphp
+@php 
+//dd($hinfo); 
+@endphp
                         <div id="h" class="tab-pane fade">
                             @if(isset($hinfo[0]['hospitalName']))
                             <div class="" style="margin-top:10px;">
@@ -320,7 +357,9 @@
                                     <span class="col-md-5">
                                         @if(isset($documents['prescriptionForm'])  && !empty($documents['prescriptionForm']))
                                             
-                                        @php // dd($documents['prescriptionForm']); @endphp
+                                        @php 
+                                        // dd($documents['prescriptionForm']);  
+                                        @endphp
                                             <a href="{{$documents['prescriptionForm']}}">Click to download</a>
                                         @else
                                             N/A

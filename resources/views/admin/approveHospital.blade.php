@@ -1,6 +1,23 @@
 @extends('admin.layout')
 @section('content')
 
+
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp 
+
+
 @php
   //dd($pending_hospital);
 @endphp
@@ -111,14 +128,18 @@
                                                     <td>{{$plan}}</td>
                                                     
                                                     <td>
+                                                      
                                                         {{-- <a style="margin-top:5px;" class="btn btn-primary btn-sm" href="{{url('admin/viewHospitalUser')}}">View</a> --}}
-                                                        @if($approve == true && $approve != '')
-                                                            <a  style="margin-top:5px;" class="btn btn-info btn-sm" disabled>Approved</a>
-                                                        @elseif($approve == false && $approve != '')
-                                                            <a  style="margin-top:5px;" class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser/'.$id)}}">Approve</a>
+                                                        @if($approve == 'true' && $approve != '')
+                                                            @if($approvePermission)
+                                                               <a  style="margin-top:5px;" class="btn btn-info btn-sm" disabled>Approved</a>
+                                                            @endif
+                                                        @elseif($approve == 'false' && $approve != '')
+                                                            @if($approvePermission) <a  style="margin-top:5px;" class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser/'.$id)}}">Approve</a>@endif
                                                         @else
-                                                            <a  style="margin-top:5px;" class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser/'.$id)}}">Approve</a>
+                                                            @if($approvePermission) <a  style="margin-top:5px;" class="btn btn-success btn-sm" href="{{url('admin/approveHospitalUser/'.$id)}}">Approve</a>@endif
                                                         @endif
+                                                      
                                                     </td>
                                                 </tr>
 

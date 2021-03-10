@@ -3,7 +3,7 @@
         <div class="privacydetails-area ptb-100" style="margin-top:30px;">
             <div class="container">
                 <div class="privacydetails" style="padding-top:15px;">
-                    <h2>How TeloCure Works</h2>
+                    <h2>            </h2>
                 </div>
                 <div class="row" style="margin-bottom:50px;margin-top:20px;">
 

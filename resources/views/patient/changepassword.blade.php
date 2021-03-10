@@ -31,9 +31,12 @@
                                     <p class="alert alert-danger">{{ $error }}</p>
                                     @endforeach
                                 </ul>
-                        @endif
+        @endif
           @if(Session::has('change-password'))
             <ul><p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('change-password') }}</p></ul>
+          @endif
+          @if(Session::has('error-changepassword'))
+            <ul><p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('error-changepassword') }}</p></ul>
           @endif
           <div class="card-header"><span style="margin-left:22px">Change Password</span></div>
           @php

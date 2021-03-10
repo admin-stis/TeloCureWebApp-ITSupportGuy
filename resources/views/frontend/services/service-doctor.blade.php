@@ -59,7 +59,7 @@
                             <p>And see your patients without any infrastructure. Be more cost-efficient by seeing patients from the comfort of your space without having to invest in infrastructure for a doctor’s office</p>
                             <h5>Work from the safety of your home</h5>
                             <p>As doctors, your health matters too, practice
-social- distancing during the COVID-19 pandemic and help your patients feel better
+social- distancing during the {{-- COVID-19 --}} pandemic and help your patients feel better
 via online visits using our app</p>
                             <p><b>For every visit, we will take up to 5% to 20 % commission</b></p> 
                         </div>
@@ -112,7 +112,7 @@ via online visits using our app</p>
                     </div>
                    <div class="col-lg-6 col-sm-12">
                        <div class="privacydetails-inner-left">
-                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-01.jpg')}}" alt="Service">
+                           <img src="{{asset('assets/img/how-helodoc-work/01.jpg')}}" alt="Service">
                        </div>
                    </div>
                 </div>
@@ -150,7 +150,7 @@ via online visits using our app</p>
                     </div>
                     <div class="col-lg-6 col-sm-12">
                        <div class="privacydetails-inner-left">
-                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-021.jpg')}}" alt="Service">
+                           <img src="{{asset('assets/img/how-helodoc-work/021.jpg')}}" alt="Service">
                        </div>
                    </div>
 
@@ -186,7 +186,7 @@ via online visits using our app</p>
                     </div>
                    <div class="col-lg-6 col-sm-12">
                        <div class="privacydetails-inner-left">
-                           <img src="{{asset('assets/img/how-helodoc-work/How-It-Work-031.jpg')}}" alt="Service">
+                           <img src="{{asset('assets/img/how-helodoc-work/031.jpg')}}" alt="Service">
                        </div>
                    </div>
                 </div>

@@ -30,6 +30,10 @@
         <!-- Left col -->
             <section class="col-lg-12">
                 <div class="row profile">
+                        @if(Session::has('error_msg'))
+                            <ul><p class="alert {{ Session::get('alert-class', 'alert-error') }}">{{ Session::get('error_msg') }}</p></ul>
+                        @endif
+                    @if(isset($transaction[0]))    
                     <div class="col-md-12 text-center" style="backgroud:#fff;padding: 10px;background:white;"><h4>Transaction History</h4></div>
                     <div class="row col-md-12" style="background: #fff;">
                         <div class="doctor col-sm-12 col-md-4 col-lg-4" style="background: #363748;color: #fff;padding: 10px;">
@@ -141,6 +145,9 @@
 
                             </div>
                     </div>
+                    @else 
+                    <div>No transaction data exists for this visit id or visit id does not exist in mysql db</div>
+                    @endif 
                 </div>
             </section>
         </div>

@@ -28,10 +28,10 @@
           @if(Session::has('change-password'))
             <ul><p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('change-password') }}</p></ul>
           @endif
-          {{--@if(Session::has('error-changepassword'))
+          @if(Session::has('error-changepassword'))
             <ul><p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('error-changepassword') }}</p></ul>
           @endif
-          --}}
+          
           @if ($errors->any())
                             <ul>
                                 @foreach ($errors->all() as $error)

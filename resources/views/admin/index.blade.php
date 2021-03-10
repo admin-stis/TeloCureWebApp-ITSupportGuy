@@ -1,7 +1,40 @@
 @extends('admin.layout')
 
 @section('content')
-
+@php 
+    $admin = Session::get('user');
+    if($admin[0]['user_name']=="super") {
+      $view_doctorPermission = true; 
+      $view_patientPermission = true; 
+      $view_hospitalPermission = true; 
+      $view_service_financePermission = true; 
+      $view_districtPermission = true; 
+      $view_all_pagesPermission = true; 
+      $view_district_discountPermission = true;  
+      $view_manage_paymentsPermission = true; 
+      $view_settingsPermission = true; 
+    } else { 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    //dd($all_perms); 
+    $view_doctorPermission = false; $view_patientPermission = false;$view_hospitalPermission = false; $view_service_financePermission = false; $view_districtPermission = false; 
+    $view_authorizationPermission = false; $view_all_pagesPermission = false; $view_district_discountPermission = false; 
+    $view_manage_paymentsPermission = false; $view_settingsPermission = false; 
+    for($i=0; $i<count($all_perms); $i++){      
+      if($all_perms[$i]=="view_doctor") { $view_doctorPermission = true; }
+      if($all_perms[$i]=="view_patient") { $view_patientPermission = true; }
+      if($all_perms[$i]=="view_hospital") { $view_hospitalPermission = true; }
+      if($all_perms[$i]=="view_service_finance") { $view_service_financePermission = true; }
+      if($all_perms[$i]=="view_district") { $view_districtPermission = true; }
+      if($all_perms[$i]=="view_all_pages") { $view_all_pagesPermission = true; }
+      if($all_perms[$i]=="view_authorization") { $view_authorizationPermission = true; }
+      if($all_perms[$i]=="view_district_discount") { $view_district_discountPermission = true; } 
+      if($all_perms[$i]=="view_manage_payments") { $view_manage_paymentsPermission = true; }
+      if($all_perms[$i]=="view_settings") { $view_settingsPermission = true; }
+    } }
+    
+@endphp 
 <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -26,7 +59,7 @@
         <!-- Small boxes (Stat box) -->
          <!-- Small boxes (Stat box) -->
         <div class="row">
-
+          @php if($view_doctorPermission== true || $view_all_pagesPermission==true) { @endphp
           <!-- ./col -->
           <div class="col-lg-3 col-12">
             <!-- small box -->
@@ -40,8 +73,9 @@
               </div>
               <a href="{{url('admin/doctor')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
+          </div> @php } @endphp
           <!-- ./col -->
+          @php if($view_patientPermission== true || $view_all_pagesPermission==true) { @endphp
           <div class="col-lg-3 col-12">
             <!-- small box -->
             <div class="small-box bg-info">
@@ -54,8 +88,9 @@
               </div>
               <a href="{{url('admin/patient')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
+          </div> @php } @endphp
           <!-- ./col -->
+          @php if($view_hospitalPermission== true || $view_all_pagesPermission==true) { @endphp
           <div class="col-lg-3 col-12">
             <!-- small box -->
             <div class="small-box bg-warning">
@@ -68,7 +103,8 @@
               </div>
               <a href="{{url('admin/hospital')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
+          </div>  @php } @endphp
+          @php if($admin[0]['user_name']=="super") { @endphp
           <div class="col-lg-3 col-12">
             <!-- small box -->
             <div class="small-box bg-secondary">
@@ -81,7 +117,7 @@
               </div>
               <a href="{{url('admin/doctorTransactionData')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
+          </div> @php } @endphp
           <!-- ./col -->
         </div>
 
@@ -92,7 +128,7 @@
 
         <div class="row" style="margin-top: 10px;margin-bottom: 28px;background: #fff;margin-right: 0px;margin-left: 0px;padding: 20px">
             <!-- ./col -->
-
+           @php if($view_patientPermission== true || $view_all_pagesPermission==true) { @endphp
             <!-- test purpose -->
             <div class="col-lg-5">
               <div class="card"  style="min-height: 468px;">
@@ -104,9 +140,9 @@
                   </div>
                   <div class="card-footer"></div>
               </div>
-            </div>
+            </div>  @php } @endphp
             <!-- end -->
-
+            @php if($view_patientPermission== true || $view_all_pagesPermission==true) { @endphp
             <!-- test visitor purpose -->
             <div class="col-lg-7 ">
               <div class="card">
@@ -123,9 +159,9 @@
                   </div>
                   <div class="card-footer"></div>
               </div>
-            </div>
+            </div> @php } @endphp
             <!-- end -->
-
+            @php if($view_service_financePermission== true || $view_all_pagesPermission==true) { @endphp
             <!-- test rev purpose -->
             <div class="col-lg-12 ">
               <div class="card">
@@ -143,7 +179,7 @@
                   </div>
                   <div class="card-footer"></div>
               </div>
-            </div>
+            </div> @php } @endphp
             <!-- end -->
 
 
@@ -182,8 +218,9 @@
 
         <!-- /.row -->
         <!-- Small boxes (Stat box) -->
+         
         <div class="row">
-
+            @php if($admin[0]['user_name']=="super") { @endphp
             <!-- ./col -->
             <div class="col-lg-3 col-6">
               <!-- small box -->
@@ -193,7 +230,9 @@
                 </div>
                 <a href="{{url('admin/doctor')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>
+            </div> @php } @endphp
+            
+            @php if($admin[0]['user_name']=="super") { @endphp
             <!-- ./col -->
             <div class="col-lg-3 col-6">
               <!-- small box -->
@@ -203,7 +242,8 @@
                 </div>
                 <a href="{{url('admin/patient')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>
+            </div> @php } @endphp
+            @php if($admin[0]['user_name']=="super") { @endphp
             <!-- ./col -->
             <div class="col-lg-3 col-6">
               <!-- small box -->
@@ -213,9 +253,10 @@
                 </div>
                 <a href="{{url('admin/hospital')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>
+            </div> @php } @endphp
             <!-- ./col -->
             <!-- ./col -->
+            @php if($admin[0]['user_name']=="super") { @endphp
             <div class="col-lg-3 col-6">
                 <!-- small box -->
                 <div class="small-box bg-primary">
@@ -224,7 +265,7 @@
                   </div>
                 <a href="{{url('admin/servicenav')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-              </div>
+              </div> @php } @endphp
               <!-- ./col -->
           </div>
           <!-- /.row -->

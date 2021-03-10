@@ -143,10 +143,15 @@
                                 <label class="">Email</label>
                                 <input name="email" type="email" required="required" class="form-control" placeholder="" value="{{$doctorInfo[0]['email']}}"/>
                             </div>
-                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                 <label class="">Currrent Address <i class="iconFa fa fa-asterisk color-red"></i> </label>
                                 <textarea name="presentAddress" type="text" required="required" class="form-control" placeholder="">{{old('presentAddress')}}</textarea>
                             </div>
+                             <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                <label class="">Years of Experiences <i class="iconFa fa fa-asterisk color-red"></i> </label>
+                                <input name="yearsOfExprience" type="number" class="form-control" placeholder="" value="@if(isset($doctorProfile['yearsOfExprience'])){{$doctorProfile['yearsOfExprience']}}@endif"/>
+                            </div>
+
                             <div class="form-group col-lg-6 col-md-6 col-sm-12">
                                 <label class="">District <i class="iconFa fa fa-asterisk color-red"></i></label>
 

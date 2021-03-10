@@ -106,9 +106,10 @@
         text-align: center;
     }
 </style>
-@php
+<?php 
     $admin = Session::get('user');
-@endphp
+?>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -257,19 +258,34 @@
         </div>
       </div>
 
+       
       <!-- Sidebar Menu -->
       @include('admin.sidebar')
       <!-- /.sidebar-menu -->
+       
+
+
+
+
     </div>
     <!-- /.sidebar -->
   </aside>
 
+
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @yield('content')
+   
+    @yield('content') 
     <!-- /.content-header -->
+    
+
   </div>
+
+
+
+  
   <!-- /.content-wrapper -->
   <footer class="main-footer text-center">
     <strong>Copyright &copy; <?php echo date('Y'); ?> <a href="https://stis.com.bd/">Smart Tech Solution</a></strong>
@@ -314,6 +330,7 @@
 <script src="{{ asset('backend/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
 <!-- daterangepicker -->
 <script src="{{ asset('backend/plugins/moment/moment.min.js') }}"></script>
+
 <script src="{{ asset('backend/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{ asset('backend/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
@@ -332,6 +349,25 @@
 
 <script>
     $(document).ready(function(){
+
+    	 $('#incompleteTrans').change(function() {
+    	        if(this.checked) {
+        	        console.log('test');        	        
+                    //var value = "0 TK";
+                    $("tbody tr").filter(function() {
+                       var toggle = false; 
+                       if($(this).find('.totalInput').length)
+                       {
+                    	  console.log("exists"); toggle = true;                     	  
+                       }
+                       $(this).toggle(toggle);
+                       //$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    }); 
+    	        } else { 
+        	        console.log('uncheckedd');
+    	        }        
+    	    });
+ 	    
         $("#search").on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $("tbody tr").filter(function() {
@@ -342,9 +378,10 @@
 
     $(document).ready(function () {
         $('table').paginate({
-            'elemsPerPage': 10,
+            'elemsPerPage': 15,
                 'maxButtons': 6
         });
+
     });
 
     $(document).ready(function(){
@@ -355,6 +392,78 @@
 
         });
     });
+    //dropDown box
+    $(document).ready(function(){
+      	 $("select#disId").change(function() {
+      	  var val = $(this).children(":selected").attr("value");
+      	  $(this).parent("div").children("div").hide(); 
+      	  $(this).parent("div").find("div input#discount"+val).parent().show(); 
+      	  $(this).parent("div").find("div input#service"+val).parent().show(); 
+      	});
+// start for calender date time
+      	var start = moment().subtract(29, 'days');
+        var end = moment();
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        }
+
+        $('#reportrange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+               'Today': [moment(), moment()],
+               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+               'This Month': [moment().startOf('month'), moment().endOf('month')],
+               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        $('#reportrange2').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+               'Today': [moment(), moment()],
+               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+               'This Month': [moment().startOf('month'), moment().endOf('month')],
+               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        //cb(start, end); //it shows date when page loaded at first 
+        
+          $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+          //alert(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+          
+          var dateFrom = picker.startDate.format('DD/MM/YYYY'); //"02/05/2013";
+    var dateTo = picker.endDate.format('DD/MM/YYYY');//"02/09/2013";
+    //var dateCheck = "04/10/2020";
+
+    var d1 = dateFrom.split("/");
+    var d2 = dateTo.split("/");
+    //var c = dateCheck.split("/");
+
+    var from_date = new Date(d1[2], parseInt(d1[1])-1, d1[0]);  // -1 because months are from 0 to 11
+    var to_date   = new Date(d2[2], parseInt(d2[1])-1, d2[0]);
+    //var check = new Date(c[2], parseInt(c[1])-1, c[0]);
+
+    $("table.table tbody tr").filter(function() {
+      var date_now = $(this).find("td input.date_val").val(); //console.log(date_now);
+      var c = date_now.split("/"); var check = new Date(c[2], parseInt(c[1])-1, c[0]);
+      var show_row = false;
+      if(check >= from_date && check <= to_date) {  show_row = true; } 
+      $(this).toggle(show_row);
+    });
+                
+    //console.log(check > from && check < to)
+          
+          });
+          
+      	});
 </script>
 </body>
 </html>

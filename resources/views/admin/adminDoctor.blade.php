@@ -1,13 +1,26 @@
 @extends('admin.layout')
-
 @section('content')
 
+@php 
+    //for roles and security 
+    $perm_role = Session::get('user_roles');
+    $all_perms = $perm_role["perms"]; 
+    $editPermission = false; 
+    $deletePermission = false; 
+    $approvePermission = false; 
+    for($i=0; $i<count($all_perms); $i++)
+    {
+      if($all_perms[$i]=="Edit") { $editPermission = true; }
+      if($all_perms[$i]=="Delete") { $deletePermission = true; }
+      if($all_perms[$i]=="Approve") { $approvePermission = true; }    
+    }
+@endphp 
 
 <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Doctor</h1>
+            <h1 class="m-0 text-dark">Doctor's Information</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -75,6 +88,21 @@
                 <a href="{{url('admin/doctor/approve')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{$onlineDoctor}}</h3>
+
+                  <p>Online</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+                <a href="{{url('admin/doctor/online')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            
             <!-- ./col -->
             <div class="col-lg-3 col-6">
               <!-- small box -->
@@ -136,12 +164,13 @@
                                                 <th scope="col">Rating</th>
                                                 <th scope="col">Price</th>
                                                 <th scope="col">Hospital</th>
+                                                <th scope="col">Type</th>
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @php $count = 0; $frb_tz = new \DateTimeZone('Asia/Dhaka'); @endphp 
+                                        @php $count = 0; $frb_tz = new \DateTimeZone('Asia/Dhaka'); @endphp
                                             @foreach ($doctorList as $key=>$item)
 
                                                 <tr>
@@ -169,26 +198,38 @@
                                                     </td>
                                                     <td>@if(isset($item['price'])){{$item['price']}} Tk @else N/A @endif</td>
                                                     <td>@if(isset($item['hospitalName']) && $item['hospitalName'] !=null){{$item['hospitalName']}} @else N/A @endif</td>
+                                                    <td>@if(isset($item['doctorType'])){{$item['doctorType']}} @else N/A @endif</td>
                                                     <td>
-                                                     @if(isset($item['createdAt'])) 
-                                                     
-                                                     @php                            
+                                                     @if(isset($item['createdAt']))
+
+                                                     @php
                                                       $frb_date = new \DateTime($item['createdAt']);
                                                       $frb_date->setTimezone($frb_tz);
-                                                      echo $frb_date->format('d-m-y  h:i:s A'); 
+                                                      echo $frb_date->format('d-m-y  h:i:s A');
                                                        @endphp
                                                        /
                                                       @endif
                                                     </td>
+                                                    {{-- //Button  --}}
                                                     <td>
                                                         @if(isset($item['uid']))
-                                                            <a class="btn btn-sm btn-primary" href="{{url('admin/dprofile/'.$item['uid'])}}">View</a>
-                                                            <a @if(isset($item['active']) && $item['active'] == 'true') class="btn btn-sm btn-danger disabled" ; @else class="btn btn-sm btn-success"; @endif  href="{{url('admin/approveDocotr/'.$item['uid'])}}">Approve</a>
-                                                            <a @if(isset($item['rejected']) && $item['rejected'] == 'true') class="btn  btn-sm btn-danger disabled"; @else class="btn btn-sm btn-warning"; @endif href="{{url('admin/rejactDoctor/'.$item['uid'])}}">Reject</a>
+                                                            <a class="btn btn-sm btn-primary" href="{{url('admin/dprofile/'.$item['uid'])}}">View</a> 
+                                                            {{-- @if($approvePermission)
+                                                            <a 
+                                                                @if(isset($item['active']) && $item['active'] == 'true') class="btn btn-sm btn-danger disabled" ; 
+                                                                @else class="btn btn-sm btn-success"; @endif  href="{{url('admin/approveDocotr/'.$item['uid'])}}">Approve</a>
+                                                             
+                                                             
+                                                            <a 
+                                                                @if(isset($item['rejected']) && $item['rejected'] == 'true') class="btn  btn-sm btn-danger disabled"; 
+                                                                @else class="btn btn-sm btn-warning"; @endif href="{{url('admin/rejactDoctor/'.$item['uid'])}}">Reject</a>
+                                                            @endif --}} 
                                                         @else
+                                                             @if($approvePermission)
                                                             <a class="btn btn-sm btn-primary disabled" href="#">View </a>
                                                             <a class="btn btn-sm btn-success disabled" href="#">Approve</a>
                                                             <a class="btn btn-sm btn-danger  disabled" href="#">Reject</a>
+                                                            @endif
                                                         @endif
                                                     </td>
                                                 </tr>
